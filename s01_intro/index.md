@@ -73,9 +73,3 @@
     -   `./site/*.*`: files and directories used in examples
     -   `./src/*.*`: shell scripts and Python programs
     -   `./out/*.*`: expected output for examples
-
-[docker]: https://www.docker.com/
-[pandas]: https://pandas.pydata.org/
-[polars]: https://pola.rs/
-[sc_shell]: https://swcarpentry.github.io/shell-novice/
-[uv]: https://docs.astral.sh/uv/

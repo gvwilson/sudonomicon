@@ -144,6 +144,3 @@ All checks passed!
 -   Want to include the examples shown above in this repository and re-run them automatically
 -   But nesting Git repositories is tricky
 -   And re-running these commands *and* capturing all their output is also hard
-
-[crontab-guru]: https://crontab.guru/
-[ruff]: https://astral.sh/ruff

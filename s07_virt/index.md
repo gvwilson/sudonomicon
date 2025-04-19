@@ -729,8 +729,3 @@ $ docker logs 54c8
 5 18:42:48
 …more output…
 ```
-
-[apt]: https://en.wikipedia.org/wiki/APT_(software)
-[docker]: https://www.docker.com/
-[docker_hub]: https://hub.docker.com/
-[golang]: https://go.dev/

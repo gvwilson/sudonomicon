@@ -74,7 +74,7 @@ if __name__ == '__main__':
 </ul>
 <h2>Docker</h2>
 <ul>
-<li><a href="https://www.docker.com/">Docker</a> solves these problems (and others)</li>
+<li>[Docker][docker] solves these problems (and others)</li>
 <li>Define an <a href="../glossary.html#docker_image">image</a> with its own copy of the operating system, filesystem, etc.</li>
 <li>Run it in a <a href="../glossary.html#docker_container">container</a> that is isolated from the rest of your computer</li>
 </ul>
@@ -119,7 +119,7 @@ ubuntu       latest    ca2b0f26964c   3 weeks ago   77.9MB
 </code></pre>
 <ul>
 <li>Ask Docker to run a container with <code>ubuntu:latest</code><ul>
-<li>I.e., latest stable version of Ubuntu Linux from <a href="https://hub.docker.com/">Docker Hub</a></li>
+<li>I.e., latest stable version of Ubuntu Linux from [Docker Hub][docker_hub]</li>
 </ul>
 </li>
 <li>Docker can't find a <a href="../glossary.html#cache">cached</a> copy locally, so it downloads the image</li>
@@ -267,7 +267,7 @@ CONTAINER ID   STATUS                                       |
 </code></pre>
 <ul>
 <li><code>docker container ls</code> on its own shows a wide table</li>
-<li>The command uses <a href="https://go.dev/">Go</a> format strings for output<ul>
+<li>The command uses [Go][golang] format strings for output<ul>
 <li>Yes, really…</li>
 </ul>
 </li>
@@ -295,7 +295,7 @@ ubuntu       latest    2b7cc08dcdbb   6 weeks ago   69.2MB
 </ul>
 <h2>Installing Software</h2>
 <ul>
-<li>Use <a href="https://en.wikipedia.org/wiki/APT_(software)">apt</a> (Advanced Package Tool)</li>
+<li>Use [apt][apt] (Advanced Package Tool)</li>
 </ul>
 <pre class="language-text"><code class="language-text" data-file="docker_install_python.text">$ docker container run -it ubuntu
 

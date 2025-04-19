@@ -554,9 +554,3 @@ class RequestHandler(BaseHTTPRequestHandler):
     `status_code` (set to 400)
     and `error_message` (set to something informative).
     Explain why the server should return JSON rather than HTML in the case of an error.
-
-[http_status_codes]: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-[netcat]: https://nmap.org/ncat/
-[py_http_server]: https://docs.python.org/3/library/http.server.html
-[py_urllib_parse]: https://docs.python.org/3/library/urllib.parse.html
-[requests]: https://docs.python-requests.org/

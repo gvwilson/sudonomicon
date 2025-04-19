@@ -64,6 +64,7 @@ Welcome, thrice welcome, to Unix systems programming.
 1.  [License](./LICENSE.md)
 1.  [Code of Conduct](./CODE_OF_CONDUCT.md)
 1.  [Contributing](./CONTRIBUTING.md)
+1.  [Links](./links.md)
 
 </div>
 
