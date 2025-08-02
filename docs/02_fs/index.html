@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Filesystem</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>The Filesystem</h1>
+<ul>
+<li>FIXME</li>
+</ul>
+<h2>Definitions</h2>
+<ul>
+<li><a href="../glossary/#ball_and_stick">Ball-and-stick model</a><ul>
+<li>Computer's hard drive has files and directories</li>
+<li>Directories can contain other directories but don't contain data</li>
+<li>Files contain data but can't contain other files (or directories)</li>
+<li>Everything forms a tree under the <a href="../glossary/#root_directory">root directory</a> <code>/</code></li>
+</ul>
+</li>
+<li>More accurate model<ul>
+<li>Computer may have many storage devices, each with its own <a href="../glossary/#filesystem">filesystem</a></li>
+<li>Each file is made up of one or more fixed-size <a href="../glossary/#block_filesystem">blocks</a></li>
+<li>The filesystem keeps track of which blocks belong to which files<ul>
+<li>Adds or recycles blocks as necessary</li>
+</ul>
+</li>
+<li>A directory is a special kind of file that keeps track of other files<ul>
+<li>Files aren't physically "in" a directory</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>Information About Files and Directories</h2>
+<ul>
+<li><code>ls</code> command flags:<ul>
+<li><code>-a</code>: show directories whose names begin with <code>.</code></li>
+<li><code>-i</code>: show inode numbers</li>
+<li><code>-l</code>: long form (i.e., include several pieces of information)</li>
+<li><code>-s</code>: show the number of blocks</li>
+</ul>
+</li>
+</ul>
+<pre class="language-sh"><code class="language-sh" data-file="ls_long_tmp.sh">ls -a -i -l -s tmp
+</code></pre>
+<pre class="language-out"><code class="language-out" data-file="ls_long_tmp.out">total 8
+99138261 0 drwxr-xr-x   3 tut  staff   96 Apr 20 07:50 ./
+94560701 0 drwxr-xr-x  22 tut  staff  704 Apr 20 07:53 ../
+99138262 8 -rw-r--r--   1 tut  staff  174 Apr 20 07:50 bibliography.html
+</code></pre>
+<ul>
+<li>It's a shame there's no option for column titles, but we can add them manually</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>inode</th>
+<th>blocks</th>
+<th>permissions</th>
+<th>links</th>
+<th>owner</th>
+<th>group</th>
+<th>bytes</th>
+<th>date</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>99138261</td>
+<td>0</td>
+<td>drwxr-xr-x</td>
+<td>3</td>
+<td>tut</td>
+<td>staff</td>
+<td>96</td>
+<td>Apr 20 07:50</td>
+<td>./</td>
+</tr>
+<tr>
+<td>94560701</td>
+<td>0</td>
+<td>drwxr-xr-x</td>
+<td>22</td>
+<td>tut</td>
+<td>staff</td>
+<td>704</td>
+<td>Apr 20 07:53</td>
+<td>../</td>
+</tr>
+<tr>
+<td>99138262</td>
+<td>8</td>
+<td>-rw-r--r--</td>
+<td>1</td>
+<td>tut</td>
+<td>staff</td>
+<td>174</td>
+<td>Apr 20 07:50</td>
+<td>bibliography.html</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The <a href="../glossary/#inode">inode</a> stores attributes and IDs of disk blocks<ul>
+<li>No-one is sure any longer what the "i" stands for</li>
+<li>Each inode has a unique ID that stays the same despite renaming</li>
+<li>Design pattern: always generate and manage your own IDs</li>
+</ul>
+</li>
+<li>Number of blocks<ul>
+<li>Each block is typically 4kbyte, but that may vary</li>
+<li>FIXME: why 8 blocks for bibliography which is only 174 bytes?</li>
+</ul>
+</li>
+<li>Permissions (discussed below)</li>
+<li>Number of <a href="../glossary/#link_hard">hard links</a><ul>
+<li>I.e., the number of things that point to this file or directory</li>
+<li>Also discussed below</li>
+</ul>
+</li>
+<li>Names of user and group that own the file or directory<ul>
+<li>Also discussed below</li>
+</ul>
+</li>
+<li>Size in bytes (i.e., what <code>wc -c</code> reports)</li>
+<li>Finally the name</li>
+<li>So now we have a bunch of concepts to explain</li>
+</ul>
+<h2>Permissions in Principle</h2>
+<ul>
+<li>The three A's<ul>
+<li><a href="../glossary/#authentication">Authentication</a>: who are you
+    (or more accurately, what is your identity on this computer system)?</li>
+<li><a href="../glossary/#authorization">Authorization</a>: who is allowed to do what?</li>
+<li><a href="../glossary/#access_control">Access control</a>: how does the system enforce those rules?</li>
+</ul>
+</li>
+<li>So operating systems needs to:<ul>
+<li>Match a person to an account (we will discuss <a href="../s06_auth/index.md">elsewhere</a>)</li>
+<li>Keep track of which account each process belongs to</li>
+<li>Keep track of what operations are permitted to whom</li>
+<li>Enforce those rules (which we won't go into)</li>
+</ul>
+</li>
+</ul>
+<h2>User and Group IDs</h2>
+<ul>
+<li>Each user account has a unique name and a unique numeric ID<ul>
+<li>The numeric user ID is often called a <a href="../glossary/#uid">uid</a></li>
+<li>Not to be confused with <a href="../glossary/#uuid">UUID</a></li>
+</ul>
+</li>
+<li>Each user can belong to one or more <a href="../glossary/#user_group">groups</a><ul>
+<li>Each of which also has a unique name and a unique group ID (or <a href="../glossary/#gid">gid</a>)</li>
+</ul>
+</li>
+</ul>
+<pre class="language-sh"><code class="language-sh" data-file="id_no_args.sh">id
+</code></pre>
+<pre class="language-out"><code class="language-out" data-file="id_no_args.out">uid=501(tut) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),…and 15 others…
+</code></pre>
+<ul>
+<li>Tells us:<ul>
+<li>User ID is 501 and name is <code>tut</code></li>
+<li>Primary group ID is 20 (<code>staff</code>)</li>
+<li>Also belongs to 12 (<code>everyone</code>) and 61 (<code>localaccounts</code>)</li>
+</ul>
+</li>
+<li>Reports by default on the user associated with the currently-running process</li>
+<li>Can provide an account name to get details of a particular account</li>
+</ul>
+<pre class="language-sh"><code class="language-sh" data-file="id_nobody.sh">id -p nobody
+</code></pre>
+<pre class="language-out"><code class="language-out" data-file="id_nobody.out">uid nobody
+groups  nobody everyone localaccounts
+</code></pre>
+<h2>Capabilities</h2>
+<ul>
+<li>A <a href="../glossary/#capability">capability</a> is something that someone may or may not be able to do to a thing<ul>
+<li>Which is incredibly vague</li>
+</ul>
+</li>
+<li>Files and directories capabilities are shown below</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Abbreviation</th>
+<th>File</th>
+<th>Directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read</td>
+<td>r</td>
+<td>Inspect content</td>
+<td>See what the directory contains</td>
+</tr>
+<tr>
+<td>Write</td>
+<td>w</td>
+<td>Modify content</td>
+<td>Add or remove contents</td>
+</tr>
+<tr>
+<td>Execute</td>
+<td>x</td>
+<td>Run program</td>
+<td>Enter or pass through directory</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Read and write make sense</li>
+<li>Execute makes sense on files<ul>
+<li>See below for how the operating system figures out how to run a file</li>
+</ul>
+</li>
+<li>Execute on directories is basically "we needed something and this bit was available"<ul>
+<li>Want to be able to run <code>dir/program</code></li>
+<li><em>Without</em> seeing what else is in <code>dir</code></li>
+<li>Use the "execute" bit on the directory <code>dir</code></li>
+</ul>
+</li>
+</ul>
+<h2>Permissions in Practice</h2>
+<ul>
+<li>Go back to permissions</li>
+<li>First letter is <code>-</code> for a regular file and <code>d</code> for a directory<ul>
+<li>We will see other things below</li>
+</ul>
+</li>
+<li>Then show read-write-execute permissions for user, group, and other (i.e., everyone else)</li>
+<li>So <code>drwxr-xr-x</code> means "a directory with owner=RWX, group=RX, and other=RX"</li>
+<li>And <code>-rw-r--r--</code> means "a file with owner=RW, group=R, and other=R"</li>
+</ul>
+<h2>Changing Permissions</h2>
+<ul>
+<li>Change permissions with <code>chmod</code> ("change mode")<ul>
+<li>Unfortunately one of the more confusing Unix shell commands</li>
+</ul>
+</li>
+<li>Simplest form: <code>chmod u=rw,g=r,o=r</code><ul>
+<li>Specify read-write-execute explicitly for user-group-other</li>
+</ul>
+</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="chmod_example.text">$ echo "original content" &gt; /tmp/somefile.txt
+
+$ ls -l /tmp/somefile.txt
+-rw-r--r--  1 gvwilson  staff  17 Apr 20 16:15 /tmp/somefile.txt
+
+$ cat /tmp/somefile.txt
+original content
+
+$ chmod u=,g=,o= /tmp/somefile.txt
+
+$ ls -l /tmp/somefile.txt
+----------  1 gvwilson  staff  17 Apr 20 16:15 /tmp/somefile.txt
+
+$ cat /tmp/somefile.txt
+cat: /tmp/somefile.txt: Permission denied
+
+$ echo "revised content" &gt; /tmp/somefile.txt
+src/fs/chmod_example.sh: line 9: /tmp/somefile.txt: Permission denied
+
+$ chmod u=rw /tmp/somefile.txt
+
+$ echo "revised content" &gt; /tmp/somefile.txt
+
+$ ls -l /tmp/somefile.txt
+-rw-------  1 gvwilson  staff  16 Apr 20 16:15 /tmp/somefile.txt
+
+$ cat /tmp/somefile.txt
+revised content
+</code></pre>
+<h2>Changing Permissions Programmatically</h2>
+<ul>
+<li><code>ls</code>, <code>chmod</code>, and other programs use <a href="../glossary/#system_call">system calls</a> to get information and change things<ul>
+<li>A function provided by the operating system</li>
+</ul>
+</li>
+<li>Other programs can also use those system calls</li>
+</ul>
+<pre class="language-py"><code class="language-py" data-file="chmod_example.py:create">import os
+import stat
+
+filename = "/tmp/somefile.txt"
+with open(filename, "w") as writer:
+    writer.write("original content")
+
+status = os.stat(filename)
+
+print(status)
+# os.stat_result(st_mode=33188, st_ino=99159112, st_dev=16777234, st_nlink=1, st_uid=501,
+#                st_gid=0, st_size=16, st_atime=1713644644, st_mtime=1713644747,
+#                st_ctime=1713644747)
+
+print(status.st_mode)
+# 33188
+
+print(stat.filemode(status.st_mode))
+# -rw-r--r--
+
+print(f"user ID {status.st_uid} group ID {status.st_gid}")
+# user ID 501 group ID 0
+</code></pre>
+<ul>
+<li><code>os.stat</code> returns a tuple with named fields<ul>
+<li>All start with <code>st_</code> prefix because that's what the original C structure did</li>
+</ul>
+</li>
+<li><code>status.st_mode</code> doesn't make much sense in decimal<ul>
+<li>Often printed in <a href="../glossary/#octal">octal</a></li>
+<li>Much easier to use <code>stat.filemode</code> to turn it into an <code>ls</code>-style string</li>
+</ul>
+</li>
+</ul>
+<pre class="language-py"><code class="language-py" data-file="chmod_example.py:lockdown">os.chmod(filename, 0)
+status = os.stat(filename)
+print(stat.filemode(status.st_mode))
+# ----------
+
+try:
+    with open(filename, "r") as reader:
+        content = reader.read()
+except OSError as exc:
+    print(f"trying to open and read: {type(exc)} {exc}")
+# trying to open and read: &lt;class 'PermissionError'&gt;
+# [Errno 13] Permission denied: '/tmp/somefile.txt
+</code></pre>
+<ul>
+<li>Use <code>os.chmod</code> to set the permission to nothing-nothing-nothing (i.e., 0)</li>
+<li>Trying to read/write file after that causes <code>PermissionError</code> (a subclass of <code>OSError</code>)</li>
+<li><code>stat</code> defines constants representing various permissions</li>
+<li>Add the ones we want</li>
+</ul>
+<h2>Not Important Until It Is</h2>
+<ul>
+<li>Permissions are less important on laptops than they were on multi-user systems…</li>
+<li>…until we start to run web servers and databases that other people can access</li>
+</ul>
+<h2>Systems Programming?</h2>
+<ul>
+<li>Not a precise term</li>
+<li>But if it means anything,
+    it includes things at this level</li>
+</ul>
+<h2>Hard Links</h2>
+<ul>
+<li>One of the columns in earlier table is "links"<ul>
+<li>How many references there are to a file in the filesystem</li>
+</ul>
+</li>
+<li>Can create more links to an existing file<ul>
+<li>What we think of as "files" are bookkeeping entries in the filesystem that refer to inodes</li>
+</ul>
+</li>
+<li>Use the <code>ln</code> command to create a <a href="../glossary/#link_hard">hard link</a><ul>
+<li>Syntax is like <code>mv</code>: existing first, then new name</li>
+</ul>
+</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="hard_link.text">$ echo "file content" &gt; /tmp/original.txt
+
+$ ls -l /tmp/*.txt
+-rw-r--r--  1 tut  staff  13 Apr 20 20:13 /tmp/original.txt
+
+$ ln /tmp/original.txt /tmp/duplicate.txt
+$ ls -l /tmp/*.txt
+-rw-r--r--  2 tut  staff  13 Apr 20 20:13 /tmp/duplicate.txt
+-rw-r--r--  2 tut  staff  13 Apr 20 20:13 /tmp/original.txt
+
+$ cat /tmp/duplicate.txt
+file content
+
+$ rm /tmp/original.txt
+$ ls -l /tmp/*.txt
+-rw-r--r--  1 tut  staff  13 Apr 20 20:13 /tmp/duplicate.txt
+
+$ cat /tmp/duplicate.txt
+file content
+</code></pre>
+<ul>
+<li>Note the number of links to <code>original.txt</code> and <code>duplicate.txt</code> is 2 when they both exist</li>
+</ul>
+<h2>Symbolic Links</h2>
+<ul>
+<li>A <a href="../glossary/#link_sym">symbolic link</a> (or symlink) is a file that refers to another file</li>
+</ul>
+<figure id="fs_links">
+<img alt="Relationship between hard and symbolic Links" src="links.svg"/>
+<figcaption>Figure 1: Hard and Symbolic Links</figcaption>
+</figure>
+<pre class="language-text"><code class="language-text" data-file="sym_link.text">$ echo "file content" &gt; /tmp/original.txt
+
+$ ls -l /tmp/*.txt
+-rw-r--r--  1 tut  staff  13 Apr 20 20:20 /tmp/original.txt
+
+$ ln -s /tmp/original.txt /tmp/duplicate.txt
+$ ls -l /tmp/*.txt
+lrwxr-xr-x  1 tut  staff  17 Apr 20 20:20 /tmp/duplicate.txt -&gt; /tmp/original.txt
+-rw-r--r--  1 tut  staff  13 Apr 20 20:20 /tmp/original.txt
+
+$ cat /tmp/duplicate.txt
+file content
+
+$ readlink /tmp/duplicate.txt
+/tmp/original.txt
+
+$ rm /tmp/original.txt
+$ ls -l /tmp/*.txt
+lrwxr-xr-x  1 tut  staff  17 Apr 20 20:20 /tmp/duplicate.txt@ -&gt; /tmp/original.txt
+
+$ cat /tmp/duplicate.txt
+cat: /tmp/duplicate.txt: No such file or directory
+</code></pre>
+<ul>
+<li>Soft links can have different permissions<ul>
+<li>Hard links all refer to the same inode, which is where permissions are stored</li>
+</ul>
+</li>
+<li>Often use soft links to hide version numbers of installed applications<ul>
+<li>E.g., <code>~/conda/bin/python</code> is a symlink to <code>~/conda/bin/python3.11</code></li>
+<li>Running the former actually launches the latter</li>
+</ul>
+</li>
+</ul>
+<h2>Other Kinds of "Files"</h2>
+<ul>
+<li>Unix (and other modern operating systems) make <a href="../glossary/#device">devices</a> look like files<ul>
+<li>Reading from the keyboard and writing to the screen are like file I/O</li>
+</ul>
+</li>
+<li>The pseudofiles representing devices live in <code>/dev</code></li>
+<li><code>ls /dev</code> on my machine shows 345 different devices</li>
+<li>Key difference between different kinds is whether access is <a href="../glossary/#buffer_verb">buffered</a><ul>
+<li>Does the operating system read a block at a time and then give the user access to the block?</li>
+<li>Does it store data in a block temporarily and write that block all at once?</li>
+</ul>
+</li>
+<li>A <a href="../glossary/#character_device">character device</a> allows direct (unbuffered) access<ul>
+<li>Example: terminals whose names are <code>/dev/tty*</code></li>
+<li><code>ls -l</code> shows <code>c</code> as the first letter instead of <code>d</code> for directory</li>
+</ul>
+</li>
+<li>A <a href="../glossary/#block_device">block device</a> always buffers<ul>
+<li>Example: a disk whose name is <code>/dev/disk*</code></li>
+<li><code>ls -l</code> shows <code>b</code> instead of <code>c</code>, <code>d</code>, <code>l</code>, or <code>-</code></li>
+</ul>
+</li>
+<li>There are stranger things as well<ul>
+<li><code>dev/urandom</code> produces random bits</li>
+</ul>
+</li>
+</ul>
+<pre class="language-py"><code class="language-py" data-file="random_bits.py">with open("/dev/urandom", "rb") as reader:
+    bytes = reader.read(8)
+print([hex(b) for b in bytes])```
+
+## Disks
+
+-   Run the `df` command (for "disk free space")
+
+```{data-file="df_output.out"}
+Filesystem     512-blocks      Used  Available Capacity iused      ifree %iused  Mounted on
+/dev/disk3s1s1 1942700360  20008776 1812103064     2%  403755 4294159622    0%   /
+devfs                 414       414          0   100%     722          0  100%   /dev
+/dev/disk3s6   1942700360        40 1812103064     1%       0 9060515320    0%   /System/Volumes/VM
+/dev/disk3s2   1942700360  11963032 1812103064     1%    1069 9060515320    0%   /System/Volumes/Preboot
+/dev/disk3s4   1942700360      7664 1812103064     1%      52 9060515320    0%   /System/Volumes/Update
+/dev/disk1s2      1024000     12328     984504     2%       1    4922520    0%   /System/Volumes/xarts
+/dev/disk1s1      1024000     12544     984504     2%      28    4922520    0%   /System/Volumes/iSCPreboot
+/dev/disk1s3      1024000      4904     984504     1%      89    4922520    0%   /System/Volumes/Hardware
+/dev/disk3s5   1942700360  96389600 1812103064     6%  955583 9060515320    0%   /System/Volumes/Data
+map auto_home           0         0          0   100%       0          0     -   /System/Volumes/Data/home
+</code></pre>
+<ul>
+<li>The physical disk in this laptop is divided into several filesystems<ul>
+<li>Each has its own inodes</li>
+</ul>
+</li>
+<li>How many 512-byte blocks does each have?</li>
+<li>How many are used and available?</li>
+<li>How many inodes are used and available?</li>
+<li>Where is the filesystem <a href="../glossary/#mount">mounted</a>?<ul>
+<li>I.e., what path do we use to tell the operating system we want that data?</li>
+</ul>
+</li>
+<li>Most people won't ever have to worry about disks at this level<ul>
+<li>But we <em>will</em> think about mounting <a href="../s07_virt/index.md">elsewhere</a></li>
+</ul>
+</li>
+</ul>
+<h2>Disk Usage</h2>
+<ul>
+<li>Use the <code>du</code> command with <code>-h</code> for human-readable suffixes and <code>-s</code> for summary</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="du_h_s.text">$ du -h -s .
+4.9M    .
+</code></pre>
+<ul>
+<li>But this doesn't include <code>.git</code> or other files and directories whose names start with <code>.</code></li>
+<li>Simple solution <code>du -h -s .*</code> tries to summarize <code>..</code>, which isn't what we want</li>
+<li>Use <a href="../glossary/#command_interpolation">command interpolation</a> and <code>ls -A</code><ul>
+<li>All of these tools evolved piece by piece over time, and it shows</li>
+</ul>
+</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="du_h_s_all.text">$ du -h -s $(ls -A)
+1.8M    .git
+4.0K    .gitignore
+4.0K    .vscode
+4.0K    CODE_OF_CONDUCT.md
+8.0K    CONTRIBUTING.md
+8.0K    LICENSE.md
+4.0K    Makefile
+4.0K    README.md
+4.0K    brew.txt
+4.0K    config.py
+812K    docs
+ 28K    info
+360K    lib
+1.1M    old
+4.0K    requirements.txt
+524K    res
+408K    src
+4.0K    tmp
+</code></pre>
+</main>
+<footer>
+<a href="../">The Sudonomicon</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
+</footer>
+</body>
+</html>

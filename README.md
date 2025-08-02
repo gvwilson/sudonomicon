@@ -2,12 +2,6 @@
 
 <p class="subtitle">An Introduction to Unix Systems for the Cautious and Weary</p>
 
-<div class="row" markdown="1">
-  <div class="col-4 center">
-    <img src="./static/advent_05_356.png" alt="Advent 356 by Danielle Navarro" style="width: 80%">
-  </div>
-  <div class="col-8" markdown="1">
-
 Many think they know Unix.
 Few realize that what they know is just a shell.
 Beneath it lie mysteries both bewildering and wonderful:
@@ -21,16 +15,12 @@ Unix will outlive those who mock it.
 Welcome, then, to a world in which the strange will become familiar, and the familiar, strange.
 Welcome, thrice welcome, to Unix systems programming.
 
-  </div>
-</div>
-
 -   Please see [the website][site] to view the current version of this tutorial.
 
--   Contributions are very welcome:
-    please see the [contributors' guide][contribute] for background
-    and [these issues][help_wanted] for items where assistance would be most appreciated.
-    Please also see our [license][license] for terms of use,
-    and note that all contributors are required to abide by our [Code of Conduct][conduct].
+-   Contributions are very welcome;
+    please see the contributors' guide for background.
+    Please also see our [license](./LICENSE.md) for terms of use,
+    and note that all contributors are required to abide by our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 > This lesson notes and working examples for instructors to use as a starting point.
 > We do *not* expect novices with only basic Python and Unix experience to be able to learn from this on their own.
@@ -42,31 +32,21 @@ Welcome, thrice welcome, to Unix systems programming.
 
 ## Syllabus
 
-<div class="chapters" markdown="1">
-
-1.  [Introduction](./s01_intro/index.md): who this is for and what it covers
-1.  [The Filesystem](./s02_fs/index.md): how to manage files, directories, and their stranger kin
-1.  [Processes](./s03_proc/index.md): how to create, signal, and interact with running programs
-1.  [Running Jobs](./s04_jobs/index.md): how to do work on demand
-1.  [HTTP](./s05_http/index.md): how to move data from place to place
-1.  [Authentication](./s06_auth/index.md): how to tell who someone is
-1.  [Virtualization](./s07_virt/index.md): how and why to pretend you have lots of computers
-1.  [Conclusion](./s08_finale/index.md): where we've been and what comes next
-
-</div>
+1.  [Introduction](@root/01_intro): who this is for and what it covers
+1.  [The Filesystem](@root/02_fs): how to manage files, directories, and their stranger kin
+1.  [Processes](@root/03_proc): how to create, signal, and interact with running programs
+1.  [Running Jobs](@root/04_jobs): how to do work on demand
+1.  [HTTP](@root/05_http): how to move data from place to place
+1.  [Authentication](@root/06_auth): how to tell who someone is
+1.  [Virtualization](@root/07_virt): how and why to pretend you have lots of computers
+1.  [Conclusion](@root/08_finale): where we've been and what comes next
 
 ##  Appendices
 
-<div class="appendices" markdown="1">
-
+1.  [License](./LICENSE.md)
 1.  [Bibliography](./bibliography.md)
 1.  [Glossary](./glossary.md)
-1.  [License](./LICENSE.md)
 1.  [Code of Conduct](./CODE_OF_CONDUCT.md)
-1.  [Contributing](./CONTRIBUTING.md)
-1.  [Links](./links.md)
-
-</div>
 
 <p class="center">
   <em>

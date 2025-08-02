@@ -2,19 +2,44 @@
 
 <html>
 <head>
-<title>Processes</title>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Processes</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
 <main>
 <h1>Processes</h1>
 <h2>Program vs. Process</h2>
 <ul>
 <li>A program is a set of instructions for a computer</li>
-<li>A <a href="../glossary.html#process">process</a> is a running instance of a program<ul>
+<li>A <a href="../glossary/#process">process</a> is a running instance of a program<ul>
 <li>Code plus variables in memory plus open files plus some IDs</li>
 </ul>
 </li>
@@ -64,17 +89,17 @@
 <li>Except the first, which is started automatically when the operating system boots up</li>
 </ul>
 </li>
-<li>Refer to <a href="../glossary.html#child_process">child process</a> and <a href="../glossary.html#parent_process">parent process</a></li>
-<li><code>echo $$</code> shows <a href="../glossary.html#process_id">process ID</a> of current process<ul>
+<li>Refer to <a href="../glossary/#child_process">child process</a> and <a href="../glossary/#parent_process">parent process</a></li>
+<li><code>echo $$</code> shows <a href="../glossary/#process_id">process ID</a> of current process<ul>
 <li><code>$$</code> shortcut for current process's ID because it's used so often</li>
 </ul>
 </li>
 <li><code>echo $PPID</code> (parent process ID) to get parent</li>
-<li><code>pstree $$</code> to see <a href="../glossary.html#process_tree">process tree</a></li>
+<li><code>pstree $$</code> to see <a href="../glossary/#process_tree">process tree</a></li>
 </ul>
 <h2>Signals</h2>
 <ul>
-<li>Can send a <a href="../glossary.html#signal">signal</a> to a process<ul>
+<li>Can send a <a href="../glossary/#signal">signal</a> to a process<ul>
 <li>"Something extraordinary happened, please deal with it immediately"</li>
 </ul>
 </li>
@@ -171,8 +196,8 @@
 </tbody>
 </table>
 <ul>
-<li>Create a <a href="../glossary.html#callback_function">callback function</a>
-    to act as a <a href="../glossary.html#signal_handler">signal handler</a></li>
+<li>Create a <a href="../glossary/#callback_function">callback function</a>
+    to act as a <a href="../glossary/#signal_handler">signal handler</a></li>
 </ul>
 <pre class="language-py"><code class="language-py" data-file="catch_interrupt.py">import signal
 import sys
@@ -202,7 +227,7 @@ use Ctrl-C three times
 </ul>
 <h2>Background Processes</h2>
 <ul>
-<li>Can run a process in the <a href="../glossary.html#background_process">background</a><ul>
+<li>Can run a process in the <a href="../glossary/#background_process">background</a><ul>
 <li>Only difference is that it isn't connected to the keyboard (stdin)</li>
 <li>Can still print to the screen (stdout and stderr)</li>
 </ul>
@@ -234,14 +259,14 @@ loop finished
 <li>Or needs keyboard input</li>
 </ul>
 </li>
-<li>Can also start process and then <a href="../glossary.html#suspend_process">suspend</a> it with Ctrl-Z<ul>
+<li>Can also start process and then <a href="../glossary/#suspend_process">suspend</a> it with Ctrl-Z<ul>
 <li>Sends <code>SIGSTOP</code> instead of <code>SIGINT</code></li>
 </ul>
 </li>
 <li>Use <code>jobs</code> to see all suspended processes</li>
 <li>Then <code>bg %<em>num</em></code> to resume in the background</li>
-<li>Or <code>fg %<em>num</em></code> to <a href="../glossary.html#foreground_process">foreground</a> the process
-    to <a href="../glossary.html#resume_process">resume</a> its execution</li>
+<li>Or <code>fg %<em>num</em></code> to <a href="../glossary/#foreground_process">foreground</a> the process
+    to <a href="../glossary/#resume_process">resume</a> its execution</li>
 </ul>
 <pre class="language-text"><code class="language-text" data-file="ctrl_z_background.text">$ python src/show_timer.py
 loop 0
@@ -293,7 +318,7 @@ KeyboardInterrupt
 </code></pre>
 <h2>Fork</h2>
 <ul>
-<li><a href="../glossary.html#fork_process">Fork</a> creates a duplicate of a process<ul>
+<li><a href="../glossary/#fork_process">Fork</a> creates a duplicate of a process<ul>
 <li>Creator is parent, gets process ID of child as return value</li>
 <li>Child gets 0 as return value (but has something else as its process ID)</li>
 </ul>
@@ -334,7 +359,7 @@ child got 0 is 41619
 </ul>
 <h2>Flushing I/O</h2>
 <ul>
-<li>Can force OS to do I/O <em>right now</em> by <a href="../glossary.html#flush">flushing</a> its buffers</li>
+<li>Can force OS to do I/O <em>right now</em> by <a href="../glossary/#flush">flushing</a> its buffers</li>
 </ul>
 <pre class="language-py"><code class="language-py" data-file="flush.py">import os
 import sys
@@ -383,9 +408,9 @@ child echoing 0 from 46714
 </ol>
 </main>
 <footer>
-<a href="../">The Sudonomicon</a>
-      copyright © 2024
-      <a href="../contributing.html#contributors">the authors</a>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
 </footer>
 </body>
 </html>

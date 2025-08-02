@@ -1,21 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
     <link rel="icon" type="image/x-icon" href="@root/static/favicon.ico">
-    {% if css_file %}<link rel="stylesheet" href="@root/static/{{css_file}}" type="text/css">{% endif %}
     <link rel="stylesheet" href="@root/static/page.css" type="text/css">
   </head>
   <body>
+    <nav>
+      <a href="@root/">Home</a>
+      &middot;
+      <span class="dropdown">
+	<a href="#">Lessons</a>
+	<span class="dropdown-content">
+          <a href="@root/01_intro/">Introduction</a>
+          <a href="@root/02_meeting/">How&nbsp;to&nbsp;Run&nbsp;a&nbsp;Meeting</a>
+          <a href="@root/03_gst/">Goals,&nbsp;Strategies,&nbsp;and&nbsp;Tactics</a>
+          <a href="@root/04_power/">Power</a>
+          <a href="@root/05_start/">Starting</a>
+          <a href="@root/06_finish/">Finishing</a>
+	</span>
+      </span>
+      &middot;
+      <span class="dropdown">
+        <a href="#">Extras</a>
+        <span class="dropdown-content">
+	  <a href="@root/license/">License</a>
+	  <a href="@root/conduct/">Code of Conduct</a>
+	  <a href="@root/bibliography/">Bibliography</a>
+	  <a href="@root/glossary/">Glossary</a>
+        </span>
+      </span>
+    </nav>
     <main>
 {{content}}
     </main>
     <footer>
       <a href="@root/">The Sudonomicon</a>
-      copyright &copy; 2024
-      <a href="@root/contributing.html#contributors">the authors</a>
+      copyright &copy; 2025
+      <a href="@root/01_intro/#acknowledgments">the authors</a>
     </footer>
   </body>
 </html>

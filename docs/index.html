@@ -2,21 +2,41 @@
 
 <html>
 <head>
-<title>The Sudonomicon</title>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Sudonomicon</title>
 <link href="./static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="./static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<nav>
+<a href="./">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="./01_intro/">Introduction</a>
+<a href="./02_meeting/">How to Run a Meeting</a>
+<a href="./03_gst/">Goals, Strategies, and Tactics</a>
+<a href="./04_power/">Power</a>
+<a href="./05_start/">Starting</a>
+<a href="./06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="./license/">License</a>
+<a href="./conduct/">Code of Conduct</a>
+<a href="./bibliography/">Bibliography</a>
+<a href="./glossary/">Glossary</a>
+</span>
+</span>
+</nav>
 <main>
 <h1>The Sudonomicon</h1>
 <p class="subtitle">An Introduction to Unix Systems for the Cautious and Weary</p>
-<div class="row">
-<div class="col-4 center">
-<img alt="Advent 356 by Danielle Navarro" src="./static/advent_05_356.png" style="width: 80%"/>
-</div>
-<div class="col-8">
 <p>Many think they know Unix.
 Few realize that what they know is just a shell.
 Beneath it lie mysteries both bewildering and wonderful:
@@ -28,18 +48,15 @@ that occasionally rise to the surface like ancient sea creatures believed long e
 Unix will outlive those who mock it.
 Welcome, then, to a world in which the strange will become familiar, and the familiar, strange.
 Welcome, thrice welcome, to Unix systems programming.</p>
-</div>
-</div>
 <ul>
 <li>
 <p>Please see <a href="https://lessonomicon.github.io/sudonomicon/">the website</a> to view the current version of this tutorial.</p>
 </li>
 <li>
-<p>Contributions are very welcome:
-    please see the <a href="https://lessonomicon.github.io/sudonomicon/contributing/">contributors' guide</a> for background
-    and <a href="https://github.com/lessonomicon/sudonomicon/issues?q=is%3Aissue+is%3Aopen+label%3Ahelp-wanted">these issues</a> for items where assistance would be most appreciated.
-    Please also see our <a href="https://lessonomicon.github.io/sudonomicon/license/">license</a> for terms of use,
-    and note that all contributors are required to abide by our <a href="https://lessonomicon.github.io/sudonomicon/conduct/">Code of Conduct</a>.</p>
+<p>Contributions are very welcome;
+    please see the contributors' guide for background.
+    Please also see our <a href="./license/">license</a> for terms of use,
+    and note that all contributors are required to abide by our <a href="./conduct/">Code of Conduct</a>.</p>
 </li>
 </ul>
 <blockquote>
@@ -52,29 +69,23 @@ when delivering it.
 Please see <a href="https://teachtogether.tech/"><em>Teaching Tech Together</em></a> for background.</p>
 </blockquote>
 <h2>Syllabus</h2>
-<div class="chapters">
 <ol>
-<li><a href="./s01_intro/index.html">Introduction</a>: who this is for and what it covers</li>
-<li><a href="./s02_fs/index.html">The Filesystem</a>: how to manage files, directories, and their stranger kin</li>
-<li><a href="./s03_proc/index.html">Processes</a>: how to create, signal, and interact with running programs</li>
-<li><a href="./s04_jobs/index.html">Running Jobs</a>: how to do work on demand</li>
-<li><a href="./s05_http/index.html">HTTP</a>: how to move data from place to place</li>
-<li><a href="./s06_auth/index.html">Authentication</a>: how to tell who someone is</li>
-<li><a href="./s07_virt/index.html">Virtualization</a>: how and why to pretend you have lots of computers</li>
-<li><a href="./s08_finale/index.html">Conclusion</a>: where we've been and what comes next</li>
+<li><a href="./01_intro">Introduction</a>: who this is for and what it covers</li>
+<li><a href="./02_fs">The Filesystem</a>: how to manage files, directories, and their stranger kin</li>
+<li><a href="./03_proc">Processes</a>: how to create, signal, and interact with running programs</li>
+<li><a href="./04_jobs">Running Jobs</a>: how to do work on demand</li>
+<li><a href="./05_http">HTTP</a>: how to move data from place to place</li>
+<li><a href="./06_auth">Authentication</a>: how to tell who someone is</li>
+<li><a href="./07_virt">Virtualization</a>: how and why to pretend you have lots of computers</li>
+<li><a href="./08_finale">Conclusion</a>: where we've been and what comes next</li>
 </ol>
-</div>
 <h2>Appendices</h2>
-<div class="appendices">
 <ol>
-<li><a href="./bibliography.html">Bibliography</a></li>
-<li><a href="./glossary.html">Glossary</a></li>
-<li><a href="./license.html">License</a></li>
-<li><a href="./code_of_conduct.html">Code of Conduct</a></li>
-<li><a href="./contributing.html">Contributing</a></li>
-<li><a href="./links.html">Links</a></li>
+<li><a href="./license/">License</a></li>
+<li><a href="./bibliography/">Bibliography</a></li>
+<li><a href="./glossary/">Glossary</a></li>
+<li><a href="./conduct/">Code of Conduct</a></li>
 </ol>
-</div>
 <p class="center">
 <em>
     Start where you are
@@ -87,8 +98,8 @@ Please see <a href="https://teachtogether.tech/"><em>Teaching Tech Together</em>
 </main>
 <footer>
 <a href="./">The Sudonomicon</a>
-      copyright © 2024
-      <a href="./contributing.html#contributors">the authors</a>
+      copyright © 2025
+      <a href="./01_intro/#acknowledgments">the authors</a>
 </footer>
 </body>
 </html>

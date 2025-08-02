@@ -2,13 +2,38 @@
 
 <html>
 <head>
-<title>The Filesystem</title>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Filesystem</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
 <main>
 <h1>The Filesystem</h1>
 <ul>
@@ -16,16 +41,16 @@
 </ul>
 <h2>Definitions</h2>
 <ul>
-<li><a href="../glossary.html#ball_and_stick">Ball-and-stick model</a><ul>
+<li><a href="../glossary/#ball_and_stick">Ball-and-stick model</a><ul>
 <li>Computer's hard drive has files and directories</li>
 <li>Directories can contain other directories but don't contain data</li>
 <li>Files contain data but can't contain other files (or directories)</li>
-<li>Everything forms a tree under the <a href="../glossary.html#root_directory">root directory</a> <code>/</code></li>
+<li>Everything forms a tree under the <a href="../glossary/#root_directory">root directory</a> <code>/</code></li>
 </ul>
 </li>
 <li>More accurate model<ul>
-<li>Computer may have many storage devices, each with its own <a href="../glossary.html#filesystem">filesystem</a></li>
-<li>Each file is made up of one or more fixed-size <a href="../glossary.html#block_filesystem">blocks</a></li>
+<li>Computer may have many storage devices, each with its own <a href="../glossary/#filesystem">filesystem</a></li>
+<li>Each file is made up of one or more fixed-size <a href="../glossary/#block_filesystem">blocks</a></li>
 <li>The filesystem keeps track of which blocks belong to which files<ul>
 <li>Adds or recycles blocks as necessary</li>
 </ul>
@@ -108,7 +133,7 @@
 </tbody>
 </table>
 <ul>
-<li>The <a href="../glossary.html#inode">inode</a> stores attributes and IDs of disk blocks<ul>
+<li>The <a href="../glossary/#inode">inode</a> stores attributes and IDs of disk blocks<ul>
 <li>No-one is sure any longer what the "i" stands for</li>
 <li>Each inode has a unique ID that stays the same despite renaming</li>
 <li>Design pattern: always generate and manage your own IDs</li>
@@ -120,7 +145,7 @@
 </ul>
 </li>
 <li>Permissions (discussed below)</li>
-<li>Number of <a href="../glossary.html#link_hard">hard links</a><ul>
+<li>Number of <a href="../glossary/#link_hard">hard links</a><ul>
 <li>I.e., the number of things that point to this file or directory</li>
 <li>Also discussed below</li>
 </ul>
@@ -136,14 +161,14 @@
 <h2>Permissions in Principle</h2>
 <ul>
 <li>The three A's<ul>
-<li><a href="../glossary.html#authentication">Authentication</a>: who are you
+<li><a href="../glossary/#authentication">Authentication</a>: who are you
     (or more accurately, what is your identity on this computer system)?</li>
-<li><a href="../glossary.html#authorization">Authorization</a>: who is allowed to do what?</li>
-<li><a href="../glossary.html#access_control">Access control</a>: how does the system enforce those rules?</li>
+<li><a href="../glossary/#authorization">Authorization</a>: who is allowed to do what?</li>
+<li><a href="../glossary/#access_control">Access control</a>: how does the system enforce those rules?</li>
 </ul>
 </li>
 <li>So operating systems needs to:<ul>
-<li>Match a person to an account (we will discuss <a href="../s06_auth/index.html">elsewhere</a>)</li>
+<li>Match a person to an account (we will discuss <a href="../s06_auth/index.md">elsewhere</a>)</li>
 <li>Keep track of which account each process belongs to</li>
 <li>Keep track of what operations are permitted to whom</li>
 <li>Enforce those rules (which we won't go into)</li>
@@ -153,12 +178,12 @@
 <h2>User and Group IDs</h2>
 <ul>
 <li>Each user account has a unique name and a unique numeric ID<ul>
-<li>The numeric user ID is often called a <a href="../glossary.html#uid">uid</a></li>
-<li>Not to be confused with <a href="../glossary.html#uuid">UUID</a></li>
+<li>The numeric user ID is often called a <a href="../glossary/#uid">uid</a></li>
+<li>Not to be confused with <a href="../glossary/#uuid">UUID</a></li>
 </ul>
 </li>
-<li>Each user can belong to one or more <a href="../glossary.html#user_group">groups</a><ul>
-<li>Each of which also has a unique name and a unique group ID (or <a href="../glossary.html#gid">gid</a>)</li>
+<li>Each user can belong to one or more <a href="../glossary/#user_group">groups</a><ul>
+<li>Each of which also has a unique name and a unique group ID (or <a href="../glossary/#gid">gid</a>)</li>
 </ul>
 </li>
 </ul>
@@ -183,7 +208,7 @@ groups  nobody everyone localaccounts
 </code></pre>
 <h2>Capabilities</h2>
 <ul>
-<li>A <a href="../glossary.html#capability">capability</a> is something that someone may or may not be able to do to a thing<ul>
+<li>A <a href="../glossary/#capability">capability</a> is something that someone may or may not be able to do to a thing<ul>
 <li>Which is incredibly vague</li>
 </ul>
 </li>
@@ -285,7 +310,7 @@ revised content
 </code></pre>
 <h2>Changing Permissions Programmatically</h2>
 <ul>
-<li><code>ls</code>, <code>chmod</code>, and other programs use <a href="../glossary.html#system_call">system calls</a> to get information and change things<ul>
+<li><code>ls</code>, <code>chmod</code>, and other programs use <a href="../glossary/#system_call">system calls</a> to get information and change things<ul>
 <li>A function provided by the operating system</li>
 </ul>
 </li>
@@ -320,7 +345,7 @@ print(f"user ID {status.st_uid} group ID {status.st_gid}")
 </ul>
 </li>
 <li><code>status.st_mode</code> doesn't make much sense in decimal<ul>
-<li>Often printed in <a href="../glossary.html#octal">octal</a></li>
+<li>Often printed in <a href="../glossary/#octal">octal</a></li>
 <li>Much easier to use <code>stat.filemode</code> to turn it into an <code>ls</code>-style string</li>
 </ul>
 </li>
@@ -365,7 +390,7 @@ except OSError as exc:
 <li>What we think of as "files" are bookkeeping entries in the filesystem that refer to inodes</li>
 </ul>
 </li>
-<li>Use the <code>ln</code> command to create a <a href="../glossary.html#link_hard">hard link</a><ul>
+<li>Use the <code>ln</code> command to create a <a href="../glossary/#link_hard">hard link</a><ul>
 <li>Syntax is like <code>mv</code>: existing first, then new name</li>
 </ul>
 </li>
@@ -395,7 +420,7 @@ file content
 </ul>
 <h2>Symbolic Links</h2>
 <ul>
-<li>A <a href="../glossary.html#link_sym">symbolic link</a> (or symlink) is a file that refers to another file</li>
+<li>A <a href="../glossary/#link_sym">symbolic link</a> (or symlink) is a file that refers to another file</li>
 </ul>
 <figure id="fs_links">
 <img alt="Relationship between hard and symbolic Links" src="links.svg"/>
@@ -437,23 +462,23 @@ cat: /tmp/duplicate.txt: No such file or directory
 </ul>
 <h2>Other Kinds of "Files"</h2>
 <ul>
-<li>Unix (and other modern operating systems) make <a href="../glossary.html#device">devices</a> look like files<ul>
+<li>Unix (and other modern operating systems) make <a href="../glossary/#device">devices</a> look like files<ul>
 <li>Reading from the keyboard and writing to the screen are like file I/O</li>
 </ul>
 </li>
 <li>The pseudofiles representing devices live in <code>/dev</code></li>
 <li><code>ls /dev</code> on my machine shows 345 different devices</li>
-<li>Key difference between different kinds is whether access is <a href="../glossary.html#buffer_verb">buffered</a><ul>
+<li>Key difference between different kinds is whether access is <a href="../glossary/#buffer_verb">buffered</a><ul>
 <li>Does the operating system read a block at a time and then give the user access to the block?</li>
 <li>Does it store data in a block temporarily and write that block all at once?</li>
 </ul>
 </li>
-<li>A <a href="../glossary.html#character_device">character device</a> allows direct (unbuffered) access<ul>
+<li>A <a href="../glossary/#character_device">character device</a> allows direct (unbuffered) access<ul>
 <li>Example: terminals whose names are <code>/dev/tty*</code></li>
 <li><code>ls -l</code> shows <code>c</code> as the first letter instead of <code>d</code> for directory</li>
 </ul>
 </li>
-<li>A <a href="../glossary.html#block_device">block device</a> always buffers<ul>
+<li>A <a href="../glossary/#block_device">block device</a> always buffers<ul>
 <li>Example: a disk whose name is <code>/dev/disk*</code></li>
 <li><code>ls -l</code> shows <code>b</code> instead of <code>c</code>, <code>d</code>, <code>l</code>, or <code>-</code></li>
 </ul>
@@ -492,12 +517,12 @@ map auto_home           0         0          0   100%       0          0     -  
 <li>How many 512-byte blocks does each have?</li>
 <li>How many are used and available?</li>
 <li>How many inodes are used and available?</li>
-<li>Where is the filesystem <a href="../glossary.html#mount">mounted</a>?<ul>
+<li>Where is the filesystem <a href="../glossary/#mount">mounted</a>?<ul>
 <li>I.e., what path do we use to tell the operating system we want that data?</li>
 </ul>
 </li>
 <li>Most people won't ever have to worry about disks at this level<ul>
-<li>But we <em>will</em> think about mounting <a href="../s07_virt/index.html">elsewhere</a></li>
+<li>But we <em>will</em> think about mounting <a href="../s07_virt/index.md">elsewhere</a></li>
 </ul>
 </li>
 </ul>
@@ -511,7 +536,7 @@ map auto_home           0         0          0   100%       0          0     -  
 <ul>
 <li>But this doesn't include <code>.git</code> or other files and directories whose names start with <code>.</code></li>
 <li>Simple solution <code>du -h -s .*</code> tries to summarize <code>..</code>, which isn't what we want</li>
-<li>Use <a href="../glossary.html#command_interpolation">command interpolation</a> and <code>ls -A</code><ul>
+<li>Use <a href="../glossary/#command_interpolation">command interpolation</a> and <code>ls -A</code><ul>
 <li>All of these tools evolved piece by piece over time, and it shows</li>
 </ul>
 </li>
@@ -538,9 +563,9 @@ map auto_home           0         0          0   100%       0          0     -  
 </code></pre>
 </main>
 <footer>
-<a href="../">The Sudonomicon</a>
-      copyright © 2024
-      <a href="../contributing.html#contributors">the authors</a>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
 </footer>
 </body>
 </html>

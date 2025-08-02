@@ -2,24 +2,49 @@
 
 <html>
 <head>
-<title>Virtualization</title>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Virtualization</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
 <main>
 <h1>Virtualization</h1>
 <ul>
-<li>See [<a href="../bibliography.html#Stoneman2020">Stoneman2020</a>]</li>
+<li>See [<a href="../bibliography/#Stoneman2020">Stoneman2020</a>]</li>
 </ul>
 <h2>Virtual Environments</h2>
 <ul>
 <li>If two directories <code>A</code> and <code>B</code> contain a program <code>xyz</code>
     and <code>A</code> comes before <code>B</code> in the user's <code>PATH</code>,
     the command <code>xyz</code> will run <code>A/xyz</code> instead of <code>B/xyz</code></li>
-<li>This is how <a href="../glossary.html#virtual_env">virtual environments</a> work</li>
+<li>This is how <a href="../glossary/#virtual_env">virtual environments</a> work</li>
 </ul>
 <pre class="language-sh"><code class="language-sh" data-file="show_virtual_env.sh">echo $PATH | tr : '\n' | grep conda
 echo "python is" $(which python)
@@ -75,8 +100,8 @@ if __name__ == '__main__':
 <h2>Docker</h2>
 <ul>
 <li>[Docker][docker] solves these problems (and others)</li>
-<li>Define an <a href="../glossary.html#docker_image">image</a> with its own copy of the operating system, filesystem, etc.</li>
-<li>Run it in a <a href="../glossary.html#docker_container">container</a> that is isolated from the rest of your computer</li>
+<li>Define an <a href="../glossary/#docker_image">image</a> with its own copy of the operating system, filesystem, etc.</li>
+<li>Run it in a <a href="../glossary/#docker_container">container</a> that is isolated from the rest of your computer</li>
 </ul>
 <pre class="language-sh"><code class="language-sh" data-file="docker_image_ls.sh">docker image ls
 </code></pre>
@@ -91,7 +116,7 @@ if __name__ == '__main__':
 </ul>
 <h2 class="aside">Common Error Message</h2>
 <ul>
-<li>Docker requires a <a href="../glossary.html#daemon">daemon</a> process
+<li>Docker requires a <a href="../glossary/#daemon">daemon</a> process
     to be running in the background to start images</li>
 </ul>
 <pre class="language-sh"><code class="language-sh" data-file="docker_image_ls.sh">docker image ls
@@ -122,7 +147,7 @@ ubuntu       latest    ca2b0f26964c   3 weeks ago   77.9MB
 <li>I.e., latest stable version of Ubuntu Linux from [Docker Hub][docker_hub]</li>
 </ul>
 </li>
-<li>Docker can't find a <a href="../glossary.html#cache">cached</a> copy locally, so it downloads the image</li>
+<li>Docker can't find a <a href="../glossary/#cache">cached</a> copy locally, so it downloads the image</li>
 <li>Then runs it</li>
 <li>But its default command is <code>/bin/bash</code> with no inputs, so it exits immediately.</li>
 </ul>
@@ -190,15 +215,15 @@ UBUNTU_CODENAME=jammy
 <li>Which makes a mess of reproducibility</li>
 </ul>
 </li>
-<li>But each layer in an image can also be identified by a <a href="../glossary.html#hash">hash</a> of its contents</li>
+<li>But each layer in an image can also be identified by a <a href="../glossary/#hash">hash</a> of its contents</li>
 <li>So we can reproduce an image exactly when we want to</li>
 </ul>
 <h2 class="aside">Wait, What's a Layer?</h2>
 <ul>
-<li>Every image consists of one or more <a href="../glossary.html#docker_layer">layers</a></li>
+<li>Every image consists of one or more <a href="../glossary/#docker_layer">layers</a></li>
 <li>Upper layers mask things in lower layers</li>
 <li>So if several images are built on top of <code>ubuntu:latest</code> the computer doesn't need to store multiple copies of it</li>
-<li>Layers are implemented by <a href="../glossary.html#copy_on_write">copy on write</a><ul>
+<li>Layers are implemented by <a href="../glossary/#copy_on_write">copy on write</a><ul>
 <li>When a container writes to memory or disk,
     the operating system stops,
 makes a copy of that part of memory or disk for that container's private use,
@@ -337,7 +362,7 @@ exit
 </code></pre>
 <h2>Actually Installing Software</h2>
 <ul>
-<li>Create a <a href="../glossary.html#dockerfile">Dockerfile</a><ul>
+<li>Create a <a href="../glossary/#dockerfile">Dockerfile</a><ul>
 <li>Usually called that and in a directory of its own</li>
 <li>Ours is <code>ubuntu-python3/Dockerfile</code></li>
 </ul>
@@ -406,7 +431,7 @@ c06d47d8275d   24 hours ago   RUN /bin/sh -c apt install python3 -y # buil…   
 &lt;missing&gt;      3 weeks ago    /bin/sh -c #(nop)  ARG RELEASE                  0B
 </code></pre>
 <ul>
-<li>Docker images are built in <a href="../glossary.html#docker_layer">layers</a></li>
+<li>Docker images are built in <a href="../glossary/#docker_layer">layers</a></li>
 <li>Layers can be shared between images to reduce disk space</li>
 </ul>
 <pre class="language-text"><code class="language-text" data-file="docker_system_df.text">$ docker system df
@@ -700,9 +725,9 @@ $
 </code></pre>
 </main>
 <footer>
-<a href="../">The Sudonomicon</a>
-      copyright © 2024
-      <a href="../contributing.html#contributors">the authors</a>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
 </footer>
 </body>
 </html>

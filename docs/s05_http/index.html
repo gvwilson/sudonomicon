@@ -2,13 +2,38 @@
 
 <html>
 <head>
-<title>HTTP</title>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HTTP</title>
 <link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="../static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
 <main>
 <h1>HTTP</h1>
 <h2>Start with Something Simple</h2>
@@ -25,13 +50,13 @@ Start where you are, use what you have, help who you can.
 
 </code></pre>
 <ul>
-<li>Use the [<code>requests</code>][requests] module to send an <a href="../glossary.html#http">HTTP</a> <a href="../glossary.html#http_request">request</a></li>
+<li>Use the [<code>requests</code>][requests] module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
 <li>The URL identifies the file we want<ul>
 <li>Though as we'll see, the server can interpret it differently</li>
 </ul>
 </li>
 <li>Response includes:<ul>
-<li><a href="../glossary.html#http_status_code">HTTP status code</a> such as 200 (OK) or 404 (Not Found)</li>
+<li><a href="../glossary/#http_status_code">HTTP status code</a> such as 200 (OK) or 404 (Not Found)</li>
 <li>The text of the response</li>
 </ul>
 </li>
@@ -46,8 +71,8 @@ Start where you are, use what you have, help who you can.
 </figure>
 <ul>
 <li>Open a connection to the server</li>
-<li>Send an <a href="../glossary.html#http_request">HTTP request</a> for the file we want</li>
-<li>Server creates a <a href="../glossary.html#http_response">response</a> that includes the contents of the file</li>
+<li>Send an <a href="../glossary/#http_request">HTTP request</a> for the file we want</li>
+<li>Server creates a <a href="../glossary/#http_response">response</a> that includes the contents of the file</li>
 <li>Sends it back</li>
 <li><code>requests</code> parses the response and creates a Python object for us</li>
 </ul>
@@ -69,8 +94,8 @@ Connection: keep-alive
 
 </code></pre>
 <ul>
-<li>First line is <a href="../glossary.html#http_method">method</a>, URL, and protocol version</li>
-<li>Every HTTP request can have <a href="../glossary.html#http_header">headers</a> with extra information<ul>
+<li>First line is <a href="../glossary/#http_method">method</a>, URL, and protocol version</li>
+<li>Every HTTP request can have <a href="../glossary/#http_header">headers</a> with extra information<ul>
 <li>And optionally data being uploaded</li>
 </ul>
 </li>
@@ -114,7 +139,7 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
 </li>
 <li>Most important for now are:<ul>
 <li><code>Content-Length</code>: number of bytes in response data (i.e., how much to read)</li>
-<li><code>Content-Type</code>: <a href="../glossary.html#mime_type">MIME type</a> of data (e.g., <code>text/plain</code>)</li>
+<li><code>Content-Type</code>: <a href="../glossary/#mime_type">MIME type</a> of data (e.g., <code>text/plain</code>)</li>
 </ul>
 </li>
 <li>From now on we will only show interesting headers</li>
@@ -179,12 +204,12 @@ body as JSON:
 {'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}
 </code></pre>
 <ul>
-<li>Parsing data out of HTML is called <a href="../glossary.html#web_scraping">web scraping</a><ul>
+<li>Parsing data out of HTML is called <a href="../glossary/#web_scraping">web scraping</a><ul>
 <li>Painful and error prone</li>
 </ul>
 </li>
 <li>Better to have the server return data as data<ul>
-<li>Preferred format these days is <a href="../glossary.html#json">JSON</a></li>
+<li>Preferred format these days is <a href="../glossary/#json">JSON</a></li>
 <li>So common that <code>requests</code> has built-in support</li>
 </ul>
 </li>
@@ -204,13 +229,13 @@ body as JSON:
 <li>Pushing files to GitHub so that we can use them is annoying</li>
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
 <li>Use Python's [<code>http.server</code>][py_http_server] module
-    to run a <a href="../glossary.html#local_server">local server</a></li>
+    to run a <a href="../glossary/#local_server">local server</a></li>
 </ul>
 <pre class="language-sh"><code class="language-sh" data-file="local_server.sh">python -m http.server -d site
 </code></pre>
 <ul>
-<li>Host name is <a href="../glossary.html#localhost"><code>localhost</code></a></li>
-<li>Uses <a href="../glossary.html#port">port</a> 8000 by default<ul>
+<li>Host name is <a href="../glossary/#localhost"><code>localhost</code></a></li>
+<li>Uses <a href="../glossary/#port">port</a> 8000 by default<ul>
 <li>So URLs look like <code>http://localhost:8000/path/to/file</code></li>
 </ul>
 </li>
@@ -236,7 +261,7 @@ Start where you are, use what you have, help who you can.
 
 </code></pre>
 <ul>
-<li><a href="../glossary.html#concurrency">Concurrent</a> systems are hard to debug<ul>
+<li><a href="../glossary/#concurrency">Concurrent</a> systems are hard to debug<ul>
 <li>Multiple streams of activity</li>
 <li>Order may change from run to run</li>
 <li>Usually easiest to run each process in its own terminal window</li>
@@ -326,7 +351,7 @@ print(f"body:\n{response.text}")
 </code></pre>
 <ul>
 <li>Add a sub-directory to <code>site</code> called <code>sandbox</code> with a file <code>example.txt</code><ul>
-<li>Called a <a href="../glossary.html#sandbox">sandbox</a> because it's a safe place to play</li>
+<li>Called a <a href="../glossary/#sandbox">sandbox</a> because it's a safe place to play</li>
 </ul>
 </li>
 <li>Serve that sub-directory</li>
@@ -488,7 +513,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
         self.send_content(result, HTTPStatus.OK)
 </code></pre>
 <ul>
-<li><code>send_content</code> <a href="../glossary.html#character_encoding">encodes</a> the JSON string as <a href="../glossary.html#utf_8">UTF-8</a>
+<li><code>send_content</code> <a href="../glossary/#character_encoding">encodes</a> the JSON string as <a href="../glossary/#utf_8">UTF-8</a>
     and sets the MIME type to <code>application/json</code></li>
 </ul>
 <pre class="language-py"><code class="language-py" data-file="bird_server_whole.py:send">    def send_content(self, content, status):
@@ -504,7 +529,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 </ul>
 <h2>Slicing Data</h2>
 <ul>
-<li>URL can contain <a href="../glossary.html#query_parameter">query parameters</a></li>
+<li>URL can contain <a href="../glossary/#query_parameter">query parameters</a></li>
 <li>Want <code>http://localhost:8000/?year=2021&amp;species=rebnut</code> to select red-breasted nuthatches in 2021</li>
 <li>Put slicing in a method of its own</li>
 </ul>
@@ -556,9 +581,9 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 </ol>
 </main>
 <footer>
-<a href="../">The Sudonomicon</a>
-      copyright © 2024
-      <a href="../contributing.html#contributors">the authors</a>
+<a href="../">Organizational Change for Open Science</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
 </footer>
 </body>
 </html>

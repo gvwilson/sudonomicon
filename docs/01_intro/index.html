@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Introduction</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>Introduction</h1>
+<h2>Objective</h2>
+<ul>
+<li>Tried teaching computer security to data scientists</li>
+<li>Had to back up every few minutes to explain underlying concepts<ul>
+<li>"What does it mean to 'mount' a filesystem?"</li>
+<li>"What does it mean to 'background' a job?"</li>
+<li>"What is a 'port'?"</li>
+</ul>
+</li>
+<li>Answer those questions step-by-step so that securing a web service will make sense</li>
+</ul>
+<h2>What This Is</h2>
+<ul>
+<li>Notes and working examples that instructors can use to perform a lesson</li>
+<li>Musical analogy<ul>
+<li>This is the chord changes and melody</li>
+<li>We expect instructors to create an arrangement and/or improvise while delivering</li>
+</ul>
+</li>
+<li>Please see <a href="../license/">the license</a> for terms of use,
+    the <a href="../conduct/">Code of Conduct</a> for community standards,
+    and <a href="../CONTRIBUTING.md">these guidelines</a> for notes on contributing</li>
+</ul>
+<h2>Scope</h2>
+<ul>
+<li>Intended audience<ul>
+<li>Ning did a bachelor's degree in economics
+    and now works as a data analyst for the Ministry of Health</li>
+<li>They are comfortable working with common Unix command-line tools,
+    writing data analysis scripts in Python,
+and downloading data from the web manually</li>
+<li>They want to understand what happens when they install a package
+or run a pipeline in the cloud</li>
+<li>Their work schedule is unpredictable and highly variable,
+    so they need to be able to learn a bit at a time</li>
+</ul>
+</li>
+</ul>
+<h2>Prerequisites</h2>
+<ul>
+<li>Unix shell commands covered in [this Software Carpentry lesson][sc_shell]:<ul>
+<li><code>pwd</code>; <code>ls</code>; <code>cd</code>; <code>.</code> and <code>..</code>; <code>rm</code> and <code>rmdir</code>; <code>mkdir</code>; <code>touch</code>;
+    <code>mv</code>; <code>cp</code>; <code>tree</code>; <code>cat</code>; <code>wc</code>; <code>head</code>; <code>tail</code>; <code>less</code>; <code>cut</code>; <code>echo</code>;
+    <code>history</code>; <code>find</code>; <code>grep</code>; <code>zip</code>; <code>man</code></li>
+<li>current working directory; absolute and relative paths; naming files</li>
+<li>standard input; standard output; standard error; redirection; pipes</li>
+<li><code>*</code> and <code>?</code> wildcards; shell variable with <code>$</code> expansion; <code>for</code> loop</li>
+</ul>
+</li>
+<li>Python for command-line scripting<ul>
+<li>variables; numbers and strings; lists; dictionaries; <code>for</code> and <code>while</code> loops;
+    <code>if</code>/<code>else</code>; <code>with</code>; defining and calling functions; <code>sys.argv</code>, <code>sys.stdin</code>,
+    and <code>sys.stdout</code>; simple regular expressions; reading JSON data;
+    reading CSV files using [Pandas][pandas] or [Polars][polars]</li>
+<li>create an environment with [uv][uv]; activate it and install packages</li>
+</ul>
+</li>
+</ul>
+<h2>Learning Outcomes</h2>
+<ol>
+<li>Explain what environment variables are and write programs that use them.</li>
+<li>Create a virtual environment and explain what this actually does.</li>
+<li>Create <code>requirements.txt</code> file for Python and explain version pinning.</li>
+<li>Explain what a filesystem is (disk partitions, inodes, symbolic links)
+    and use <code>df</code>, <code>ln</code>, similar commands to explore with them.</li>
+<li>Explain what a process is and use commands like <code>ps</code> and <code>kill</code> to explore and manage them.</li>
+<li>Explain what a job is and use commands like <code>jobs</code>, <code>bg</code>, and <code>fg</code> to manage them.</li>
+<li>Explain what <code>cron</code> jobs are and how to create them.</li>
+<li>Explain the difference between a container and a virtual machine.</li>
+<li>Create and manage [Docker][docker] images.</li>
+<li>Explain what ports are and write Python code that uses sockets and HTTP.</li>
+<li>Explain what certificates are and how they are used to support HTTPS.</li>
+<li>Explain what key pairs are and how they are stored, and create and manage key pairs.</li>
+<li>Explain what IP addresses are and how they are resolved.</li>
+<li>Explain how traditional password authentication works and describe its weaknesses.</li>
+</ol>
+<h2>Setup</h2>
+<ul>
+<li>Download the latest release</li>
+<li>Unzip the file in a temporary directory to create:<ul>
+<li><code>./site/*.*</code>: files and directories used in examples</li>
+<li><code>./src/*.*</code>: shell scripts and Python programs</li>
+<li><code>./out/*.*</code>: expected output for examples</li>
+</ul>
+</li>
+</ul>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>FIXME</p>
+</main>
+<footer>
+<a href="../">The Sudonomicon</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
+</footer>
+</body>
+</html>

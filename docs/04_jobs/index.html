@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Running Jobs</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content">
+<a href="../01_intro/">Introduction</a>
+<a href="../02_meeting/">How to Run a Meeting</a>
+<a href="../03_gst/">Goals, Strategies, and Tactics</a>
+<a href="../04_power/">Power</a>
+<a href="../05_start/">Starting</a>
+<a href="../06_finish/">Finishing</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Extras</a>
+<span class="dropdown-content">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>Running Jobs</h1>
+<ul>
+<li>Computers don't get bored, so get them to do boring things</li>
+</ul>
+<h2>Watching a Command</h2>
+<ul>
+<li>The <code>watch</code> command runs a command periodically and displays result<ul>
+<li>Hard to show output statically…</li>
+</ul>
+</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="watch_date.text">$ watch -n 5 date
+Every 5.0s: date              cherne: Mon Apr 22 16:11:48 2024
+
+Mon Apr 22 16:11:53 EDT 2024
+</code></pre>
+<ul>
+<li><code>-n 5</code>: every five seconds</li>
+<li>Less distracting to show without title (<code>-t</code>)</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="watch_date_no_title.text">$ watch -t -n 5 date
+Mon Apr 22 16:11:53 EDT 2024
+</code></pre>
+<ul>
+<li>More useful to show differences with <code>-d</code></li>
+<li>Each successive update highlights the difference from the previous one<ul>
+<li>Again, hard to show statically</li>
+</ul>
+</li>
+<li>Also use to use <code>-g</code> to exit when the command's output changes</li>
+<li>E.g., <code>watch -n 1 -g netstat</code> will exit within one second of network activity</li>
+</ul>
+<h2>Watching Files</h2>
+<ul>
+<li>Use <code>fswatch</code> (file system watch)</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="fswatch_example.text">$ fswatch -l 1 -x Created -x Removed /tmp
+
+# touch /tmp/a.txt
+/private/tmp/a.txt Created IsFile
+
+# rm /tmp/a.txt
+/private/tmp/a.txt Created IsFile Removed
+</code></pre>
+<ul>
+<li><code>-l 1</code>: latency of one second (i.e., how often to report)</li>
+<li><code>-x Created -x Removed</code>: what events to watch for</li>
+<li><code>/tmp</code>: look for any changes in this directory</li>
+<li>Get one line per change<ul>
+<li>Common to pipe the output of <code>fswatch</code> to something that parses these lines and acts on them</li>
+</ul>
+</li>
+<li>FIXME: why does removing the file generate a 'Created' record?</li>
+</ul>
+<h2>And Then There's <code>cron</code></h2>
+<ul>
+<li><code>cron</code> runs jobs at specified times</li>
+<li>Which sounds simple, but its interface is complex even by Unix standards<ul>
+<li>And differences between different machines make life even harder</li>
+</ul>
+</li>
+<li>Most research programmers won't ever need it</li>
+<li>If you do, consult [crontab.guru][crontab-guru]</li>
+</ul>
+<h2>Git Hooks</h2>
+<ul>
+<li>Git stores repository data in <code>.git</code></li>
+<li>Contains a directory called <code>hooks</code></li>
+<li>Git automatically runs programs it finds there at particular times<ul>
+<li>E.g., if there is a program called <code>pre-commit</code>, Git runs it before each commit takes place</li>
+</ul>
+</li>
+<li>What happens next depends on the program's exit <a href="../glossary/#exit_status">exit status</a><ul>
+<li>0: no problems</li>
+<li>anything else: an error code of some sort</li>
+</ul>
+</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="pre_commit_always_fail.text"># Make a place for this example.
+$ mkdir example
+$ cd example
+
+# Turn it into a Git repository.
+$ git init .
+Initialized empty Git repository in /Users/tut/example/.git/
+
+# Create a pre-commit script that always fails (i.e., exits with non-zero status).
+$ cat &gt; .git/hooks/pre-commit.sh
+#!/bin/sh
+echo "hook running"
+exit 1
+
+# Make that script executable.
+$ chmod 755 .git/hooks/pre-commit.sh
+
+# Run it and check its exit status.
+$ .git/hooks/pre-commit.sh
+hook running
+
+$ echo $?
+1
+
+# Create some content.
+$ cat &gt; a.txt
+content
+
+# Try committing it.
+# The hook should print "hook running" and the commit should be prevented.
+$ git add a.txt
+
+$ git commit -m "should not work"
+hook running
+
+$ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged &lt;file&gt;..." to unstage)
+    modified:   a.txt
+</code></pre>
+<ul>
+<li>More useful to check the files or something else</li>
+</ul>
+<pre class="language-text"><code class="language-text" data-file="pre_commit_ruff.text">$ cat &gt; .git/hooks/pre-commit
+ruff check
+exit $?
+
+$ cat &gt; a.py
+x = not_defined
+
+$ git add .
+$ git commit
+a.py:1:5: F821 Undefined name `not_defined`
+Found 1 error.
+
+$ cat &gt; a.py
+x = 0
+
+$ git add .
+$ git commit -m "this commit works"
+All checks passed!
+[main 7c01aee] this commit works
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+</code></pre>
+<ul>
+<li>Use [ruff][ruff] to <a href="../glossary/#lint">lint</a> the project's Python code</li>
+<li>Exit with whatever exit status it returned<ul>
+<li><code>$?</code> is the exit status of the most recently run process in the shell</li>
+</ul>
+</li>
+</ul>
+<h2 class="aside">Managing These Examples</h2>
+<ul>
+<li>Want to include the examples shown above in this repository and re-run them automatically</li>
+<li>But nesting Git repositories is tricky</li>
+<li>And re-running these commands <em>and</em> capturing all their output is also hard</li>
+</ul>
+</main>
+<footer>
+<a href="../">The Sudonomicon</a>
+      copyright © 2025
+      <a href="../01_intro/#acknowledgments">the authors</a>
+</footer>
+</body>
+</html>
