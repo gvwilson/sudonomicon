@@ -32,6 +32,8 @@ Welcome, thrice welcome, to Unix systems programming.
 
 ## Syllabus
 
+<div id="syllabus" markdown="1">
+
 1.  [Introduction](@root/01_intro): who this is for and what it covers
 1.  [The Filesystem](@root/02_fs): how to manage files, directories, and their stranger kin
 1.  [Processes](@root/03_proc): how to create, signal, and interact with running programs
@@ -41,12 +43,18 @@ Welcome, thrice welcome, to Unix systems programming.
 1.  [Virtualization](@root/07_virt): how and why to pretend you have lots of computers
 1.  [Conclusion](@root/08_finale): where we've been and what comes next
 
+</div>
+
 ##  Appendices
+
+<div id="appendices" markdown="1">
 
 1.  [License](./LICENSE.md)
 1.  [Bibliography](./bibliography.md)
 1.  [Glossary](./glossary.md)
 1.  [Code of Conduct](./CODE_OF_CONDUCT.md)
+
+</div>
 
 <p class="center">
   <em>
