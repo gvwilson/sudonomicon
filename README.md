@@ -34,14 +34,14 @@ Welcome, thrice welcome, to Unix systems programming.
 
 <div id="syllabus" markdown="1">
 
-1.  [Introduction](@root/01_intro): who this is for and what it covers
-1.  [The Filesystem](@root/02_fs): how to manage files, directories, and their stranger kin
-1.  [Processes](@root/03_proc): how to create, signal, and interact with running programs
-1.  [Running Jobs](@root/04_jobs): how to do work on demand
-1.  [HTTP](@root/05_http): how to move data from place to place
-1.  [Authentication](@root/06_auth): how to tell who someone is
-1.  [Virtualization](@root/07_virt): how and why to pretend you have lots of computers
-1.  [Conclusion](@root/08_finale): where we've been and what comes next
+1.  [Introduction](./01_intro): who this is for and what it covers
+1.  [The Filesystem](./02_fs): how to manage files, directories, and their stranger kin
+1.  [Processes](./03_proc): how to create, signal, and interact with running programs
+1.  [Running Jobs](./04_jobs): how to do work on demand
+1.  [HTTP](./05_http): how to move data from place to place
+1.  [Authentication](./06_auth): how to tell who someone is
+1.  [Virtualization](./07_virt): how and why to pretend you have lots of computers
+1.  [Conclusion](./08_finale): where we've been and what comes next
 
 </div>
 

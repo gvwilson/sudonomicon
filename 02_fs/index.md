@@ -68,7 +68,7 @@ total 8
     -   [Authorization](g:authorization): who is allowed to do what?
     -   [Access control](g:access_control): how does the system enforce those rules?
 -   So operating systems needs to:
-    -   Match a person to an account (we will discuss [elsewhere](../s06_auth/index.md))
+    -   Match a person to an account (we will discuss [elsewhere](../06_auth/))
     -   Keep track of which account each process belongs to
     -   Keep track of what operations are permitted to whom
     -   Enforce those rules (which we won't go into)
@@ -360,7 +360,7 @@ map auto_home           0         0          0   100%       0          0     -  
 -   Where is the filesystem [mounted](g:mount)?
     -   I.e., what path do we use to tell the operating system we want that data?
 -   Most people won't ever have to worry about disks at this level
-    -   But we *will* think about mounting [elsewhere](../s07_virt/index.md)
+    -   But we *will* think about mounting [elsewhere](../07_virt/)
 
 ## Disk Usage
 

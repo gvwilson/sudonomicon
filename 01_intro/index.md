@@ -16,8 +16,7 @@
     -   This is the chord changes and melody
     -   We expect instructors to create an arrangement and/or improvise while delivering
 -   Please see [the license](../LICENSE.md) for terms of use,
-    the [Code of Conduct](../CODE_OF_CONDUCT.md) for community standards,
-    and [these guidelines](../CONTRIBUTING.md) for notes on contributing
+    the [Code of Conduct](../CODE_OF_CONDUCT.md) for community standards.
 
 ## Scope
 
