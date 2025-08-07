@@ -16,11 +16,13 @@
 <a href="#">Lessons</a>
 <span class="dropdown-content">
 <a href="../01_intro/">Introduction</a>
-<a href="../02_meeting/">How to Run a Meeting</a>
-<a href="../03_gst/">Goals, Strategies, and Tactics</a>
-<a href="../04_power/">Power</a>
-<a href="../05_start/">Starting</a>
-<a href="../06_finish/">Finishing</a>
+<a href="../02_fs/">The Filesystem</a>
+<a href="../03_proc/">Processes</a>
+<a href="../04_jobs/">Running Jobs</a>
+<a href="../05_http/">HTTP</a>
+<a href="../06_auth/">Authentication</a>
+<a href="../07_virt/">Virtualization</a>
+<a href="../08_finale/">Finale</a>
 </span>
 </span>
       ·
@@ -29,6 +31,7 @@
 <span class="dropdown-content">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
+<a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
 </span>
@@ -37,14 +40,14 @@
 <main>
 <h1>HTTP</h1>
 <h2>Start with Something Simple</h2>
-<pre class="language-py"><code class="language-py" data-file="get_remote.py">import requests
+<pre class=""><code data-file="get_remote.py">import requests
 
 url = "https://lessonomicon.github.io/sudonomicon/site/motto.txt"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body:\n{response.text}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_remote.out">status code: 200
+<pre class=""><code data-file="get_remote.out">status code: 200
 body:
 Start where you are, use what you have, help who you can.
 
@@ -77,7 +80,7 @@ Start where you are, use what you have, help who you can.
 <li><code>requests</code> parses the response and creates a Python object for us</li>
 </ul>
 <h2>Request Structure</h2>
-<pre class="language-py"><code class="language-py" data-file="dump_structure.py">import requests
+<pre class=""><code data-file="dump_structure.py">import requests
 from requests_toolbelt.utils import dump
 
 url = "https://lessonomicon.github.io/sudonomicon/site/motto.txt"
@@ -85,7 +88,7 @@ response = requests.get(url)
 data = dump.dump_all(response)
 print(str(data, "utf-8"))
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="dump_structure.out">GET /safety-tutorial/site/motto.txt HTTP/1.1
+<pre class=""><code data-file="dump_structure.out">GET /safety-tutorial/site/motto.txt HTTP/1.1
 Host: gvwilson.github.io
 User-Agent: python-requests/2.31.0
 Accept-Encoding: gzip, deflate
@@ -105,14 +108,14 @@ Connection: keep-alive
 </li>
 </ul>
 <h2>Response Structure</h2>
-<pre class="language-py"><code class="language-py" data-file="response_headers.py">import requests
+<pre class=""><code data-file="response_headers.py">import requests
 
 url = "https://lessonomicon.github.io/sudonomicon/site/motto.txt"
 response = requests.get(url)
 for key, value in response.headers.items():
     print(f"{key}: {value}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="response_headers.out">Connection: keep-alive
+<pre class=""><code data-file="response_headers.out">Connection: keep-alive
 Content-Length: 5142
 Server: GitHub.com
 Content-Type: text/html; charset=utf-8
@@ -157,14 +160,14 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
 </li>
 </ol>
 <h2>When Things Go Wrong</h2>
-<pre class="language-py"><code class="language-py" data-file="get_404.py">import requests
+<pre class=""><code data-file="get_404.py">import requests
 
 url = "https://lessonomicon.github.io/sudonomicon/site/nonexistent.txt"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body length: {len(response.text)}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_404.out">status code: 404
+<pre class=""><code data-file="get_404.out">status code: 404
 body length: 9115
 </code></pre>
 <ul>
@@ -189,7 +192,7 @@ body length: 9115
 </li>
 </ol>
 <h2>Getting JSON</h2>
-<pre class="language-py"><code class="language-py" data-file="get_json.py">import requests
+<pre class=""><code data-file="get_json.py">import requests
 
 url = "https://lessonomicon.github.io/sudonomicon/site/motto.json"
 response = requests.get(url)
@@ -198,7 +201,7 @@ print(f"body as text: {len(response.text)} bytes")
 as_json = response.json()
 print(f"body as JSON:\n{as_json}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_json.out">status code: 200
+<pre class=""><code data-file="get_json.out">status code: 200
 body as text: 107 bytes
 body as JSON:
 {'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}
@@ -231,7 +234,7 @@ body as JSON:
 <li>Use Python's [<code>http.server</code>][py_http_server] module
     to run a <a href="../glossary/#local_server">local server</a></li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="local_server.sh">python -m http.server -d site
+<pre class=""><code data-file="local_server.sh">python -m http.server -d site
 </code></pre>
 <ul>
 <li>Host name is <a href="../glossary/#localhost"><code>localhost</code></a></li>
@@ -246,7 +249,7 @@ body as JSON:
 </li>
 </ul>
 <h2>Talk to Local Server</h2>
-<pre class="language-py"><code class="language-py" data-file="get_local.py">import requests
+<pre class=""><code data-file="get_local.py">import requests
 
 URL = "http://localhost:8000/motto.txt"
 
@@ -254,7 +257,7 @@ response = requests.get(URL)
 print(f"status code: {response.status_code}")
 print(f"body:\n{response.text}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_local.out">::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
+<pre class=""><code data-file="get_local.out">::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
 status code: 200
 body:
 Start where you are, use what you have, help who you can.
@@ -269,7 +272,7 @@ Start where you are, use what you have, help who you can.
 </li>
 </ul>
 <h2>Our Own File Server</h2>
-<pre class="language-py"><code class="language-py" data-file="file_server_unsafe.py:do_get">class RequestHandler(BaseHTTPRequestHandler):
+<pre class=""><code data-file="file_server_unsafe.py:do_get">class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             url_path = self.path.lstrip("/")
@@ -293,7 +296,7 @@ Start where you are, use what you have, help who you can.
 <ul>
 <li>Serve files</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="file_server_unsafe.py:send_content">    def send_content(self, content, status):
+<pre class=""><code data-file="file_server_unsafe.py:send_content">    def send_content(self, content, status):
         self.send_response(int(status))
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(content)))
@@ -313,7 +316,7 @@ ERROR_PAGE = """\
 &lt;/html&gt;
 """
 </code></pre>
-<pre class="language-py"><code class="language-py" data-file="file_server_unsafe.py:handle_error">    def handle_error(self, msg):
+<pre class=""><code data-file="file_server_unsafe.py:handle_error">    def handle_error(self, msg):
         content = ERROR_PAGE.format(path=self.path, msg=msg)
         content = bytes(content, "utf-8")
         self.send_content(content, HTTPStatus.NOT_FOUND)
@@ -326,7 +329,7 @@ class ServerException(Exception):
     pass
 </code></pre>
 <h2>Running Our File Server</h2>
-<pre class="language-py"><code class="language-py" data-file="file_server_unsafe.py:main">if __name__ == "__main__":
+<pre class=""><code data-file="file_server_unsafe.py:main">if __name__ == "__main__":
     os.chdir(sys.argv[1])
     serverAddress = ("", 8000)
     server = HTTPServer(serverAddress, RequestHandler)
@@ -340,7 +343,7 @@ class ServerException(Exception):
 <ul>
 <li>Modify <code>requests</code> script to take URL as command-line parameter</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="get_url.py">import requests
+<pre class=""><code data-file="get_url.py">import requests
 import sys
 
 URL = sys.argv[1]
@@ -356,29 +359,29 @@ print(f"body:\n{response.text}")
 </li>
 <li>Serve that sub-directory</li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="file_server_sandbox.sh">python src/file_server_unsafe.py site/sandbox
+<pre class=""><code data-file="file_server_sandbox.sh">python src/file_server_unsafe.py site/sandbox
 </code></pre>
 <ul>
 <li>Can get files from that directory</li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="get_url_allowed.sh">python src/get_url.py http://localhost:8000/example.txt
+<pre class=""><code data-file="get_url_allowed.sh">python src/get_url.py http://localhost:8000/example.txt
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_url_allowed_server.out">'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
+<pre class=""><code data-file="get_url_allowed_server.out">'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
 127.0.0.1 - - [21/Feb/2024 06:04:32] "GET /example.txt HTTP/1.1" 200 -
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_url_allowed_client.out">status code: 200
+<pre class=""><code data-file="get_url_allowed_client.out">status code: 200
 body:
 example file
 </code></pre>
 <ul>
 <li>But not from parent directory (which isn't part of sandbox)</li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="get_url_disallowed.sh">python src/requests_local_url.py http://localhost:8000/motto.txt
+<pre class=""><code data-file="get_url_disallowed.sh">python src/requests_local_url.py http://localhost:8000/motto.txt
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_url_disallowed_server.out">'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
+<pre class=""><code data-file="get_url_disallowed_server.out">'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
 127.0.0.1 - - [21/Feb/2024 06:04:38] "GET /motto.txt HTTP/1.1" 404 -
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="get_url_disallowed_client.out">status code: 404
+<pre class=""><code data-file="get_url_disallowed_client.out">status code: 404
 body:
 &lt;html&gt;
   &lt;head&gt;&lt;title&gt;Error accessing /motto.txt&lt;/title&gt;&lt;/head&gt;
@@ -397,12 +400,12 @@ body:
 <li>[<code>netcat</code>][netcat] (often just <code>nc</code>) is a computer networking tool</li>
 <li>Open a connection, send exactly what the user types, and show exactly what is sent in response</li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="nc_localhost.sh">nc localhost 8000
+<pre class=""><code data-file="nc_localhost.sh">nc localhost 8000
 </code></pre>
-<pre class="language-text"><code class="language-text" data-file="nc_allowed.text">GET /example.txt HTTP/1.1
+<pre class=""><code data-file="nc_allowed.text">GET /example.txt HTTP/1.1
 
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="nc_allowed.out">HTTP/1.0 200 OK
+<pre class=""><code data-file="nc_allowed.out">HTTP/1.0 200 OK
 Server: BaseHTTP/0.6 Python/3.12.1
 Date: Thu, 22 Feb 2024 18:37:37 GMT
 Content-Type: text/html; charset=utf-8
@@ -413,10 +416,10 @@ example file
 <ul>
 <li>Let's see what happens if we <em>do</em> send a URL with <code>..</code> in it</li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="nc_disallowed.text">GET ../motto.txt HTTP/1.1
+<pre class=""><code data-file="nc_disallowed.text">GET ../motto.txt HTTP/1.1
 
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="nc_disallowed.out">HTTP/1.0 200 OK
+<pre class=""><code data-file="nc_disallowed.out">HTTP/1.0 200 OK
 Server: BaseHTTP/0.6 Python/3.12.1
 Date: Thu, 22 Feb 2024 18:38:50 GMT
 Content-Type: text/html; charset=utf-8
@@ -438,7 +441,7 @@ and then try to get <code>~/test.txt</code> using your browser,
 and <code>netcat</code>.
 What happens with each and why?</p>
 <h2>A Safer File Server</h2>
-<pre class="language-py"><code class="language-py" data-file="file_server_safe.py:handle_file">    def handle_file(self, given_path, full_path):
+<pre class=""><code data-file="file_server_safe.py:handle_file">    def handle_file(self, given_path, full_path):
         try:
             resolved_path = str(full_path.resolve())
             sandbox = str(Path.cwd().resolve())
@@ -473,7 +476,7 @@ Do you think making code easier to understand also makes it safer?
 ```{data-file="birds_head.sh"}
 head -n 10 site/birds.csv
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="birds_head.out">loc_id,latitude,longitude,region,year,month,day,species_id,num
+<pre class=""><code data-file="birds_head.out">loc_id,latitude,longitude,region,year,month,day,species_id,num
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,redcro,3.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,rebnut,1.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,comred,13.0
@@ -488,7 +491,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 <li>Modify server to generate it dynamically</li>
 <li>Main program</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="bird_server_whole.py:main">def main():
+<pre class=""><code data-file="bird_server_whole.py:main">def main():
     sandbox, filename = sys.argv[1], sys.argv[2]
     os.chdir(sandbox)
     df = pl.read_csv(filename)
@@ -499,7 +502,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 <ul>
 <li>Create our own server class because we want to pass the dataframe in the constructor</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="bird_server_whole.py:server">class BirdServer(HTTPServer):
+<pre class=""><code data-file="bird_server_whole.py:server">class BirdServer(HTTPServer):
     def __init__(self, data, server_address, request_handler):
         super().__init__(server_address, request_handler)
         self._data = data
@@ -507,7 +510,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 <ul>
 <li><code>do_GET</code> converts the dataframe to JSON (will modify later to do more than this)</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="bird_server_whole.py:get">class RequestHandler(BaseHTTPRequestHandler):
+<pre class=""><code data-file="bird_server_whole.py:get">class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         result = self.server._data.write_json(row_oriented=True)
         self.send_content(result, HTTPStatus.OK)
@@ -516,7 +519,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 <li><code>send_content</code> <a href="../glossary/#character_encoding">encodes</a> the JSON string as <a href="../glossary/#utf_8">UTF-8</a>
     and sets the MIME type to <code>application/json</code></li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="bird_server_whole.py:send">    def send_content(self, content, status):
+<pre class=""><code data-file="bird_server_whole.py:send">    def send_content(self, content, status):
         content = bytes(content, "utf-8")
         self.send_response(int(status))
         self.send_header("Content-Type", "application/json; charset=utf-8")

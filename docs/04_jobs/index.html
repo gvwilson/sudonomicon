@@ -16,11 +16,13 @@
 <a href="#">Lessons</a>
 <span class="dropdown-content">
 <a href="../01_intro/">Introduction</a>
-<a href="../02_meeting/">How to Run a Meeting</a>
-<a href="../03_gst/">Goals, Strategies, and Tactics</a>
-<a href="../04_power/">Power</a>
-<a href="../05_start/">Starting</a>
-<a href="../06_finish/">Finishing</a>
+<a href="../02_fs/">The Filesystem</a>
+<a href="../03_proc/">Processes</a>
+<a href="../04_jobs/">Running Jobs</a>
+<a href="../05_http/">HTTP</a>
+<a href="../06_auth/">Authentication</a>
+<a href="../07_virt/">Virtualization</a>
+<a href="../08_finale/">Finale</a>
 </span>
 </span>
       ·
@@ -29,6 +31,7 @@
 <span class="dropdown-content">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
+<a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
 </span>
@@ -46,7 +49,7 @@
 </ul>
 </li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="watch_date.text">$ watch -n 5 date
+<pre class=""><code data-file="watch_date.text">$ watch -n 5 date
 Every 5.0s: date              cherne: Mon Apr 22 16:11:48 2024
 
 Mon Apr 22 16:11:53 EDT 2024
@@ -55,7 +58,7 @@ Mon Apr 22 16:11:53 EDT 2024
 <li><code>-n 5</code>: every five seconds</li>
 <li>Less distracting to show without title (<code>-t</code>)</li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="watch_date_no_title.text">$ watch -t -n 5 date
+<pre class=""><code data-file="watch_date_no_title.text">$ watch -t -n 5 date
 Mon Apr 22 16:11:53 EDT 2024
 </code></pre>
 <ul>
@@ -71,7 +74,7 @@ Mon Apr 22 16:11:53 EDT 2024
 <ul>
 <li>Use <code>fswatch</code> (file system watch)</li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="fswatch_example.text">$ fswatch -l 1 -x Created -x Removed /tmp
+<pre class=""><code data-file="fswatch_example.text">$ fswatch -l 1 -x Created -x Removed /tmp
 
 # touch /tmp/a.txt
 /private/tmp/a.txt Created IsFile
@@ -113,7 +116,7 @@ Mon Apr 22 16:11:53 EDT 2024
 </ul>
 </li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="pre_commit_always_fail.text"># Make a place for this example.
+<pre class=""><code data-file="pre_commit_always_fail.text"># Make a place for this example.
 $ mkdir example
 $ cd example
 
@@ -157,7 +160,7 @@ Changes to be committed:
 <ul>
 <li>More useful to check the files or something else</li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="pre_commit_ruff.text">$ cat &gt; .git/hooks/pre-commit
+<pre class=""><code data-file="pre_commit_ruff.text">$ cat &gt; .git/hooks/pre-commit
 ruff check
 exit $?
 

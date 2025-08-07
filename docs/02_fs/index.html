@@ -16,11 +16,13 @@
 <a href="#">Lessons</a>
 <span class="dropdown-content">
 <a href="../01_intro/">Introduction</a>
-<a href="../02_meeting/">How to Run a Meeting</a>
-<a href="../03_gst/">Goals, Strategies, and Tactics</a>
-<a href="../04_power/">Power</a>
-<a href="../05_start/">Starting</a>
-<a href="../06_finish/">Finishing</a>
+<a href="../02_fs/">The Filesystem</a>
+<a href="../03_proc/">Processes</a>
+<a href="../04_jobs/">Running Jobs</a>
+<a href="../05_http/">HTTP</a>
+<a href="../06_auth/">Authentication</a>
+<a href="../07_virt/">Virtualization</a>
+<a href="../08_finale/">Finale</a>
 </span>
 </span>
       ·
@@ -29,6 +31,7 @@
 <span class="dropdown-content">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
+<a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
 </span>
@@ -72,9 +75,9 @@
 </ul>
 </li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="ls_long_tmp.sh">ls -a -i -l -s tmp
+<pre class=""><code data-file="ls_long_tmp.sh">ls -a -i -l -s tmp
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="ls_long_tmp.out">total 8
+<pre class=""><code data-file="ls_long_tmp.out">total 8
 99138261 0 drwxr-xr-x   3 tut  staff   96 Apr 20 07:50 ./
 94560701 0 drwxr-xr-x  22 tut  staff  704 Apr 20 07:53 ../
 99138262 8 -rw-r--r--   1 tut  staff  174 Apr 20 07:50 bibliography.html
@@ -187,9 +190,9 @@
 </ul>
 </li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="id_no_args.sh">id
+<pre class=""><code data-file="id_no_args.sh">id
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="id_no_args.out">uid=501(tut) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),…and 15 others…
+<pre class=""><code data-file="id_no_args.out">uid=501(tut) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),…and 15 others…
 </code></pre>
 <ul>
 <li>Tells us:<ul>
@@ -201,9 +204,9 @@
 <li>Reports by default on the user associated with the currently-running process</li>
 <li>Can provide an account name to get details of a particular account</li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="id_nobody.sh">id -p nobody
+<pre class=""><code data-file="id_nobody.sh">id -p nobody
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="id_nobody.out">uid nobody
+<pre class=""><code data-file="id_nobody.out">uid nobody
 groups  nobody everyone localaccounts
 </code></pre>
 <h2>Capabilities</h2>
@@ -279,7 +282,7 @@ groups  nobody everyone localaccounts
 </ul>
 </li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="chmod_example.text">$ echo "original content" &gt; /tmp/somefile.txt
+<pre class=""><code data-file="chmod_example.text">$ echo "original content" &gt; /tmp/somefile.txt
 
 $ ls -l /tmp/somefile.txt
 -rw-r--r--  1 gvwilson  staff  17 Apr 20 16:15 /tmp/somefile.txt
@@ -316,7 +319,7 @@ revised content
 </li>
 <li>Other programs can also use those system calls</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="chmod_example.py:create">import os
+<pre class=""><code data-file="chmod_example.py:create">import os
 import stat
 
 filename = "/tmp/somefile.txt"
@@ -350,7 +353,7 @@ print(f"user ID {status.st_uid} group ID {status.st_gid}")
 </ul>
 </li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="chmod_example.py:lockdown">os.chmod(filename, 0)
+<pre class=""><code data-file="chmod_example.py:lockdown">os.chmod(filename, 0)
 status = os.stat(filename)
 print(stat.filemode(status.st_mode))
 # ----------
@@ -395,7 +398,7 @@ except OSError as exc:
 </ul>
 </li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="hard_link.text">$ echo "file content" &gt; /tmp/original.txt
+<pre class=""><code data-file="hard_link.text">$ echo "file content" &gt; /tmp/original.txt
 
 $ ls -l /tmp/*.txt
 -rw-r--r--  1 tut  staff  13 Apr 20 20:13 /tmp/original.txt
@@ -426,7 +429,7 @@ file content
 <img alt="Relationship between hard and symbolic Links" src="links.svg"/>
 <figcaption>Figure 1: Hard and Symbolic Links</figcaption>
 </figure>
-<pre class="language-text"><code class="language-text" data-file="sym_link.text">$ echo "file content" &gt; /tmp/original.txt
+<pre class=""><code data-file="sym_link.text">$ echo "file content" &gt; /tmp/original.txt
 
 $ ls -l /tmp/*.txt
 -rw-r--r--  1 tut  staff  13 Apr 20 20:20 /tmp/original.txt
@@ -488,7 +491,7 @@ cat: /tmp/duplicate.txt: No such file or directory
 </ul>
 </li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="random_bits.py">with open("/dev/urandom", "rb") as reader:
+<pre class=""><code data-file="random_bits.py">with open("/dev/urandom", "rb") as reader:
     bytes = reader.read(8)
 print([hex(b) for b in bytes])```
 
@@ -530,7 +533,7 @@ map auto_home           0         0          0   100%       0          0     -  
 <ul>
 <li>Use the <code>du</code> command with <code>-h</code> for human-readable suffixes and <code>-s</code> for summary</li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="du_h_s.text">$ du -h -s .
+<pre class=""><code data-file="du_h_s.text">$ du -h -s .
 4.9M    .
 </code></pre>
 <ul>
@@ -541,7 +544,7 @@ map auto_home           0         0          0   100%       0          0     -  
 </ul>
 </li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="du_h_s_all.text">$ du -h -s $(ls -A)
+<pre class=""><code data-file="du_h_s_all.text">$ du -h -s $(ls -A)
 1.8M    .git
 4.0K    .gitignore
 4.0K    .vscode

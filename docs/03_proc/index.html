@@ -16,11 +16,13 @@
 <a href="#">Lessons</a>
 <span class="dropdown-content">
 <a href="../01_intro/">Introduction</a>
-<a href="../02_meeting/">How to Run a Meeting</a>
-<a href="../03_gst/">Goals, Strategies, and Tactics</a>
-<a href="../04_power/">Power</a>
-<a href="../05_start/">Starting</a>
-<a href="../06_finish/">Finishing</a>
+<a href="../02_fs/">The Filesystem</a>
+<a href="../03_proc/">Processes</a>
+<a href="../04_jobs/">Running Jobs</a>
+<a href="../05_http/">HTTP</a>
+<a href="../06_auth/">Authentication</a>
+<a href="../07_virt/">Virtualization</a>
+<a href="../08_finale/">Finale</a>
 </span>
 </span>
       ·
@@ -29,6 +31,7 @@
 <span class="dropdown-content">
 <a href="../license/">License</a>
 <a href="../conduct/">Code of Conduct</a>
+<a href="../contrib/">Contributing</a>
 <a href="../bibliography/">Bibliography</a>
 <a href="../glossary/">Glossary</a>
 </span>
@@ -59,9 +62,9 @@
 </ul>
 </li>
 </ul>
-<pre class="language-sh"><code class="language-sh" data-file="ps_a_l.sh">ps -a -l
+<pre class=""><code data-file="ps_a_l.sh">ps -a -l
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="ps_a_l.out">  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
+<pre class=""><code data-file="ps_a_l.out">  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
     0 13215 83470     4106   0  31  0 408655632   9504   ttys001    0:00.02 login -pfl gvwilson /
   501 13216 13215     4006   0  31  0 408795632   5424   ttys001    0:00.04 -bash
   501 13569 13216     4046   0  31  0 408895008  20864   ttys001    0:00.10 python -m http.server
@@ -199,7 +202,7 @@
 <li>Create a <a href="../glossary/#callback_function">callback function</a>
     to act as a <a href="../glossary/#signal_handler">signal handler</a></li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="catch_interrupt.py">import signal
+<pre class=""><code data-file="catch_interrupt.py">import signal
 import sys
 
 COUNT = 0
@@ -216,7 +219,7 @@ print("use Ctrl-C three times")
 while True:
     signal.pause()
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="catch_interrupt.out">python src/catch_interrupt.py
+<pre class=""><code data-file="catch_interrupt.out">python src/catch_interrupt.py
 use Ctrl-C three times
 ^Cinterrupt 1
 ^Cinterrupt 2
@@ -233,17 +236,17 @@ use Ctrl-C three times
 </ul>
 </li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="show_timer.py">import time
+<pre class=""><code data-file="show_timer.py">import time
 
 for i in range(3):
     print(f"loop {i}")
     time.sleep(1)
 print("loop finished")
 </code></pre>
-<pre class="language-sh"><code class="language-sh" data-file="show_timer.sh">python src/show_timer.py &amp;
+<pre class=""><code data-file="show_timer.sh">python src/show_timer.py &amp;
 ls site
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="show_timer.out">$ src/show_timer.sh
+<pre class=""><code data-file="show_timer.out">$ src/show_timer.sh
 birds.csv       cert_authority.srl  sandbox         server.pem      species.csv
 cert_authority.key  motto.json      server.csr      server_first_cert.pem   yukon.db
 cert_authority.pem  motto.txt       server.key      server_first_key.pem
@@ -268,7 +271,7 @@ loop finished
 <li>Or <code>fg %<em>num</em></code> to <a href="../glossary/#foreground_process">foreground</a> the process
     to <a href="../glossary/#resume_process">resume</a> its execution</li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="ctrl_z_background.text">$ python src/show_timer.py
+<pre class=""><code data-file="ctrl_z_background.text">$ python src/show_timer.py
 loop 0
 ^Z
 [1]+  Stopped                 python src/show_timer.py
@@ -288,7 +291,7 @@ loop finished
 <ul>
 <li>Use <code>kill</code> to send a signal to a process</li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="kill_process.text">$ python src/show_timer.py
+<pre class=""><code data-file="kill_process.text">$ python src/show_timer.py
 loop 0
 ^Z
 [1]+  Stopped                 python src/show_timer.py
@@ -303,7 +306,7 @@ $ kill %1
 </ul>
 </li>
 </ul>
-<pre class="language-text"><code class="language-text" data-file="kill_int.text">$ python src/show_timer.py
+<pre class=""><code data-file="kill_int.text">$ python src/show_timer.py
 loop 0
 ^Z
 [1]+  Stopped                 python src/show_timer.py
@@ -324,7 +327,7 @@ KeyboardInterrupt
 </ul>
 </li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="fork.py">import os
+<pre class=""><code data-file="fork.py">import os
 
 print(f"starting {os.getpid()}")
 pid = os.fork()
@@ -333,7 +336,7 @@ if pid == 0:
 else:
     print(f"parent got {pid} is {os.getpid()}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="fork.out">starting 41618
+<pre class=""><code data-file="fork.out">starting 41618
 parent got 41619 is 41618
 child got 0 is 41619
 </code></pre>
@@ -361,7 +364,7 @@ child got 0 is 41619
 <ul>
 <li>Can force OS to do I/O <em>right now</em> by <a href="../glossary/#flush">flushing</a> its buffers</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="flush.py">import os
+<pre class=""><code data-file="flush.py">import os
 import sys
 
 print(f"starting {os.getpid()}")
@@ -372,7 +375,7 @@ if pid == 0:
 else:
     print(f"parent got {pid} is {os.getpid()}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="flush.out">starting 41536
+<pre class=""><code data-file="flush.out">starting 41536
 parent got 41537 is 41536
 child got 0 is 41537
 </code></pre>
@@ -386,7 +389,7 @@ child got 0 is 41537
 </li>
 <li>Use <code>fork</code>/<code>exec</code> to create a new process and then run a program in it</li>
 </ul>
-<pre class="language-py"><code class="language-py" data-file="fork_exec.py">import os
+<pre class=""><code data-file="fork_exec.py">import os
 import sys
 
 print(f"starting {os.getpid()}")
@@ -397,7 +400,7 @@ if pid == 0:
 else:
     print(f"parent got {pid} is {os.getpid()}")
 </code></pre>
-<pre class="language-out"><code class="language-out" data-file="fork_exec.out">starting 46713
+<pre class=""><code data-file="fork_exec.out">starting 46713
 parent got 46714 is 46713
 child echoing 0 from 46714
 </code></pre>
