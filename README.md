@@ -22,13 +22,17 @@ Welcome, thrice welcome, to Unix systems programming.
     Please also see our [license](./LICENSE.md) for terms of use,
     and note that all contributors are required to abide by our [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-> This lesson notes and working examples for instructors to use as a starting point.
-> We do *not* expect novices with only basic Python and Unix experience to be able to learn from this on their own.
-> As a musical analogy,
-> these notes are the chord changes and melody;
-> we expect instructors to create an arrangement and/or improvise over the material
-> when delivering it.
-> Please see [*Teaching Tech Together*][t3] for background.
+<div class="callout" markdown="1">
+
+These lesson notes and examples are for instructors to use as a starting point.
+We do *not* expect novices with only basic Python and Unix experience to be able to learn from this on their own.
+As a musical analogy,
+these notes are the chord changes and melody;
+we expect instructors to create an arrangement and/or improvise over the material
+when delivering it.
+Please see [*Teaching Tech Together*][t3] for background.
+
+</div>
 
 ## Syllabus
 
