@@ -1,5 +1,6 @@
 [project]
 name = "sudononomicon"
+description = "an introduction to Unix systems for the cautious and weary"
 version = "0.3.0"
 requires-python = ">=3.12"
 dependencies = [
