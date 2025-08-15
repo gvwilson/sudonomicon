@@ -5,7 +5,7 @@
 ```{data-file="get_remote.py"}
 import requests
 
-url = "https://lessonomicon.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body:\n{response.text}")
@@ -45,7 +45,7 @@ Start where you are, use what you have, help who you can.
 import requests
 from requests_toolbelt.utils import dump
 
-url = "https://lessonomicon.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
 response = requests.get(url)
 data = dump.dump_all(response)
 print(str(data, "utf-8"))
@@ -71,7 +71,7 @@ Connection: keep-alive
 ```{data-file="response_headers.py"}
 import requests
 
-url = "https://lessonomicon.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
 response = requests.get(url)
 for key, value in response.headers.items():
     print(f"{key}: {value}")
@@ -119,7 +119,7 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
 ```{data-file="get_404.py"}
 import requests
 
-url = "https://lessonomicon.github.io/sudonomicon/site/nonexistent.txt"
+url = "https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body length: {len(response.text)}")
@@ -149,7 +149,7 @@ Look at [this list of HTTP status codes][http_status_codes].
 ```{data-file="get_json.py"}
 import requests
 
-url = "https://lessonomicon.github.io/sudonomicon/site/motto.json"
+url = "https://gvwilson.github.io/sudonomicon/site/motto.json"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body as text: {len(response.text)} bytes")

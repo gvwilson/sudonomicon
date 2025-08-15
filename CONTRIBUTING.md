@@ -59,26 +59,7 @@ Can I add a new section?
 Why is this material free to read?
 :   Because if we all give a little, we all get a lot.
 
-## Contributors
-
--   [*Greg Wilson*][wilson_greg] is a programmer, author, and educator based in Toronto.
-    He was the co-founder and first Executive Director of Software Carpentry
-    and received ACM SIGSOFT's Influential Educator Award in 2020.
-
-Our thanks to:
-
-- Stefan Arentz
-- Julia Evans
-- Robert Kern
-- Matt Panaro
-- Jean-Marc Saffroy
-
 ## Colophon
-
--   The colors in this theme
-    are lightened versions of those used in [classic Canadian postage stamps][stamps].
-    The art in the title is by [Danielle Navarro][navarro_danielle]
-    and used with her gracious permission.
 
 -   The CSS files used to style code were obtained from [highlight-css][highlight_css];
     legibility was checked using [WebAIM WAVE][wave].
@@ -103,10 +84,7 @@ Our thanks to:
 [homebrew]: https://brew.sh/
 [html5validator]: https://pypi.org/project/html5validator/
 [mccole]: https://pypi.org/project/mccole/
-[navarro_danielle]: https://art.djnavarro.net/
 [repo]: https://github.com/lessonomicon/sudonomicon
 [ruff]: https://astral.sh/ruff
-[stamps]: https://third-bit.com/colophon/
 [uv]: https://docs.astral.sh/uv/
 [wave]: https://wave.webaim.org/
-[wilson_greg]: https://third-bit.com/

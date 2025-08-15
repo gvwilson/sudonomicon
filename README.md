@@ -61,6 +61,20 @@ Please see [*Teaching Tech Together*][t3] for background.
 
 </div>
 
+## Acknowledgments {: #acknowledgments}
+
+-   [*Greg Wilson*][wilson_greg] is a programmer, author, and educator based in Toronto.
+    He was the co-founder and first Executive Director of Software Carpentry
+    and received ACM SIGSOFT's Influential Educator Award in 2020.
+
+Our thanks to:
+
+- Stefan Arentz
+- Julia Evans
+- Robert Kern
+- Matt Panaro
+- Jean-Marc Saffroy
+
 <p class="center">
   <em>
     start where you are
@@ -71,9 +85,10 @@ Please see [*Teaching Tech Together*][t3] for background.
   </em>
 </p>
 
-[conduct]: https://lessonomicon.github.io/sudonomicon/conduct/
-[contribute]: https://lessonomicon.github.io/sudonomicon/contributing/
-[help_wanted]: https://github.com/lessonomicon/sudonomicon/issues?q=is%3Aissue+is%3Aopen+label%3Ahelp-wanted
-[license]: https://lessonomicon.github.io/sudonomicon/license/
-[site]: https://lessonomicon.github.io/sudonomicon/
+[conduct]: https://gvwilson.github.io/sudonomicon/conduct/
+[contribute]: https://gvwilson.github.io/sudonomicon/contributing/
+[help_wanted]: https://github.com/gvwilson/sudonomicon/issues?q=is%3Aissue+is%3Aopen+label%3Ahelp-wanted
+[license]: https://gvwilson.github.io/sudonomicon/license/
+[site]: https://gvwilson.github.io/sudonomicon/
 [t3]: https://teachtogether.tech/
+[wilson_greg]: https://third-bit.com/
