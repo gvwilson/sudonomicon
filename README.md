@@ -85,9 +85,6 @@ Our thanks to:
   </em>
 </p>
 
-[conduct]: https://gvwilson.github.io/sudonomicon/conduct/
-[contribute]: https://gvwilson.github.io/sudonomicon/contributing/
-[license]: https://gvwilson.github.io/sudonomicon/license/
 [site]: https://gvwilson.github.io/sudonomicon/
 [t3]: https://teachtogether.tech/
 [wilson-greg]: https://third-bit.com/
