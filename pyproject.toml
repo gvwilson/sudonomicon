@@ -17,6 +17,7 @@ dependencies = [
 
 [tool.mccole]
 skips = [
+    "*~",
     "*.env",
     "*.mk",
     "*.out",
@@ -24,6 +25,7 @@ skips = [
     "*.sh",
     "*.tbl",
     "*.text",
+    "extras/**",
     "old/**",
     "uv.lock"
 ]

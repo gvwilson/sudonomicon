@@ -22,7 +22,7 @@ All contributors must abide by our [Code of Conduct](./CODE_OF_CONDUCT.md).
 | serve     | serve generated HTML                     |
 | stats     | basic site statistics                    |
 
--   If you are on macOS you may want to use [Homebrew][homebrew] to install:
+-   If you are on MacOS you may want to use [Homebrew][homebrew] to install:
     -   `fswatch`
     -   `pstree`
     -   `tree`

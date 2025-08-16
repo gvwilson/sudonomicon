@@ -40,7 +40,7 @@ find $HOME/conda/envs/example -name faker
 -   The script in `bin` loads the module and runs it
 
 ```{data-file="faker_bin.py"}
-#!/Users/gregwilson/conda/envs/example/bin/python3.12
+#!/Users/gvwilson/conda/envs/example/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
