@@ -1,5 +1,7 @@
 # Runnable tasks.
 
+SLUG=sudonomicon
+
 include common.mk
 
 all: commands
@@ -10,6 +12,10 @@ HTML_IGNORES =
 build:
 	mccole build ${CSS}
 	@touch docs/.nojekyll
+
+## links: check links in published site
+links:
+	linkchecker -F text https://gvwilson.github.io/${SLUG}/
 
 ## lint: check code and project
 lint:
