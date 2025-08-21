@@ -34,9 +34,9 @@ Please see [*Teaching Tech Together*][t3] for background.
 
 </div>
 
-## Syllabus
+## Lessons
 
-<div id="syllabus" markdown="1">
+<div id="lessons" markdown="1">
 
 1.  [Introduction](./01_intro/): who this is for and what it covers
 1.  [The Filesystem](./02_fs/): how to manage files, directories, and their stranger kin
