@@ -15,25 +15,25 @@
       <span class="dropdown">
 <a href="#">Lessons</a>
 <span class="dropdown-content" id="nav-lessons">
-<a href="../01_intro/">Introduction</a>
-<a href="../02_fs/">The Filesystem</a>
-<a href="../03_proc/">Processes</a>
-<a href="../04_jobs/">Running Jobs</a>
-<a href="../05_http/">HTTP</a>
-<a href="../06_auth/">Authentication</a>
-<a href="../07_virt/">Virtualization</a>
-<a href="../08_finale/">Conclusion</a>
+<a href="('01_intro', 'Introduction')"></a>
+<a href="('02_fs', 'The Filesystem')"></a>
+<a href="('03_proc', 'Processes')"></a>
+<a href="('04_jobs', 'Running Jobs')"></a>
+<a href="('05_http', 'HTTP')"></a>
+<a href="('06_auth', 'Authentication')"></a>
+<a href="('07_virt', 'Virtualization')"></a>
+<a href="('08_finale', 'Conclusion')"></a>
 </span>
 </span>
       ·
       <span class="dropdown">
 <a href="#">Extras</a>
 <span class="dropdown-content" id="nav-extras">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contrib/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
+<a href="('license', 'License')"></a>
+<a href="('conduct', 'Code of Conduct')"></a>
+<a href="('contributing', 'Contributing')"></a>
+<a href="('bibliography', 'Bibliography')"></a>
+<a href="('glossary', 'Glossary')"></a>
 </span>
 </span>
 </nav>
@@ -53,7 +53,7 @@ Start where you are, use what you have, help who you can.
 
 </code></pre>
 <ul>
-<li>Use the [<code>requests</code>][requests] module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
+<li>Use the <a href="https://requests.readthedocs.io/"><code>requests</code></a> module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
 <li>The URL identifies the file we want<ul>
 <li>Though as we'll see, the server can interpret it differently</li>
 </ul>
@@ -68,9 +68,9 @@ Start where you are, use what you have, help who you can.
 <ul>
 <li>Figure shows what happened</li>
 </ul>
-<figure id="http_lifecycle">
+<figure id="f:http_lifecycle">
 <img alt="HTTP request/response lifecycle" src="http_lifecycle.svg"/>
-<figcaption>Figure 1: Lifecycle of an HTTP request and response</figcaption>
+<figcaption>Figure 1: Figure 1: Lifecycle of an HTTP request and response</figcaption>
 </figure>
 <ul>
 <li>Open a connection to the server</li>
@@ -179,7 +179,7 @@ body length: 9115
 </li>
 </ul>
 <h2 class="exercise">Exercise</h2>
-<p>Look at [this list of HTTP status codes][http_status_codes].</p>
+<p>Look at <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">this list of HTTP status codes</a>.</p>
 <ol>
 <li>
 <p>What is the difference between status code 403 and status code 404?</p>
@@ -223,15 +223,15 @@ body as JSON:
 </ul>
 </li>
 </ul>
-<figure id="http_json_tables">
+<figure id="f:http_json_tables">
 <img alt="Three ways to represent tables as JSON" src="http_json_tables.svg"/>
-<figcaption>Figure 2: Representing tables as JSON</figcaption>
+<figcaption>Figure 2: Figure 2: Representing tables as JSON</figcaption>
 </figure>
 <h2>Local Web Server</h2>
 <ul>
 <li>Pushing files to GitHub so that we can use them is annoying</li>
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
-<li>Use Python's [<code>http.server</code>][py_http_server] module
+<li>Use Python's <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module
     to run a <a href="../glossary/#local_server">local server</a></li>
 </ul>
 <pre class=""><code data-file="local_server.sh">python -m http.server -d site
@@ -397,7 +397,7 @@ body:
 </ul>
 <h2>Introducing <code>netcat</code></h2>
 <ul>
-<li>[<code>netcat</code>][netcat] (often just <code>nc</code>) is a computer networking tool</li>
+<li><a href="https://en.wikipedia.org/wiki/Netcat"><code>netcat</code></a> (often just <code>nc</code>) is a computer networking tool</li>
 <li>Open a connection, send exactly what the user types, and show exactly what is sent in response</li>
 </ul>
 <pre class=""><code data-file="nc_localhost.sh">nc localhost 8000
@@ -542,7 +542,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
         as_json = result.to_json(orient="records")
         self.send_content(as_json, HTTPStatus.OK)</code></p>
 <ul>
-<li>Use <code>urlparse</code> and <code>parse_qs</code> from [<code>urllib.parse</code>][py_urllib_parse] to get query parameters<ul>
+<li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters<ul>
 <li>(Key, list) dictionary</li>
 </ul>
 </li>
@@ -584,7 +584,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 </ol>
 </main>
 <footer>
-<a href="../">The Sudonomicon</a>
+<a href="../"></a>
       copyright © 2025
       <a href="../#acknowledgments">the authors</a>
 </footer>

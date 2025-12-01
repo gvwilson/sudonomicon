@@ -1,0 +1,15 @@
+[apt]: https://en.wikipedia.org/wiki/APT_(software)
+[crontab-guru]: https://crontab.guru/
+[docker]: https://www.docker.com/
+[docker_hub]: https://hub.docker.com/
+[golang]: https://go.dev/
+[http_status_codes]: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+[netcat]: https://en.wikipedia.org/wiki/Netcat
+[pandas]: https://pandas.pydata.org/
+[polars]: https://pola.rs/
+[py_http_server]: https://docs.python.org/3/library/http.server.html
+[py_urllib_parse]: https://docs.python.org/3/library/urllib.parse.html
+[requests]: https://requests.readthedocs.io/
+[ruff]: https://astral.sh/ruff
+[sc_shell]: https://swcarpentry.github.io/shell-novice/
+[uv]: https://docs.astral.sh/uv/

@@ -275,7 +275,7 @@ file content
 
 -   A [symbolic link](g:link_sym) (or symlink) is a file that refers to another file
 
-<figure id="fs_links">
+<figure id="f:fs_links">
   <img src="links.svg" alt="Relationship between hard and symbolic Links"/>
   <figcaption>Figure 1: Hard and Symbolic Links</figcaption>
 </figure>

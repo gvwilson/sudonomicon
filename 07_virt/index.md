@@ -210,7 +210,7 @@ UBUNTU_CODENAME=jammy
 	makes a copy of that part of memory or disk for that container's private use,
 	and then continues
 
-<figure id="virt_docker_layers">
+<figure id="f:virt_docker_layers">
   <img src="docker_layers.svg" alt="How layers and copy-on-write work in Docker"/>
   <figcaption>Figure 1: Docker Layers and Copy-on-Write</figcaption>
 </figure>

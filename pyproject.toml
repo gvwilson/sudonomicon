@@ -1,18 +1,11 @@
 [project]
 name = "sudononomicon"
-description = "an introduction to Unix systems for the cautious and weary"
+description = "An introduction to Unix systems for the cautious and weary"
 version = "0.3.0"
 requires-python = ">=3.12"
 dependencies = [
-    "beautifulsoup4",
-    "fastapi",
-    "flask",
-    "mccole",
-    "pandas",
-    "psutil",
-    "requests",
-    "requests_toolbelt",
-    "uvicorn[standard]"
+    "linkchecker",
+    "mccole"
 ]
 
 [tool.mccole]
@@ -27,11 +20,6 @@ skips = [
     "*.text",
     "extras/**",
     "old/**",
-    "uv.lock"
+    "uv.lock",
+    "Dockerfile"
 ]
-
-[tool.mccole.renames]
-"README.md" = ""
-"CODE_OF_CONDUCT.md" = "conduct"
-"CONTRIBUTING.md" = "contrib"
-"LICENSE.md" = "license"

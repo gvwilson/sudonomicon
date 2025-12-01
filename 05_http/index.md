@@ -28,7 +28,7 @@ Start where you are, use what you have, help who you can.
 
 -   Figure shows what happened
 
-<figure id="http_lifecycle">
+<figure id="f:http_lifecycle">
   <img src="http_lifecycle.svg" alt="HTTP request/response lifecycle"/>
   <figcaption>Figure 1: Lifecycle of an HTTP request and response</figcaption>
 </figure>
@@ -173,7 +173,7 @@ body as JSON:
     -   A list with N dictionaries, all with the same keys?
     -   A dictionary with column names and lists of values, all the same length?
 
-<figure id="http_json_tables">
+<figure id="f:http_json_tables">
   <img src="http_json_tables.svg" alt="Three ways to represent tables as JSON"/>
   <figcaption>Figure 2: Representing tables as JSON</figcaption>
 </figure>
