@@ -36,7 +36,7 @@ Start where you are, use what you have, help who you can.
 </figure>
 
 -   Open a connection to the server
--   Send an [HTTP request](g:http_request) for the file we want
+-   Send an HTTP request for the file we want
 -   Server creates a [response](g:http_response) that includes the contents of the file
 -   Sends it back
 -   `requests` parses the response and creates a Python object for us

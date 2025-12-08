@@ -40,6 +40,7 @@
 <main>
 <h1>Virtualization</h1>
 <ul>
+<li>FIXME</li>
 <li>See [<a href="../bibliography/#Stoneman2020">Stoneman2020</a>]</li>
 </ul>
 <h2>Virtual Environments</h2>
@@ -89,8 +90,10 @@ if __name__ == '__main__':
 <li>The <code>python</code> in the virtual environment' <code>bin</code> directory
     knows to look in that environment's <code>site-packages</code> directory</li>
 </ul>
-<h2 class="exercise">Exercises</h2>
+<section class="exercise">
+<h2>Exercise: Substitution</h2>
 <p>What is the <code>re.sub</code> call in the <code>faker</code> script doing and why?</p>
+</section>
 <h2 class="aside">Limits of Virtual Environments</h2>
 <ul>
 <li><code>conda</code> (and equivalents like <code>python -m venv</code>) work for Python</li>
@@ -434,7 +437,7 @@ c06d47d8275d   24 hours ago   RUN /bin/sh -c apt install python3 -y # buil…   
 &lt;missing&gt;      3 weeks ago    /bin/sh -c #(nop)  ARG RELEASE                  0B
 </code></pre>
 <ul>
-<li>Docker images are built in <a href="../glossary/#docker_layer">layers</a></li>
+<li>Docker images are built in layers</li>
 <li>Layers can be shared between images to reduce disk space</li>
 </ul>
 <pre class=""><code data-file="docker_system_df.text">$ docker system df
@@ -533,7 +536,8 @@ proof that the script was copied
 <li>So put things that change more frequently (like your scripts)
     <em>after</em> things that change less frequently (like Linux and Python)</li>
 </ul>
-<h2 class="exercise">Exericse</h2>
+<section class="exercise">
+<h2>Exericse: Playing with Docker</h2>
 <ol>
 <li>
 <p>Create a Dockerfile that installs Git
@@ -546,6 +550,7 @@ proof that the script was copied
     When would you use the latter instead of the former?</p>
 </li>
 </ol>
+</section>
 <h2>Sharing Files</h2>
 <ul>
 <li>Containers exist to provide isolation…</li>

@@ -1,6 +1,7 @@
 # Virtualization
 
--   See [[Stoneman2020](b:Stoneman2020)]
+-   FIXME
+-   See [[](b:Stoneman2020)]
 
 ## Virtual Environments
 
@@ -54,9 +55,13 @@ if __name__ == '__main__':
 -   The `python` in the virtual environment' `bin` directory
     knows to look in that environment's `site-packages` directory
 
-## Exercises {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exercise: Substitution
 
 What is the `re.sub` call in the `faker` script doing and why?
+
+</section>
 
 ## Limits of Virtual Environments {: .aside}
 
@@ -425,7 +430,7 @@ c06d47d8275d   24 hours ago   RUN /bin/sh -c apt install python3 -y # buil…   
 <missing>      3 weeks ago    /bin/sh -c #(nop)  ARG RELEASE                  0B
 ```
 
--   Docker images are built in [layers](g:docker_layer)
+-   Docker images are built in layers
 -   Layers can be shared between images to reduce disk space
 
 ```{data-file="docker_system_df.text"}
@@ -531,7 +536,9 @@ proof that the script was copied
 -   So put things that change more frequently (like your scripts)
     *after* things that change less frequently (like Linux and Python)
 
-## Exericse {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exericse: Playing with Docker
 
 1.  Create a Dockerfile that installs Git
     and uses it to clone a repository containing a Python script
@@ -540,6 +547,8 @@ proof that the script was copied
 
 1.  What is the difference between `CMD` and `ENTRYPOINT` in Dockerfiles?
     When would you use the latter instead of the former?
+
+</section>
 
 ## Sharing Files
 

@@ -33,12 +33,16 @@ ps -a -l
 -   Use `ps -a -x` to see (almost) all processes running on computer
     -   `ps -a -x | wc` tells me there are 655 processes running on my laptop right now
 
-## Exercise {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exercise: Watching Processes
 
 1.  What does the `top` command do?
     What does `top -o cpu` do?
 
 1.  What does the `pgrep` command do?
+
+</section>
 
 ## Parent and Child Processes
 

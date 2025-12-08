@@ -244,7 +244,7 @@ except OSError as exc:
     -   How many references there are to a file in the filesystem
 -   Can create more links to an existing file
     -   What we think of as "files" are bookkeeping entries in the filesystem that refer to inodes
--   Use the `ln` command to create a [hard link](g:link_hard)
+-   Use the `ln` command to create a hard link
     -   Syntax is like `mv`: existing first, then new name
 
 ```{data-file="hard_link.text"}

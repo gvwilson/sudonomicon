@@ -64,11 +64,8 @@ We do *not* expect novices with only basic Python and Unix experience to be able
 
 Our thanks to:
 
-- Stefan Arentz
-- Julia Evans
-- Robert Kern
-- Matt Panaro
-- Jean-Marc Saffroy
+-   Stefan Arentz, Julia Evans, Robert Kern, Matt Panaro, and Jean-Marc Saffroy for feedback.
+-   Alex Gold for [[](b:Gold2024)]
 
 <p class="center">
   <em>
