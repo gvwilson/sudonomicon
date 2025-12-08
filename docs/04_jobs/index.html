@@ -40,12 +40,13 @@
 <main>
 <h1>Running Jobs</h1>
 <ul>
+<li>FIXME</li>
 <li>Computers don't get bored, so get them to do boring things</li>
 </ul>
 <h2>Watching a Command</h2>
 <ul>
 <li>The <code>watch</code> command runs a command periodically and displays result<ul>
-<li>Hard to show output statically…</li>
+<li>Hard to show output statically</li>
 </ul>
 </li>
 </ul>
@@ -105,14 +106,14 @@ Mon Apr 22 16:11:53 EDT 2024
 <h2>Git Hooks</h2>
 <ul>
 <li>Git stores repository data in <code>.git</code></li>
-<li>Contains a directory called <code>hooks</code></li>
+<li>Contains a subdirectory called <code>hooks</code></li>
 <li>Git automatically runs programs it finds there at particular times<ul>
 <li>E.g., if there is a program called <code>pre-commit</code>, Git runs it before each commit takes place</li>
 </ul>
 </li>
-<li>What happens next depends on the program's exit <a href="../glossary/#exit_status">exit status</a><ul>
-<li>0: no problems</li>
-<li>anything else: an error code of some sort</li>
+<li>What happens next depends on the program's exit status<ul>
+<li>Reminder: 0 means "no problem", anything else is an error of some sort</li>
+<li>Get the exit status using <code>$?</code></li>
 </ul>
 </li>
 </ul>

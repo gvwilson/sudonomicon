@@ -1,11 +1,12 @@
 # Running Jobs
 
+-   FIXME
 -   Computers don't get bored, so get them to do boring things
 
 ## Watching a Command
 
 -   The `watch` command runs a command periodically and displays result
-    -   Hard to show output statically…
+    -   Hard to show output statically
 
 ```{data-file="watch_date.text"}
 $ watch -n 5 date
@@ -60,12 +61,12 @@ $ fswatch -l 1 -x Created -x Removed /tmp
 ## Git Hooks
 
 -   Git stores repository data in `.git`
--   Contains a directory called `hooks`
+-   Contains a subdirectory called `hooks`
 -   Git automatically runs programs it finds there at particular times
     -   E.g., if there is a program called `pre-commit`, Git runs it before each commit takes place
--   What happens next depends on the program's exit [exit status](g:exit_status)
-    -   0: no problems
-    -   anything else: an error code of some sort
+-   What happens next depends on the program's exit status
+    -   Reminder: 0 means "no problem", anything else is an error of some sort
+    -   Get the exit status using `$?`
 
 ```{data-file="pre_commit_always_fail.text"}
 # Make a place for this example.

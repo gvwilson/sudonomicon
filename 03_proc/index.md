@@ -112,6 +112,13 @@ use Ctrl-C three times
 
 -   `^C` shows where user typed Ctrl-C
 
+## Exit Status
+
+-   FIXME: explain [exit status](g:exit_status)
+    -   0: nothing went wrong
+    -   non-zero: error code
+    -   Always confusing because we think of 0 as false
+
 ## Background Processes
 
 -   Can run a process in the [background](g:background_process)
