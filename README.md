@@ -39,8 +39,9 @@ We do *not* expect novices with only basic Python and Unix experience to be able
 1.  [Running Jobs](@/04_jobs/): how to do work on demand
 1.  [HTTP](@/05_http/): how to move data from place to place
 1.  [Authentication](@/06_auth/): how to tell who someone is
-1.  [Virtualization](@/07_virt/): how and why to pretend you have lots of computers
-1.  [Conclusion](@/08_finale/): where we've been and what comes next
+1.  [Packages and Virtual Environments](@/07_venv/): managing what you've installed
+1.  [Virtualization](@/08_docker/): how and why to pretend you have lots of computers
+1.  [Conclusion](@/09_finale/): where we've been and what comes next
 
 </div>
 
