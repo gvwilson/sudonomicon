@@ -1,12 +1,17 @@
 [apt]: https://en.wikipedia.org/wiki/APT_(software)
+[bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell)
+[conda]: https://docs.conda.io/
 [crontab-guru]: https://crontab.guru/
 [docker]: https://www.docker.com/
 [docker_hub]: https://hub.docker.com/
+[fish]: https://en.wikipedia.org/wiki/Fish_(Unix_shell)
 [golang]: https://go.dev/
 [http_status_codes]: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 [netcat]: https://en.wikipedia.org/wiki/Netcat
-[pandas]: https://pandas.pydata.org/
+[nushell]: https://www.nushell.sh/
+[nvm]: https://github.com/nvm-sh/nvm
 [polars]: https://pola.rs/
+[powershell]: https://en.wikipedia.org/wiki/PowerShell
 [py_http_server]: https://docs.python.org/3/library/http.server.html
 [py_urllib_parse]: https://docs.python.org/3/library/urllib.parse.html
 [requests]: https://requests.readthedocs.io/
@@ -14,3 +19,4 @@
 [sc_shell]: https://swcarpentry.github.io/shell-novice/
 [t3]: https://teachtogether.tech/
 [uv]: https://docs.astral.sh/uv/
+[zsh]: https://en.wikipedia.org/wiki/Z_shell

@@ -39,6 +39,7 @@ We do *not* expect novices with only basic Python and Unix experience to be able
 1.  [Running Jobs](@/jobs/): how to do work on demand
 1.  [HTTP](@/http/): how to move data from place to place
 1.  [Authentication](@/auth/): how to tell who someone is
+1.  [Shell Variables](@/var/): what the shell remembers
 1.  [Packages and Virtual Environments](@/packenv/): managing what you've installed
 1.  [Virtualization](@/dock/): how and why to pretend you have lots of computers
 1.  [Conclusion](@/finale/): where we've been and what comes next

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shell Variables</title>
+<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<nav>
+<a href="../">Home</a>
+      ·
+      <span class="dropdown">
+<a href="#">Lessons</a>
+<span class="dropdown-content" id="nav-lessons">
+<a href="../intro/">Introduction</a>
+<a href="../fs/">The Filesystem</a>
+<a href="../proc/">Processes</a>
+<a href="../jobs/">Running Jobs</a>
+<a href="../http/">HTTP</a>
+<a href="../auth/">Authentication</a>
+<a href="../var/">Shell Variables</a>
+<a href="../packenv/">Packages and Virtual Environments</a>
+<a href="../dock/">Virtualization</a>
+<a href="../finale/">Conclusion</a>
+</span>
+</span>
+      ·
+      <span class="dropdown">
+<a href="#">Appendices</a>
+<span class="dropdown-content" id="nav-appendices">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../contributing/">Contributing</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
+</span>
+</span>
+</nav>
+<main>
+<h1>Shell Variables</h1>
+<h2>Operating System vs. Shell</h2>
+<ul>
+<li>Operating system (OS) manages your hardware<ul>
+<li>Provides a set of system calls
+    to make different machines look the same to user-level programs</li>
+</ul>
+</li>
+<li>Command shell (or just "shell") is a text UI for interacting with the operating system<ul>
+<li>And with user-level programs</li>
+</ul>
+</li>
+<li>There are many different shells for Unix and Windows<ul>
+<li><a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">Bash</a> and <a href="https://en.wikipedia.org/wiki/Z_shell">Zsh</a> are compatible with the POSIX standard</li>
+<li><a href="https://en.wikipedia.org/wiki/Fish_(Unix_shell)">Fish</a> is nicer, but is not</li>
+<li><a href="https://www.nushell.sh/">Nushell</a> is even stranger</li>
+<li><a href="https://en.wikipedia.org/wiki/PowerShell">PowerShell</a> on Windows (and Unix) has a lot of nice features too</li>
+</ul>
+</li>
+<li>We use Bash in this tutorial but will discuss Nushell later</li>
+</ul>
+<h2>Shell Variables</h2>
+<ul>
+<li>The shell is a program and programs have variables</li>
+<li>Create or change with <code><em>name</em>=<em>value</em></code></li>
+<li><a href="../glossary/#shell_var">Shell variable</a> stays in the process that created it<ul>
+<li>E.g., that particular running copy of the shell</li>
+</ul>
+</li>
+<li>Use <code>$<em>name</em></code> to get value<ul>
+<li><code>$</code> prefix because people type file and directory names more often</li>
+</ul>
+</li>
+</ul>
+<pre class=""><code data-file="shell_var_outer.sh">WINDOW="neighbor"
+echo "outer: window is ${WINDOW}"
+bash src/shell_var_inner.sh
+</code></pre>
+<pre class=""><code data-file="shell_var_inner.sh">echo "inner: window is ${window}"
+</code></pre>
+<pre class=""><code data-file="shell_var_outer.out">outer: window is neighbor
+inner: window is 
+</code></pre>
+<ul>
+<li>Note: variables usually written in upper case to distinguish them from filenames<ul>
+<li>So use underscores as separators</li>
+</ul>
+</li>
+</ul>
+<section class="exercise">
+<h2>Exercise: Single Quotes</h2>
+<p>What happens if you modify the scripts shown above
+to use single quotes instead of double quotes?</p>
+</section>
+<h2>Environment Variables</h2>
+<ul>
+<li><a href="../glossary/#env_var">Environment variable</a> is inherited by new processes</li>
+<li>Use <code>export <em>name</em>=<em>value</em></code></li>
+</ul>
+<pre class=""><code data-file="env_var_outer.sh">WINDOW="neighbor"
+export THRESHOLD=0.5
+echo "outer: window is ${WINDOW} and threshold is ${THRESHOLD}"
+bash src/env_var_inner.sh
+</code></pre>
+<pre class=""><code data-file="env_var_inner.sh">echo "inner: window is ${window} and threshold is ${threshold}"
+</code></pre>
+<pre class=""><code data-file="env_var_outer.out">outer: window is neighbor and threshold is 0.5
+inner: window is  and threshold is 
+</code></pre>
+<section class="exercise">
+<h2>Exercise: Setting in Children</h2>
+<p>If a child process sets shell or environment variables,
+are they visible in the parent once the child finishes executing?</p>
+</section>
+<h2>Environment Variables in Programs</h2>
+<ul>
+<li>Since environment variables are inherited by child processes,
+    they are inherited by all programs run from the shell that has them</li>
+</ul>
+<pre class=""><code data-file="env_var_py.sh">WINDOW="neighbor"
+export THRESHOLD=0.5
+echo "outer: window is ${WINDOW} and threshold is ${THRESHOLD}"
+python src/env_var_py.py
+</code></pre>
+<pre class=""><code data-file="env_var_py.py">import os
+
+window = os.getenv("WINDOW", default="not set")
+threshold = os.getenv("THRESHOLD", default="not set")
+print(f"inner: window is {window} and threshold is {threshold}")
+</code></pre>
+<pre class=""><code data-file="env_var_py.out">outer: window is neighbor and threshold is 0.5
+inner: window is not set and threshold is 0.5
+</code></pre>
+<h2>Inspecting Variables</h2>
+<ul>
+<li><code>set</code> on its own lists variables<ul>
+<li>And functions, because yes, you can create those in the shell</li>
+<li>But please don't: if you need that, write a Python script</li>
+</ul>
+</li>
+<li><code>env</code> shows all environment variables</li>
+</ul>
+<pre class=""><code data-file="show_env_vars.sh">env | cut -d = -f 1 | sort | head -n 10
+</code></pre>
+<pre class=""><code data-file="show_env_vars.out">BASH_SILENCE_DEPRECATION_WARNING
+CONDA_DEFAULT_ENV
+CONDA_EXE
+CONDA_PREFIX
+CONDA_PREFIX_1
+CONDA_PROMPT_MODIFIER
+CONDA_PYTHON_EXE
+CONDA_SHLVL
+EDITOR
+GEM_HOME
+</code></pre>
+<ul>
+<li>Many tools rely on variables to manage configuration<ul>
+<li><a href="https://github.com/nvm-sh/nvm">NVM</a> defines 4, <a href="https://docs.conda.io/">Conda</a> defines 8</li>
+<li>No guarantee that their names don't [%g name_collision "collide" %]</li>
+</ul>
+</li>
+</ul>
+<section class="exercise">
+<h2>Exercise: Python vs. the Shell</h2>
+<p>The <code>os.environ</code> variable in Python's <code>os</code> module
+is an easy way to get all of the process's environment variables.
+Compare it to what <code>env</code> shows.</p>
+<ol>
+<li>
+<p>Are there differences?</p>
+</li>
+<li>
+<p>If so, what are they and why do they exist?</p>
+</li>
+</ol>
+</section>
+<h2>Important Environment Variables</h2>
+<ul>
+<li>37 environment variables in my current shell</li>
+<li>Most important are shown in [%t var_common %]</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Typical Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EDITOR</code></td>
+<td><code>nano</code></td>
+<td>default text editor</td>
+</tr>
+<tr>
+<td><code>HOME</code></td>
+<td><code>/Users/tut</code></td>
+<td>user's home directory</td>
+</tr>
+<tr>
+<td><code>LANG</code></td>
+<td><code>en_CA.UTF-8</code></td>
+<td>user's preferred (human) language</td>
+</tr>
+<tr>
+<td><code>PATH</code></td>
+<td>see below</td>
+<td>search path for programs</td>
+</tr>
+<tr>
+<td><code>PWD</code></td>
+<td><code>/Users/tut/sys</code></td>
+<td>present working directory</td>
+</tr>
+<tr>
+<td><code>SHELL</code></td>
+<td><code>/bin/bash</code></td>
+<td>user's default shell</td>
+</tr>
+<tr>
+<td><code>TERM</code></td>
+<td><code>xterm-256color</code></td>
+<td>type of terminal</td>
+</tr>
+<tr>
+<td><code>TMPDIR</code></td>
+<td><code>/var/tmp</code></td>
+<td>storage for temporary files</td>
+</tr>
+<tr>
+<td><code>USER</code></td>
+<td><code>tut</code></td>
+<td>current user's name</td>
+</tr>
+</tbody>
+</table>
+<h2>Search Path</h2>
+<ul>
+<li><code>PATH</code> holds a colon-separated list of directories</li>
+<li>Shell looks in these <em>in order</em> to find commands</li>
+<li>Reading at them all on one line is difficult, so use <code>tr</code> to split</li>
+</ul>
+<pre class=""><code data-file="show_path.sh">echo $PATH | tr : '\n'
+</code></pre>
+<pre class=""><code data-file="show_path.out">/Users/tut/google-cloud-sdk/bin
+/Users/tut/conda/envs/sys/bin
+/Users/tut/conda/condabin
+/Users/tut/.nvm/versions/node/v20.8.0/bin
+/Users/tut/bin
+/Applications/Postgres.app/Contents/Versions/14/bin
+/Users/tut/go/bin
+/usr/local/bin
+/System/Cryptexes/App/usr/bin
+/usr/bin
+/bin
+/usr/sbin
+/sbin
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
+/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+/Library/Apple/usr/bin
+/Library/TeX/texbin
+/usr/local/bin
+</code></pre>
+<ul>
+<li>Notice <code>/Users/tut/bin</code></li>
+<li>Common to have a <code>~/bin</code> directory with the user's own utilities</li>
+</ul>
+<h2>Adding to the Search Path</h2>
+<ul>
+<li>Shell variables (of both kinds) are just strings</li>
+<li>So add to search path by redefining the variable<ul>
+<li>New directory at the from</li>
+<li>Entire old value at the back</li>
+</ul>
+</li>
+</ul>
+<pre class=""><code data-file="change_path.sh">export PATH="/tmp/bin:${PATH}"
+echo $PATH | tr : '\n' | head -n 5
+</code></pre>
+<pre class=""><code data-file="change_path.out">/tmp/bin
+/Users/gregwilson/google-cloud-sdk/bin
+/Users/gregwilson/conda/envs/sys/bin
+/Users/gregwilson/conda/condabin
+/Users/gregwilson/.gem/ruby/3.1.2/bin
+</code></pre>
+<section class="exercise">
+<h2>Exercise: Shortening the Path</h2>
+<p>Removing a directory from <code>PATH</code> is harder than adding one.
+Write a shell script that:</p>
+<ol>
+<li>Splits <code>PATH</code> on colons to put one entry on each line.</li>
+<li>Uses <code>grep</code> to remove the undesired line.</li>
+<li>Uses <code>paste -s -d :</code> to recombine the lines.</li>
+<li>Uses command interpolation to assign the result back to <code>PATH</code>.</li>
+</ol>
+<p>This exercise may remind you why
+complicated operations should be done in Python rather than in the shell.</p>
+</section>
+<h2>Startup Files</h2>
+<ul>
+<li>Bash shell runs commands in <code>~/.bash_profile</code> for login shells</li>
+<li>Bash shell runs commands in <code>~/.bashrc</code> for interactive shells</li>
+<li>Yes, the terminology is confusing</li>
+<li>Common to have <code>~/.bash_profile</code> [%g source_shell "source" %] <code>~/.bashrc</code><ul>
+<li>I.e., run those commands in the current shell</li>
+</ul>
+</li>
+</ul>
+<pre class=""><code data-file="source_bashrc.sh">source $HOME/.bashrc
+</code></pre>
+<h2 class="aside">Command Interpolation</h2>
+<ul>
+<li>Can use <code>outer $(<em>inner</em>)</code> to run <code>inner</code> and use its output as arguments to <code>outer</code></li>
+<li>Long-winded way to count lines in some text files</li>
+</ul>
+<pre class=""><code data-file="interpolate.sh">wc -l $(ls src/*.text)
+</code></pre>
+<pre class=""><code data-file="interpolate.out">      12 src/ctrl_z_background.text
+      12 src/kill_int.text
+       6 src/kill_process.text
+      30 total
+</code></pre>
+</main>
+<footer>
+<div class="row">
+<div class="col-3 left">
+	  ⇐ <a href="../auth/">Authentication</a>
+</div>
+<div class="col-6 center">
+<a href="../"></a>
+	  © 2025
+	  <a href="../#acknowledgments">the authors</a>
+</div>
+<div class="col-3 right">
+<a href="../packenv/">Packages and Virtual Environments</a> ⇒
+	</div>
+</div>
+</footer>
+</body>
+</html>
