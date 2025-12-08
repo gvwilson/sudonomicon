@@ -81,5 +81,4 @@ Our thanks to:
 </p>
 
 [site]: https://gvwilson.github.io/sudonomicon/
-[t3]: https://teachtogether.tech/
 [wilson-greg]: https://third-bit.com/

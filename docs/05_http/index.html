@@ -15,34 +15,37 @@
       <span class="dropdown">
 <a href="#">Lessons</a>
 <span class="dropdown-content" id="nav-lessons">
-<a href="('01_intro', 'Introduction')"></a>
-<a href="('02_fs', 'The Filesystem')"></a>
-<a href="('03_proc', 'Processes')"></a>
-<a href="('04_jobs', 'Running Jobs')"></a>
-<a href="('05_http', 'HTTP')"></a>
-<a href="('06_auth', 'Authentication')"></a>
-<a href="('07_virt', 'Virtualization')"></a>
-<a href="('08_finale', 'Conclusion')"></a>
+<a href="../01_intro/">Introduction</a>
+<a href="../02_fs/">The Filesystem</a>
+<a href="../03_proc/">Processes</a>
+<a href="../04_jobs/">Running Jobs</a>
+<a href="../05_http/">HTTP</a>
+<a href="../06_auth/">Authentication</a>
+<a href="../07_virt/">Virtualization</a>
+<a href="../08_finale/">Conclusion</a>
 </span>
 </span>
       ·
       <span class="dropdown">
-<a href="#">Extras</a>
-<span class="dropdown-content" id="nav-extras">
-<a href="('license', 'License')"></a>
-<a href="('conduct', 'Code of Conduct')"></a>
-<a href="('contributing', 'Contributing')"></a>
-<a href="('bibliography', 'Bibliography')"></a>
-<a href="('glossary', 'Glossary')"></a>
+<a href="#">Appendices</a>
+<span class="dropdown-content" id="nav-appendices">
+<a href="../license/">License</a>
+<a href="../conduct/">Code of Conduct</a>
+<a href="../contributing/">Contributing</a>
+<a href="../bibliography/">Bibliography</a>
+<a href="../glossary/">Glossary</a>
 </span>
 </span>
 </nav>
 <main>
 <h1>HTTP</h1>
+<ul>
+<li>FIXME</li>
+</ul>
 <h2>Start with Something Simple</h2>
 <pre class=""><code data-file="get_remote.py">import requests
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body:\n{response.text}")
@@ -83,12 +86,12 @@ Start where you are, use what you have, help who you can.
 <pre class=""><code data-file="dump_structure.py">import requests
 from requests_toolbelt.utils import dump
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
 response = requests.get(url)
 data = dump.dump_all(response)
 print(str(data, "utf-8"))
 </code></pre>
-<pre class=""><code data-file="dump_structure.out">GET /safety-tutorial/site/motto.txt HTTP/1.1
+<pre class=""><code data-file="dump_structure.out">GET /sudonomicon/static/motto.txt HTTP/1.1
 Host: gvwilson.github.io
 User-Agent: python-requests/2.31.0
 Accept-Encoding: gzip, deflate
@@ -110,7 +113,7 @@ Connection: keep-alive
 <h2>Response Structure</h2>
 <pre class=""><code data-file="response_headers.py">import requests
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
 response = requests.get(url)
 for key, value in response.headers.items():
     print(f"{key}: {value}")
@@ -147,7 +150,8 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
 </li>
 <li>From now on we will only show interesting headers</li>
 </ul>
-<h2 class="exercise">Exercise</h2>
+<section class="exercise">
+<h2>Exercise: HTTP Requests</h2>
 <ol>
 <li>
 <p>Add header called <code>Studying</code> with the value <code>safety</code>
@@ -159,6 +163,7 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
 <p>What is the difference between the <code>Content-Type</code> and the <code>Content-Encoding</code> headers?</p>
 </li>
 </ol>
+</section>
 <h2>When Things Go Wrong</h2>
 <pre class=""><code data-file="get_404.py">import requests
 
@@ -178,7 +183,8 @@ body length: 9115
 </ul>
 </li>
 </ul>
-<h2 class="exercise">Exercise</h2>
+<section class="exercise">
+<h2>Exercise: Status Codes</h2>
 <p>Look at <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">this list of HTTP status codes</a>.</p>
 <ol>
 <li>
@@ -191,10 +197,11 @@ body length: 9115
 <p>Under what circumstances would you expect to get a response whose status code is 505?</p>
 </li>
 </ol>
+</section>
 <h2>Getting JSON</h2>
 <pre class=""><code data-file="get_json.py">import requests
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.json"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.json"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body as text: {len(response.text)} bytes")
@@ -231,8 +238,7 @@ body as JSON:
 <ul>
 <li>Pushing files to GitHub so that we can use them is annoying</li>
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
-<li>Use Python's <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module
-    to run a <a href="../glossary/#local_server">local server</a></li>
+<li>Use Python's <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module to run a <a href="../glossary/#local_server">local server</a></li>
 </ul>
 <pre class=""><code data-file="local_server.sh">python -m http.server -d site
 </code></pre>
@@ -431,15 +437,17 @@ Start where you are, use what you have, help who you can.
 <li>We shouldn't be able to see files outside the sandbox</li>
 <li>But if someone doesn't strip out the <code>..</code> characters, users can escape</li>
 </ul>
-<h2 class="exercise">Exercise</h2>
-<p>The shortcut <code>~<em>username</em></code> means
-"the specified user's home directory" in the shell,
+<section class="exercise">
+<h2>Exercise: Fetching From Home</h2>
+<p>The shortcut <code>~<em>username</em></code> (tilde)
+means "the specified user's home directory" in the shell,
 while <code>~</code> on its own means "the current user's home directory".
 Create a file called <code>test.txt</code> in your home directory
 and then try to get <code>~/test.txt</code> using your browser,
 <code>requests</code>,
 and <code>netcat</code>.
 What happens with each and why?</p>
+</section>
 <h2>A Safer File Server</h2>
 <pre class=""><code data-file="file_server_safe.py:handle_file">    def handle_file(self, given_path, full_path):
         try:
@@ -461,12 +469,16 @@ What happens with each and why?</p>
 -   And fail if it isn't
     -   Using our own `ServerException` guarantees that all errors are handled the same way
 
-## Exercise {: .exercise}
+&lt;section class="exercise" markdown="1"&gt;
+
+## Exercise: Cleaning Up Code
 
 [Refactor](g:refactor) the `do_GET` and `handle_file` methods in `RequestHandler`
 so that all checks are in one place.
 Does this make the code easier to understand overall?
 Do you think making code easier to understand also makes it safer?
+
+&lt;/section&gt;
 
 ## Serving Data
 
@@ -536,11 +548,11 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 <li>Want <code>http://localhost:8000/?year=2021&amp;species=rebnut</code> to select red-breasted nuthatches in 2021</li>
 <li>Put slicing in a method of its own</li>
 </ul>
-<p><code>{data-file="bird_server_slice.py:get"}
-    def do_GET(self):
+<pre class=""><code data-file="bird_server_slice.py:get">    def do_GET(self):
         result = self.filter_data()
         as_json = result.to_json(orient="records")
-        self.send_content(as_json, HTTPStatus.OK)</code></p>
+        self.send_content(as_json, HTTPStatus.OK)
+</code></pre>
 <ul>
 <li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters<ul>
 <li>(Key, list) dictionary</li>
@@ -559,7 +571,8 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
             year = int(params["year"][0])
             result = result[result["year"] == year]
         return result</code></p>
-<h2 class="exercise">Exercise</h2>
+<section class="exercise">
+<h2>Exercise: Serving Data</h2>
 <ol>
 <li>
 <p>Write a function that takes a URL as input
@@ -582,11 +595,22 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
     Explain why the server should return JSON rather than HTML in the case of an error.</p>
 </li>
 </ol>
+</section>
 </main>
 <footer>
+<div class="row">
+<div class="col-3 left">
+	  ⇐ <a href="../04_jobs/">Running Jobs</a>
+</div>
+<div class="col-6 center">
 <a href="../"></a>
-      copyright © 2025
-      <a href="../#acknowledgments">the authors</a>
+	  © 2025
+	  <a href="../#acknowledgments">the authors</a>
+</div>
+<div class="col-3 right">
+<a href="../06_auth/">Authentication</a> ⇒
+	</div>
+</div>
 </footer>
 </body>
 </html>

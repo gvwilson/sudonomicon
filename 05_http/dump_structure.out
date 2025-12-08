@@ -1,4 +1,4 @@
-GET /safety-tutorial/site/motto.txt HTTP/1.1
+GET /sudonomicon/site/motto.txt HTTP/1.1
 Host: gvwilson.github.io
 User-Agent: python-requests/2.31.0
 Accept-Encoding: gzip, deflate

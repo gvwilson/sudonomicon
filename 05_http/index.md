@@ -1,11 +1,13 @@
 # HTTP
 
+-   FIXME
+
 ## Start with Something Simple
 
 ```{data-file="get_remote.py"}
 import requests
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body:\n{response.text}")
@@ -45,13 +47,13 @@ Start where you are, use what you have, help who you can.
 import requests
 from requests_toolbelt.utils import dump
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
 response = requests.get(url)
 data = dump.dump_all(response)
 print(str(data, "utf-8"))
 ```
 ```{data-file="dump_structure.out"}
-GET /safety-tutorial/site/motto.txt HTTP/1.1
+GET /sudonomicon/static/motto.txt HTTP/1.1
 Host: gvwilson.github.io
 User-Agent: python-requests/2.31.0
 Accept-Encoding: gzip, deflate
@@ -71,7 +73,7 @@ Connection: keep-alive
 ```{data-file="response_headers.py"}
 import requests
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.txt"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
 response = requests.get(url)
 for key, value in response.headers.items():
     print(f"{key}: {value}")
@@ -105,7 +107,9 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
     -   `Content-Type`: [MIME type](g:mime_type) of data (e.g., `text/plain`)
 -   From now on we will only show interesting headers
 
-## Exercise {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exercise: HTTP Requests
 
 1.  Add header called `Studying` with the value `safety`
     to the `requests` script shown above.
@@ -113,6 +117,8 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
     Should it?
 
 1.  What is the difference between the `Content-Type` and the `Content-Encoding` headers?
+
+</section>
 
 ## When Things Go Wrong
 
@@ -134,7 +140,9 @@ body length: 9115
 -   The page contains human-readable error messages
     -   But we have to know page format to pull them out
 
-## Exercise {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exercise: Status Codes
 
 Look at [this list of HTTP status codes][http_status_codes].
 
@@ -144,12 +152,14 @@ Look at [this list of HTTP status codes][http_status_codes].
 
 3.  Under what circumstances would you expect to get a response whose status code is 505?
 
+</section>
+
 ## Getting JSON
 
 ```{data-file="get_json.py"}
 import requests
 
-url = "https://gvwilson.github.io/sudonomicon/site/motto.json"
+url = "https://gvwilson.github.io/sudonomicon/static/motto.json"
 response = requests.get(url)
 print(f"status code: {response.status_code}")
 print(f"body as text: {len(response.text)} bytes")
@@ -182,8 +192,7 @@ body as JSON:
 
 -   Pushing files to GitHub so that we can use them is annoying
 -   And we want to show how to make things *wrong* so that we can then make them *right*
--   Use Python's [`http.server`][py_http_server] module
-    to run a [local server](g:local_server)
+-   Use Python's [`http.server`][py_http_server] module to run a [local server](g:local_server)
 
 ```{data-file="local_server.sh"}
 python -m http.server -d site
@@ -398,16 +407,20 @@ Start where you are, use what you have, help who you can.
 -   We shouldn't be able to see files outside the sandbox
 -   But if someone doesn't strip out the `..` characters, users can escape
 
-## Exercise {: .exercise}
+<section class="exercise" markdown="1">
 
-The shortcut <code>~<em>username</em></code> means
-"the specified user's home directory" in the shell,
+## Exercise: Fetching From Home
+
+The shortcut <code>~<em>username</em></code> (tilde)
+means "the specified user's home directory" in the shell,
 while `~` on its own means "the current user's home directory".
 Create a file called `test.txt` in your home directory
 and then try to get `~/test.txt` using your browser,
 `requests`,
 and `netcat`.
 What happens with each and why?
+
+</section>
 
 ## A Safer File Server
 
@@ -432,12 +445,16 @@ What happens with each and why?
 -   And fail if it isn't
     -   Using our own `ServerException` guarantees that all errors are handled the same way
 
-## Exercise {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exercise: Cleaning Up Code
 
 [Refactor](g:refactor) the `do_GET` and `handle_file` methods in `RequestHandler`
 so that all checks are in one place.
 Does this make the code easier to understand overall?
 Do you think making code easier to understand also makes it safer?
+
+</section>
 
 ## Serving Data
 
@@ -517,7 +534,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         result = self.filter_data()
         as_json = result.to_json(orient="records")
         self.send_content(as_json, HTTPStatus.OK)
-    ```
+```
 
 -   Use `urlparse` and `parse_qs` from [`urllib.parse`][py_urllib_parse] to get query parameters
     -   (Key, list) dictionary
@@ -536,7 +553,9 @@ class RequestHandler(BaseHTTPRequestHandler):
         return result
     ```
 
-## Exercise {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exercise: Serving Data
 
 1.  Write a function that takes a URL as input
     and returns a dictionary whose keys are the query parameters' names
@@ -554,3 +573,5 @@ class RequestHandler(BaseHTTPRequestHandler):
     `status_code` (set to 400)
     and `error_message` (set to something informative).
     Explain why the server should return JSON rather than HTML in the case of an error.
+
+</section>

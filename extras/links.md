@@ -12,4 +12,5 @@
 [requests]: https://requests.readthedocs.io/
 [ruff]: https://astral.sh/ruff
 [sc_shell]: https://swcarpentry.github.io/shell-novice/
+[t3]: https://teachtogether.tech/
 [uv]: https://docs.astral.sh/uv/
