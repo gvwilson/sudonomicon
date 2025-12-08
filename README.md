@@ -26,11 +26,6 @@ Welcome, thrice welcome, to Unix systems programming.
 
 These lesson notes and examples are for instructors to use as a starting point.
 We do *not* expect novices with only basic Python and Unix experience to be able to learn from this on their own.
-As a musical analogy,
-these notes are the chord changes and melody;
-we expect instructors to create an arrangement and/or improvise over the material
-when delivering it.
-Please see [*Teaching Tech Together*][t3] for background.
 
 </div>
 

@@ -39,11 +39,14 @@
 </nav>
 <main>
 <h1>Processes</h1>
+<ul>
+<li>FIXME</li>
+</ul>
 <h2>Program vs. Process</h2>
 <ul>
 <li>A program is a set of instructions for a computer</li>
 <li>A <a href="../glossary/#process">process</a> is a running instance of a program<ul>
-<li>Code plus variables in memory plus open files plus some IDs</li>
+<li>Code plus variables in memory plus open files plus…</li>
 </ul>
 </li>
 <li>If files are nouns, processes are verbs</li>
@@ -92,21 +95,30 @@
 <li>Except the first, which is started automatically when the operating system boots up</li>
 </ul>
 </li>
-<li>Refer to <a href="../glossary/#child_process">child process</a> and <a href="../glossary/#parent_process">parent process</a></li>
+<li>Terminology: <a href="../glossary/#child_process">child process</a> and <a href="../glossary/#parent_process">parent process</a></li>
 <li><code>echo $$</code> shows <a href="../glossary/#process_id">process ID</a> of current process<ul>
 <li><code>$$</code> shortcut for current process's ID because it's used so often</li>
 </ul>
 </li>
-<li><code>echo $PPID</code> (parent process ID) to get parent</li>
+<li><code>echo $PPID</code> (parent process ID) to get parent<ul>
+<li>Yes, it's inconsistent</li>
+</ul>
+</li>
 <li><code>pstree $$</code> to see <a href="../glossary/#process_tree">process tree</a></li>
 </ul>
+<pre class=""><code data-file="pstree.out">-+= 34628 gvwilson -bash
+ |--= 38255 gvwilson emacs 03_proc/index.md
+ |-+= 38697 gvwilson pstree 34628
+ | \--- 38699 root ps -axwwo user,pid,ppid,pgid,command
+ \--- 38698 gvwilson pbcopy
+</code></pre>
 <h2>Signals</h2>
 <ul>
 <li>Can send a <a href="../glossary/#signal">signal</a> to a process<ul>
 <li>"Something extraordinary happened, please deal with it immediately"</li>
 </ul>
 </li>
-<li>Table shows what happened</li>
+<li>Different codes show names and meanings of some standard signals</li>
 </ul>
 <table>
 <thead>
@@ -199,8 +211,10 @@
 </tbody>
 </table>
 <ul>
-<li>Create a <a href="../glossary/#callback_function">callback function</a>
-    to act as a <a href="../glossary/#signal_handler">signal handler</a></li>
+<li>Create a <a href="../glossary/#callback_function">callback function</a> in Python to handle the signal<ul>
+<li>Unsurprisingly called a <a href="../glossary/#signal_handler">signal handler</a></li>
+</ul>
+</li>
 </ul>
 <pre class=""><code data-file="catch_interrupt.py">import signal
 import sys
@@ -264,6 +278,7 @@ loop finished
 </li>
 <li>Can also start process and then <a href="../glossary/#suspend_process">suspend</a> it with Ctrl-Z<ul>
 <li>Sends <code>SIGSTOP</code> instead of <code>SIGINT</code></li>
+<li>It's up to the receiving program to handle this correctly</li>
 </ul>
 </li>
 <li>Use <code>jobs</code> to see all suspended processes</li>
@@ -287,6 +302,22 @@ loop finished
 <ul>
 <li>Note that input and output are mixed together</li>
 </ul>
+<div class="callout">
+<p>Why bother with backgrounding and foregrounding programs instead of opening another window?</p>
+<ol>
+<li>
+<p>Opening another window is often the better solution,
+    particularly if your fingers know the keyboard shortcuts to cycle between windows.</p>
+</li>
+<li>
+<p>But if you're working on a remote computer,
+    it might be simpler to run several programs simultaneously in the same terminal window.</p>
+</li>
+<li>
+<p>And talking about this is an excuse to introduce some more ideas about processes.</p>
+</li>
+</ol>
+</div>
 <h2>Killing Processes</h2>
 <ul>
 <li>Use <code>kill</code> to send a signal to a process</li>
@@ -322,7 +353,7 @@ KeyboardInterrupt
 <h2>Fork</h2>
 <ul>
 <li><a href="../glossary/#fork_process">Fork</a> creates a duplicate of a process<ul>
-<li>Creator is parent, gets process ID of child as return value</li>
+<li>Creator (parent) gets process ID of child as return value</li>
 <li>Child gets 0 as return value (but has something else as its process ID)</li>
 </ul>
 </li>
@@ -340,7 +371,7 @@ else:
 parent got 41619 is 41618
 child got 0 is 41619
 </code></pre>
-<h2 class="aside">Unpredictability</h2>
+<div class="callout">
 <ul>
 <li>Output shown above comes from running the program interactively</li>
 <li>When run as <code>python fork.py &gt; temp.out</code>, the "starting" line may be duplicated<ul>
@@ -351,7 +382,7 @@ child got 0 is 41619
 <li>In which case both parent and child send it to the operating system to print</li>
 </ul>
 </li>
-<li>OS decides how much to buffer and when to actually display it</li>
+<li>Operating system decides how much to buffer and when to actually display it</li>
 <li>Its decision can be affected by what else it is doing</li>
 <li>So running the same program several times can produce different outputs<ul>
 <li>Because your program is only part of a larger sequence of operations</li>
@@ -360,6 +391,7 @@ child got 0 is 41619
 <li>Dealing with issues like these is
     part of what distinguishes systems programming from "regular" programming</li>
 </ul>
+</div>
 <h2>Flushing I/O</h2>
 <ul>
 <li>Can force OS to do I/O <em>right now</em> by <a href="../glossary/#flush">flushing</a> its buffers</li>
@@ -404,11 +436,13 @@ else:
 parent got 46714 is 46713
 child echoing 0 from 46714
 </code></pre>
-<h2 class="exercise">Exercise</h2>
+<section class="exercise">
+<h2>Exercise: Different Kinds of <code>exec</code></h2>
 <ol>
 <li>What are the differences between <code>os.execl</code>, <code>os.execlp</code>, and <code>os.execv</code>?
     When and why would you use each?</li>
 </ol>
+</section>
 </main>
 <footer>
 <a href="../"></a>

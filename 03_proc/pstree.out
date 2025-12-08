@@ -1,0 +1,5 @@
+-+= 34628 gvwilson -bash
+ |--= 38255 gvwilson emacs 03_proc/index.md
+ |-+= 38697 gvwilson pstree 34628
+ | \--- 38699 root ps -axwwo user,pid,ppid,pgid,command
+ \--- 38698 gvwilson pbcopy

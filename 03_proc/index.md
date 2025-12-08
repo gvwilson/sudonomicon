@@ -1,10 +1,12 @@
 # Processes
 
+-   FIXME
+
 ## Program vs. Process
 
 -   A program is a set of instructions for a computer
 -   A [process](g:process) is a running instance of a program
-    -   Code plus variables in memory plus open files plus some IDs
+    -   Code plus variables in memory plus open files plus…
 -   If files are nouns, processes are verbs
 -   Tools to manage processes were invented when most users only had a single terminal
     -   But are still useful for working with remote/cloud machines
@@ -42,17 +44,26 @@ ps -a -l
 
 -   Every process is created by another process
     -   Except the first, which is started automatically when the operating system boots up
--   Refer to [child process](g:child_process) and [parent process](g:parent_process)
+-   Terminology: [child process](g:child_process) and [parent process](g:parent_process)
 -   `echo $$` shows [process ID](g:process_id) of current process
     -   `$$` shortcut for current process's ID because it's used so often
 -   `echo $PPID` (parent process ID) to get parent
+    -   Yes, it's inconsistent
 -   `pstree $$` to see [process tree](g:process_tree)
+
+```{data-file="pstree.out"}
+-+= 34628 gvwilson -bash
+ |--= 38255 gvwilson emacs 03_proc/index.md
+ |-+= 38697 gvwilson pstree 34628
+ | \--- 38699 root ps -axwwo user,pid,ppid,pgid,command
+ \--- 38698 gvwilson pbcopy
+```
 
 ## Signals
 
 -   Can send a [signal](g:signal) to a process
     -   "Something extraordinary happened, please deal with it immediately"
--   Table shows what happened
+-   Different codes show names and meanings of some standard signals
 
 | Number | Name      | Default Action    | Description |
 | -----: | --------- | ----------------- | ----------- |
@@ -70,8 +81,8 @@ ps -a -l
 |     24 | `SIGXCPU` | terminate process | CPU time limit exceeded |
 |     25 | `SIGXFSZ` | terminate process | file size limit exceeded |
 
--   Create a [callback function](g:callback_function)
-    to act as a [signal handler](g:signal_handler)
+-   Create a [callback function](g:callback_function) in Python to handle the signal
+    -   Unsurprisingly called a [signal handler](g:signal_handler)
 
 ```{data-file="catch_interrupt.py"}
 import signal
@@ -136,6 +147,7 @@ loop finished
     -   Or needs keyboard input
 -   Can also start process and then [suspend](g:suspend_process) it with Ctrl-Z
     -   Sends `SIGSTOP` instead of `SIGINT`
+    -   It's up to the receiving program to handle this correctly
 -   Use `jobs` to see all suspended processes
 -   Then <code>bg %<em>num</em></code> to resume in the background
 -   Or <code>fg %<em>num</em></code> to [foreground](g:foreground_process) the process
@@ -157,6 +169,20 @@ loop finished
 ```
 
 -   Note that input and output are mixed together
+
+<div class="callout" markdown="1">
+
+Why bother with backgrounding and foregrounding programs instead of opening another window?
+
+1.  Opening another window is often the better solution,
+    particularly if your fingers know the keyboard shortcuts to cycle between windows.
+
+2.  But if you're working on a remote computer,
+    it might be simpler to run several programs simultaneously in the same terminal window.
+
+3.  And talking about this is an excuse to introduce some more ideas about processes.
+
+</div>
 
 ## Killing Processes
 
@@ -194,7 +220,7 @@ KeyboardInterrupt
 ## Fork
 
 -   [Fork](g:fork_process) creates a duplicate of a process
-    -   Creator is parent, gets process ID of child as return value
+    -   Creator (parent) gets process ID of child as return value
     -   Child gets 0 as return value (but has something else as its process ID)
 
 ```{data-file="fork.py"}
@@ -213,7 +239,7 @@ parent got 41619 is 41618
 child got 0 is 41619
 ```
 
-## Unpredictability {: .aside}
+<div class="callout" markdown="1">
 
 -   Output shown above comes from running the program interactively
 -   When run as `python fork.py > temp.out`, the "starting" line may be duplicated
@@ -222,12 +248,14 @@ child got 0 is 41619
     -   The operating system buffers output (and input)
     -   So the "starting" message may be sitting in a buffer when `fork` happens
     -   In which case both parent and child send it to the operating system to print
--   OS decides how much to buffer and when to actually display it
+-   Operating system decides how much to buffer and when to actually display it
 -   Its decision can be affected by what else it is doing
 -   So running the same program several times can produce different outputs
     -   Because your program is only part of a larger sequence of operations
 -   Dealing with issues like these is
     part of what distinguishes systems programming from "regular" programming
+
+</div>
 
 ## Flushing I/O
 
@@ -277,7 +305,11 @@ parent got 46714 is 46713
 child echoing 0 from 46714
 ```
 
-## Exercise {: .exercise}
+<section class="exercise" markdown="1">
+
+## Exercise: Different Kinds of `exec`
 
 1.  What are the differences between `os.execl`, `os.execlp`, and `os.execv`?
     When and why would you use each?
+
+</section>

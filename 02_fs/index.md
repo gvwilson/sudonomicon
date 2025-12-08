@@ -106,7 +106,6 @@ groups	nobody everyone localaccounts
 ## Capabilities
 
 -   A [capability](g:capability) is something that someone may or may not be able to do to a thing
-    -   Which is incredibly vague
 -   Files and directories capabilities are shown below
 
 | Name    | Abbreviation | File            | Directory                       |
@@ -116,7 +115,7 @@ groups	nobody everyone localaccounts
 | Execute | x            | Run program     | Enter or pass through directory |
 
 -   Read and write make sense
--   Execute makes sense on files
+-   Execute on files makes sense: runnable program
     -   See below for how the operating system figures out how to run a file
 -   Execute on directories is basically "we needed something and this bit was available"
     -   Want to be able to run `dir/program`
@@ -138,6 +137,7 @@ groups	nobody everyone localaccounts
     -   Unfortunately one of the more confusing Unix shell commands
 -   Simplest form: `chmod u=rw,g=r,o=r`
     -   Specify read-write-execute explicitly for user-group-other
+-   Reminder: `echo` prints its arguments
 
 ```{data-file="chmod_example.text"}
 $ echo "original content" > /tmp/somefile.txt
@@ -232,7 +232,7 @@ except OSError as exc:
 -   Permissions are less important on laptops than they were on multi-user systems…
 -   …until we start to run web servers and databases that other people can access
 
-## Systems Programming?
+## What *Is* "Systems Programming"?
 
 -   Not a precise term
 -   But if it means anything,
@@ -315,9 +315,9 @@ cat: /tmp/duplicate.txt: No such file or directory
 
 -   Unix (and other modern operating systems) make [devices](g:device) look like files
     -   Reading from the keyboard and writing to the screen are like file I/O
--   The pseudofiles representing devices live in `/dev`
+-   The pseudofiles that represent devices live in `/dev`
 -   `ls /dev` on my machine shows 345 different devices
--   Key difference between different kinds is whether access is [buffered](g:buffer_verb)
+-   Key difference between different kinds of devices is whether access is [buffered](g:buffer_verb)
     -   Does the operating system read a block at a time and then give the user access to the block?
     -   Does it store data in a block temporarily and write that block all at once?
 -   A [character device](g:character_device) allows direct (unbuffered) access

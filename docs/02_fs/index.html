@@ -211,10 +211,7 @@ groups  nobody everyone localaccounts
 </code></pre>
 <h2>Capabilities</h2>
 <ul>
-<li>A <a href="../glossary/#capability">capability</a> is something that someone may or may not be able to do to a thing<ul>
-<li>Which is incredibly vague</li>
-</ul>
-</li>
+<li>A <a href="../glossary/#capability">capability</a> is something that someone may or may not be able to do to a thing</li>
 <li>Files and directories capabilities are shown below</li>
 </ul>
 <table>
@@ -249,7 +246,7 @@ groups  nobody everyone localaccounts
 </table>
 <ul>
 <li>Read and write make sense</li>
-<li>Execute makes sense on files<ul>
+<li>Execute on files makes sense: runnable program<ul>
 <li>See below for how the operating system figures out how to run a file</li>
 </ul>
 </li>
@@ -281,6 +278,7 @@ groups  nobody everyone localaccounts
 <li>Specify read-write-execute explicitly for user-group-other</li>
 </ul>
 </li>
+<li>Reminder: <code>echo</code> prints its arguments</li>
 </ul>
 <pre class=""><code data-file="chmod_example.text">$ echo "original content" &gt; /tmp/somefile.txt
 
@@ -377,7 +375,7 @@ except OSError as exc:
 <li>Permissions are less important on laptops than they were on multi-user systems…</li>
 <li>…until we start to run web servers and databases that other people can access</li>
 </ul>
-<h2>Systems Programming?</h2>
+<h2>What <em>Is</em> "Systems Programming"?</h2>
 <ul>
 <li>Not a precise term</li>
 <li>But if it means anything,
@@ -469,9 +467,9 @@ cat: /tmp/duplicate.txt: No such file or directory
 <li>Reading from the keyboard and writing to the screen are like file I/O</li>
 </ul>
 </li>
-<li>The pseudofiles representing devices live in <code>/dev</code></li>
+<li>The pseudofiles that represent devices live in <code>/dev</code></li>
 <li><code>ls /dev</code> on my machine shows 345 different devices</li>
-<li>Key difference between different kinds is whether access is <a href="../glossary/#buffer_verb">buffered</a><ul>
+<li>Key difference between different kinds of devices is whether access is <a href="../glossary/#buffer_verb">buffered</a><ul>
 <li>Does the operating system read a block at a time and then give the user access to the block?</li>
 <li>Does it store data in a block temporarily and write that block all at once?</li>
 </ul>
