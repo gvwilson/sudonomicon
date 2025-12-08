@@ -33,15 +33,15 @@ We do *not* expect novices with only basic Python and Unix experience to be able
 
 <div id="lessons" markdown="1">
 
-1.  [Introduction](@/01_intro/): who this is for and what it covers
-1.  [The Filesystem](@/02_fs/): how to manage files, directories, and their stranger kin
-1.  [Processes](@/03_proc/): how to create, signal, and interact with running programs
-1.  [Running Jobs](@/04_jobs/): how to do work on demand
-1.  [HTTP](@/05_http/): how to move data from place to place
-1.  [Authentication](@/06_auth/): how to tell who someone is
-1.  [Packages and Virtual Environments](@/07_venv/): managing what you've installed
-1.  [Virtualization](@/08_docker/): how and why to pretend you have lots of computers
-1.  [Conclusion](@/09_finale/): where we've been and what comes next
+1.  [Introduction](@/intro/): who this is for and what it covers
+1.  [The Filesystem](@/fs/): how to manage files, directories, and their stranger kin
+1.  [Processes](@/proc/): how to create, signal, and interact with running programs
+1.  [Running Jobs](@/jobs/): how to do work on demand
+1.  [HTTP](@/http/): how to move data from place to place
+1.  [Authentication](@/auth/): how to tell who someone is
+1.  [Packages and Virtual Environments](@/packenv/): managing what you've installed
+1.  [Virtualization](@/dock/): how and why to pretend you have lots of computers
+1.  [Conclusion](@/finale/): where we've been and what comes next
 
 </div>
 
