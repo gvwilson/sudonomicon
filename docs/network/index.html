@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Networking</title>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../fs/">The Filesystem</a></li>
+<li><a href="../proc/">Processes</a></li>
+<li><a href="../jobs/">Running Jobs</a></li>
+<li><a href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a class="active" href="../network/">Networking</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
+</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
+</span>
+</nav>
+<main id="main-content">
+<h1>Networking</h1>
+<h2>What Is a Network?</h2>
+<ul>
+<li>A network is a set of computers that can send data to each other</li>
+<li>The internet is a network of networks<ul>
+<li>Your home router connects your local network to your ISP's network</li>
+<li>ISPs are connected to backbone providers</li>
+<li>Every packet travels through many intermediate machines</li>
+</ul>
+</li>
+<li>Key insight: you do not need to understand the physical layer (cables, WiFi)<ul>
+<li>Protocols at higher layers make different hardware look the same to programs</li>
+</ul>
+</li>
+</ul>
+<h2>IP Addresses</h2>
+<ul>
+<li>Every device on a network has an <a href="../glossary/#ip_address">IP address</a></li>
+<li>IPv4: four bytes written as four decimal numbers separated by dots<ul>
+<li>Example: <code>192.168.1.42</code></li>
+<li>About 4 billion possible addresses — nearly exhausted</li>
+</ul>
+</li>
+<li>IPv6: sixteen bytes written as eight groups of four hex digits separated by colons<ul>
+<li>Example: <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code></li>
+<li>Leading zeroes and consecutive zero groups can be compressed: <code>2001:db8::1</code></li>
+<li>340 undecillion addresses — not running out soon</li>
+</ul>
+</li>
+<li>Special addresses:<ul>
+<li><code>127.0.0.1</code> (IPv4) or <code>::1</code> (IPv6): the loopback address, always means "this machine"</li>
+<li><code>192.168.x.x</code>, <code>10.x.x.x</code>, <code>172.16.x.x–172.31.x.x</code>: private ranges (RFC 1918)<ul>
+<li>Not routable on the public internet; used inside home/office networks</li>
+</ul>
+</li>
+<li><code>0.0.0.0</code>: "any local address" (used when binding a server)</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>hostname<span class="w"> </span>-I<span class="w">           </span><span class="c1"># Linux</span>
+<span class="m">192</span>.168.1.42<span class="w"> </span>fd00::1
+
+$<span class="w"> </span>ipconfig<span class="w"> </span>getifaddr<span class="w"> </span>en0<span class="w">  </span><span class="c1"># macOS</span>
+<span class="m">192</span>.168.1.42
+
+$<span class="w"> </span>ipconfig<span class="w">              </span><span class="c1"># Windows</span>
+<span class="w">   </span>IPv4<span class="w"> </span>Address<span class="w"> </span>.<span class="w"> </span>.<span class="w"> </span>.<span class="w"> </span>.<span class="w"> </span>.<span class="w"> </span>:<span class="w"> </span><span class="m">192</span>.168.1.42
+</code></pre></div>
+<h2>Ports</h2>
+<ul>
+<li>An IP address identifies a machine; a <a href="../glossary/#port">port</a> identifies a service on that machine<ul>
+<li>Like a street address vs. an apartment number</li>
+</ul>
+</li>
+<li>A 16-bit number: 0 to 65535</li>
+<li>Well-known ports (0–1023): reserved for standard services, require root to bind</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th scope="col">Port</th>
+<th scope="col">Service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>22</td>
+<td>SSH</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>5432</td>
+<td>PostgreSQL</td>
+</tr>
+<tr>
+<td>3306</td>
+<td>MySQL</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Registered ports (1024–49151): assigned to specific applications by IANA</li>
+<li>Ephemeral ports (49152–65535): assigned dynamically to clients by the OS</li>
+<li>Use <code>netstat -an</code> or <code>ss -tulnp</code> to see which ports are in use</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>netstat<span class="w"> </span>-an<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>LISTEN<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span>
+tcp4<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">127</span>.0.0.1.5432<span class="w">    </span>*.*<span class="w">     </span>LISTEN
+tcp4<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span>*.8000<span class="w">            </span>*.*<span class="w">     </span>LISTEN
+tcp6<span class="w">   </span><span class="m">0</span><span class="w">   </span><span class="m">0</span><span class="w">   </span>*.22<span class="w">              </span>*.*<span class="w">     </span>LISTEN
+</code></pre></div>
+<h2>TCP vs. UDP</h2>
+<ul>
+<li>Two main transport protocols sit on top of IP</li>
+<li>TCP (Transmission Control Protocol):<ul>
+<li>Connection-oriented: both sides perform a three-way handshake before data flows</li>
+<li>Reliable: every packet is acknowledged; lost packets are retransmitted</li>
+<li>Ordered: packets are reassembled in the right order even if they arrive out of order</li>
+<li>Used by HTTP, HTTPS, SSH, SMTP, PostgreSQL</li>
+</ul>
+</li>
+<li>UDP (User Datagram Protocol):<ul>
+<li>Connectionless: send a packet and hope it arrives</li>
+<li>Unreliable: no acknowledgment, no retransmission</li>
+<li>Ordered delivery is not guaranteed</li>
+<li>Much lower overhead — useful when speed matters more than reliability</li>
+<li>Used by DNS (queries), video streaming, online games, NTP</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nx">Think</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">TCP</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">phone</span><span class="w"> </span><span class="nx">call</span><span class="p">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">You</span><span class="w"> </span><span class="nx">dial</span><span class="p">,</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">other</span><span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">picks</span><span class="w"> </span><span class="nx">up</span><span class="w"> </span><span class="p">(</span><span class="nx">handshake</span><span class="p">)</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">Both</span><span class="w"> </span><span class="nx">sides</span><span class="w"> </span><span class="nx">take</span><span class="w"> </span><span class="nx">turns</span><span class="w"> </span><span class="nx">talking</span><span class="w"> </span><span class="p">(</span><span class="nx">ordered</span><span class="p">,</span><span class="w"> </span><span class="nx">reliable</span><span class="p">)</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">Either</span><span class="w"> </span><span class="nx">side</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">hang</span><span class="w"> </span><span class="nx">up</span><span class="w"> </span><span class="nx">gracefully</span><span class="w"> </span><span class="p">(</span><span class="nx">teardown</span><span class="p">)</span>
+
+<span class="nx">Think</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">UDP</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">sending</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">postcard</span><span class="p">:</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">You</span><span class="w"> </span><span class="nx">write</span><span class="w"> </span><span class="nx">an</span><span class="w"> </span><span class="nx">address</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">drop</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">box</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">No</span><span class="w"> </span><span class="nx">confirmation</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">arrived</span>
+<span class="w">  </span><span class="o">-</span><span class="w"> </span><span class="nx">Very</span><span class="w"> </span><span class="nx">fast</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">simple</span>
+</code></pre></div>
+<h2>Sockets</h2>
+<ul>
+<li>A <a href="../glossary/#socket">socket</a> is one endpoint of a network connection<ul>
+<li>Identified by: protocol + IP address + port number</li>
+<li>Two sockets (one each end) make a connection</li>
+</ul>
+</li>
+<li>Python's <code>socket</code> module provides direct access</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s2">"127.0.0.1"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">9000</span>
+
+<span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"listening on </span><span class="si">{</span><span class="n">HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">PORT</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">conn</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">conn</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"connected from </span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>   <span class="c1"># echo it back</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s2">"127.0.0.1"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">9000</span>
+
+<span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="sa">b</span><span class="s2">"hello from client"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"received: </span><span class="si">{</span><span class="n">data</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><code>AF_INET</code>: use IPv4; use <code>AF_INET6</code> for IPv6 or <code>AF_INET</code> with the right address for both</li>
+<li><code>SOCK_STREAM</code>: TCP; <code>SOCK_DGRAM</code> for UDP</li>
+<li><code>SO_REUSEADDR</code>: allow re-binding a port immediately after the previous server exits</li>
+<li>Most applications use higher-level libraries (<code>http.server</code>, <code>requests</code>, <code>flask</code>)
+    rather than raw sockets</li>
+</ul>
+<section class="exercise">
+<h2>Exercise: Echo Server</h2>
+<ol>
+<li>
+<p>Run the TCP server in one terminal and the client in another.
+    What do you see on each side?</p>
+</li>
+<li>
+<p>Modify the server to handle multiple clients in sequence
+    (add a <code>while True</code> loop around <code>server.accept()</code>).
+    What happens if two clients connect at the same time?</p>
+</li>
+</ol>
+</section>
+<h2>DNS: Domain Name System</h2>
+<ul>
+<li>Humans remember names (<code>github.com</code>); computers communicate via IP addresses</li>
+<li><a href="../glossary/#dns">DNS</a> is the distributed system that translates between them</li>
+<li>Organized as a hierarchy:<ul>
+<li>Root (<code>.</code>) → top-level domain (<code>.com</code>, <code>.org</code>, <code>.ca</code>) → domain (<code>github</code>) → subdomain (<code>api</code>)</li>
+<li>Responsibility for each level is delegated to different servers</li>
+</ul>
+</li>
+</ul>
+<h2>DNS Record Types</h2>
+<ul>
+<li>DNS stores several kinds of records</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th scope="col">Type</th>
+<th scope="col">Purpose</th>
+<th scope="col">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>hostname → IPv4 address</td>
+<td><code>example.com → 93.184.216.34</code></td>
+</tr>
+<tr>
+<td>AAAA</td>
+<td>hostname → IPv6 address</td>
+<td><code>example.com → 2606:2800:220:1::68</code></td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td>alias → canonical hostname</td>
+<td><code>www.example.com → example.com</code></td>
+</tr>
+<tr>
+<td>MX</td>
+<td>mail exchange for a domain</td>
+<td><code>example.com → mail.example.com</code></td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>arbitrary text (verification, SPF records)</td>
+<td><code>"v=spf1 include:..."</code></td>
+</tr>
+<tr>
+<td>NS</td>
+<td>authoritative name servers for a domain</td>
+<td><code>example.com → ns1.example.com</code></td>
+</tr>
+</tbody>
+</table>
+<h2>How DNS Resolution Works</h2>
+<ul>
+<li>When you look up <code>api.github.com</code>:<ol>
+<li>Check local cache (OS or stub resolver)</li>
+<li>Check <code>/etc/hosts</code> (local overrides — useful for development)</li>
+<li>Ask the configured resolver (usually your router or ISP's DNS, e.g., <code>8.8.8.8</code>)</li>
+<li>Resolver asks a root server: "who handles <code>.com</code>?"</li>
+<li>Resolver asks the <code>.com</code> TLD server: "who handles <code>github.com</code>?"</li>
+<li>Resolver asks GitHub's authoritative server: "what is <code>api.github.com</code>?"</li>
+<li>Answer is returned and cached at each level for the record's TTL (time to live)</li>
+</ol>
+</li>
+<li>Most lookups are answered from cache and take a few milliseconds</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>#<span class="w"> </span><span class="nv">Add</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">hosts</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">local</span><span class="w"> </span><span class="nv">development</span>:
+<span class="mi">127</span>.<span class="mi">0</span>.<span class="mi">0</span>.<span class="mi">1</span><span class="w">   </span><span class="nv">myapp</span>.<span class="nv">local</span>
+<span class="mi">127</span>.<span class="mi">0</span>.<span class="mi">0</span>.<span class="mi">1</span><span class="w">   </span><span class="nv">api</span>.<span class="nv">myapp</span>.<span class="nv">local</span>
+</code></pre></div>
+<h2>Querying DNS from the Command Line</h2>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>dig<span class="w"> </span>example.com<span class="w"> </span>A
+
+<span class="p">;;</span><span class="w"> </span>ANSWER<span class="w"> </span>SECTION:
+example.com.<span class="w">    </span><span class="m">3600</span><span class="w">  </span>IN<span class="w">  </span>A<span class="w">  </span><span class="m">93</span>.184.216.34
+
+$<span class="w"> </span>dig<span class="w"> </span>example.com<span class="w"> </span>MX
+
+<span class="p">;;</span><span class="w"> </span>ANSWER<span class="w"> </span>SECTION:
+example.com.<span class="w">  </span><span class="m">3600</span><span class="w">  </span>IN<span class="w">  </span>MX<span class="w">  </span><span class="m">0</span><span class="w"> </span>.
+
+$<span class="w"> </span>dig<span class="w"> </span>+short<span class="w"> </span>github.com
+<span class="m">140</span>.82.114.4
+</code></pre></div>
+<ul>
+<li><code>dig</code> (Domain Information Groper) is the standard DNS debugging tool</li>
+<li><code>+short</code> gives a terse answer</li>
+<li><code>nslookup</code> is available on Windows as well as Unix</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>dig<span class="w"> </span>-x<span class="w"> </span><span class="m">93</span>.184.216.34<span class="w"> </span>+short
+<span class="m">93</span>.184.216.34.in-addr.arpa<span class="w"> </span>domain<span class="w"> </span>name<span class="w"> </span>pointer<span class="w"> </span>example.com.
+</code></pre></div>
+<ul>
+<li>Reverse DNS: look up the hostname for an IP address</li>
+<li>Uses PTR records, stored under <code>in-addr.arpa</code></li>
+</ul>
+<h2>DNS in Python</h2>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+
+<span class="c1"># Forward lookup: hostname → IP address</span>
+<span class="n">ip</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname</span><span class="p">(</span><span class="s2">"example.com"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"example.com → </span><span class="si">{</span><span class="n">ip</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># example.com → 93.184.216.34</span>
+
+<span class="c1"># Returns all addresses and aliases (useful for hosts with multiple IPs)</span>
+<span class="n">hostname</span><span class="p">,</span> <span class="n">aliases</span><span class="p">,</span> <span class="n">addresses</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname_ex</span><span class="p">(</span><span class="s2">"github.com"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"hostname: </span><span class="si">{</span><span class="n">hostname</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"addresses: </span><span class="si">{</span><span class="n">addresses</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Reverse lookup: IP address → hostname</span>
+<span class="n">name</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="s2">"93.184.216.34"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"93.184.216.34 → </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>For more control (specific record types, custom resolvers), use the <code>dnspython</code> package</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">dns.resolver</span>
+
+<span class="n">answers</span> <span class="o">=</span> <span class="n">dns</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="s2">"example.com"</span><span class="p">,</span> <span class="s2">"MX"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">rdata</span> <span class="ow">in</span> <span class="n">answers</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"priority </span><span class="si">{</span><span class="n">rdata</span><span class="o">.</span><span class="n">preference</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">rdata</span><span class="o">.</span><span class="n">exchange</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<section class="exercise">
+<h2>Exercise: DNS Exploration</h2>
+<ol>
+<li>
+<p>Use <code>dig</code> to find all the MX records for a domain you use regularly.
+    What do the priority numbers mean?</p>
+</li>
+<li>
+<p>Add an entry to <code>/etc/hosts</code> that maps <code>test.local</code> to <code>127.0.0.1</code>.
+    Confirm you can <code>ping test.local</code>.
+    What does this tell you about the order in which lookups are tried?</p>
+</li>
+<li>
+<p>What is the TTL on the A record for <code>github.com</code>?
+    How does TTL affect how quickly DNS changes propagate?</p>
+</li>
+</ol>
+</section>
+<h2>Network Troubleshooting</h2>
+<ul>
+<li><code>ping host</code>: send ICMP echo requests to check if a host is reachable<ul>
+<li>Measures round-trip time; reports packet loss</li>
+<li>Some hosts block ICMP, so no response does not always mean unreachable</li>
+</ul>
+</li>
+<li><code>traceroute host</code> (Unix) / <code>tracert host</code> (Windows): show the path packets take<ul>
+<li>Each line is one hop (router) along the route</li>
+<li>Useful for diagnosing where a connection slows down or breaks</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>traceroute<span class="w"> </span>github.com
+<span class="w"> </span><span class="m">1</span><span class="w">  </span>router.local<span class="w"> </span><span class="o">(</span><span class="m">192</span>.168.1.1<span class="o">)</span><span class="w">         </span><span class="m">1</span>.2<span class="w"> </span>ms
+<span class="w"> </span><span class="m">2</span><span class="w">  </span><span class="m">10</span>.0.0.1<span class="w"> </span><span class="o">(</span><span class="m">10</span>.0.0.1<span class="o">)</span><span class="w">               </span><span class="m">8</span>.4<span class="w"> </span>ms
+<span class="w"> </span><span class="m">3</span><span class="w">  </span>ae-3.r01.tor01.net<span class="w"> </span><span class="o">(</span><span class="m">206</span>.x.x.x<span class="o">)</span><span class="w">   </span><span class="m">15</span>.1<span class="w"> </span>ms
+…
+<span class="m">12</span><span class="w">  </span>lb-140-82-114-4-iad.github.com<span class="w">    </span><span class="m">22</span>.8<span class="w"> </span>ms
+</code></pre></div>
+<ul>
+<li><code>curl -I url</code>: send an HTTP HEAD request; shows response headers without body<ul>
+<li>Useful for checking HTTP status codes, redirects, and Content-Type</li>
+</ul>
+</li>
+<li><code>netstat -an</code> / <code>ss -tulnp</code>: list open ports and active connections</li>
+<li><code>lsof -i :8000</code>: show which process is using port 8000 (macOS/Linux)</li>
+</ul>
+<section class="exercise">
+<h2>Exercise: Following a Request</h2>
+<p>Use the tools above to trace what happens when you access a familiar website:</p>
+<ol>
+<li>Use <code>dig</code> to find its IP address.</li>
+<li>Use <code>ping</code> to check latency to that IP.</li>
+<li>Use <code>traceroute</code> to see the path.</li>
+<li>Use <code>curl -I</code> to inspect the HTTP headers.</li>
+</ol>
+<p>Do any of the hops in <code>traceroute</code> show <code>* * *</code>?
+What does that mean?</p>
+</section>
+</main>
+<footer aria-label="Page navigation">
+<div class="row">
+<div class="col-3 left">
+<span aria-hidden="true">⇐</span> <a href="../packenv/">Packages and Virtual Environments</a>
+</div>
+<div class="col-6 center">
+<a href="../">The Sudonomicon</a>
+	  ©
+	  <a href="../#acknowledgments">the authors</a>
+</div>
+<div class="col-3 right">
+<a href="../dock/">Virtualization</a> <span aria-hidden="true">⇒</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

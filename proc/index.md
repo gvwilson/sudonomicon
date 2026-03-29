@@ -118,10 +118,99 @@ use Ctrl-C three times
 
 ## Exit Status
 
--   FIXME: explain [exit status](g:exit_status)
-    -   0: nothing went wrong
-    -   non-zero: error code
-    -   Always confusing because we think of 0 as false
+-   Every process reports an [exit status](g:exit_status) when it finishes
+    -   An integer that tells the parent process (usually the shell) what happened
+-   By convention: 0 means success, any non-zero value means failure
+    -   This is the opposite of how Python treats integers as booleans
+    -   The reason: there is exactly one way to succeed, but many ways to fail
+    -   Non-zero values can therefore encode *which* error occurred
+-   Common non-zero codes (specific meanings vary by program):
+    -   1: general error
+    -   2: misuse of shell built-in or incorrect arguments
+    -   126: command found but not executable
+    -   127: command not found
+    -   128+N: terminated by signal number N (e.g., 130 = terminated by Ctrl-C, which is SIGINT=2)
+-   The shell stores the exit status of the last command in `$?`
+
+```{data-file="exit_status.text"}
+$ python -c "import sys; sys.exit(0)"
+$ echo $?
+0
+
+$ python -c "import sys; sys.exit(1)"
+$ echo $?
+1
+
+$ python -c "import sys; sys.exit(42)"
+$ echo $?
+42
+```
+
+-   In Python, call `sys.exit(code)` to set the exit status
+    -   `sys.exit()` with no argument is equivalent to `sys.exit(0)`
+    -   Raising an uncaught exception causes Python to exit with status 1
+    -   Printing a string to `sys.exit()` prints it to stderr and exits with status 1
+
+```{data-file="exit_example.py"}
+import sys
+
+if len(sys.argv) < 2:
+    print("Usage: exit_example.py number", file=sys.stderr)
+    sys.exit(1)
+
+value = int(sys.argv[1])
+if value < 0:
+    print(f"error: {value} is negative", file=sys.stderr)
+    sys.exit(2)
+
+print(f"value is {value}")
+sys.exit(0)
+```
+
+-   Use `subprocess` to run another program and capture its exit status
+
+```{data-file="check_exit.py"}
+import subprocess
+
+result = subprocess.run(["ls", "/no/such/directory"])
+print(f"exit status: {result.returncode}")
+# exit status: 1 (or 2 on some systems)
+
+result = subprocess.run(["ls", "/tmp"])
+print(f"exit status: {result.returncode}")
+# exit status: 0
+```
+
+-   Exit status is the basis for shell conditionals and the `&&` and `||` operators
+
+```{data-file="exit_conditional.text"}
+$ ls /tmp && echo "directory exists"
+…files in /tmp…
+directory exists
+
+$ ls /no/such/dir && echo "this will not print"
+ls: /no/such/dir: No such file or directory
+
+$ ls /no/such/dir || echo "ls failed, running fallback"
+ls: /no/such/dir: No such file or directory
+ls failed, running fallback
+```
+
+-   `&&` runs the right side only if the left side succeeded (exit status 0)
+-   `||` runs the right side only if the left side failed (exit status non-zero)
+-   This is how Git hooks work: return non-zero to abort the operation
+
+<section class="exercise" markdown="1">
+
+## Exercise: Exit Status of Python Scripts
+
+1.  What exit status does Python use when a script raises an uncaught `ValueError`?
+    What about `KeyboardInterrupt`?
+
+2.  Write a shell one-liner using `&&` that runs your test suite
+    and only prints "all tests passed" if the tests succeed.
+
+</section>
 
 ## Background Processes
 

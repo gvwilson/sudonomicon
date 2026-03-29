@@ -28,6 +28,7 @@
 <li><a href="../auth/">Authentication</a></li>
 <li><a href="../var/">Shell Variables</a></li>
 <li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../network/">Networking</a></li>
 <li><a href="../dock/">Virtualization</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
@@ -253,13 +254,105 @@ use Ctrl-C three times
 </ul>
 <h2>Exit Status</h2>
 <ul>
-<li>FIXME: explain <a href="../glossary/#exit_status">exit status</a><ul>
-<li>0: nothing went wrong</li>
-<li>non-zero: error code</li>
-<li>Always confusing because we think of 0 as false</li>
+<li>Every process reports an <a href="../glossary/#exit_status">exit status</a> when it finishes<ul>
+<li>An integer that tells the parent process (usually the shell) what happened</li>
+</ul>
+</li>
+<li>By convention: 0 means success, any non-zero value means failure<ul>
+<li>This is the opposite of how Python treats integers as booleans</li>
+<li>The reason: there is exactly one way to succeed, but many ways to fail</li>
+<li>Non-zero values can therefore encode <em>which</em> error occurred</li>
+</ul>
+</li>
+<li>Common non-zero codes (specific meanings vary by program):<ul>
+<li>1: general error</li>
+<li>2: misuse of shell built-in or incorrect arguments</li>
+<li>126: command found but not executable</li>
+<li>127: command not found</li>
+<li>128+N: terminated by signal number N (e.g., 130 = terminated by Ctrl-C, which is SIGINT=2)</li>
+</ul>
+</li>
+<li>The shell stores the exit status of the last command in <code>$?</code></li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">"import sys; sys.exit(0)"</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">$?</span>
+<span class="mi">0</span>
+
+<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">"import sys; sys.exit(1)"</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">$?</span>
+<span class="mi">1</span>
+
+<span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">"import sys; sys.exit(42)"</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">$?</span>
+<span class="mi">42</span>
+</code></pre></div>
+<ul>
+<li>In Python, call <code>sys.exit(code)</code> to set the exit status<ul>
+<li><code>sys.exit()</code> with no argument is equivalent to <code>sys.exit(0)</code></li>
+<li>Raising an uncaught exception causes Python to exit with status 1</li>
+<li>Printing a string to <code>sys.exit()</code> prints it to stderr and exits with status 1</li>
 </ul>
 </li>
 </ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Usage: exit_example.py number"</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"error: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> is negative"</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"value is </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Use <code>subprocess</code> to run another program and capture its exit status</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"ls"</span><span class="p">,</span> <span class="s2">"/no/such/directory"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"exit status: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># exit status: 1 (or 2 on some systems)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"ls"</span><span class="p">,</span> <span class="s2">"/tmp"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"exit status: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># exit status: 0</span>
+</code></pre></div>
+<ul>
+<li>Exit status is the basis for shell conditionals and the <code>&amp;&amp;</code> and <code>||</code> operators</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>ls<span class="w"> </span>/tmp<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"directory exists"</span>
+…files<span class="w"> </span><span class="k">in</span><span class="w"> </span>/tmp…
+directory<span class="w"> </span>exists
+
+$<span class="w"> </span>ls<span class="w"> </span>/no/such/dir<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"this will not print"</span>
+ls:<span class="w"> </span>/no/such/dir:<span class="w"> </span>No<span class="w"> </span>such<span class="w"> </span>file<span class="w"> </span>or<span class="w"> </span>directory
+
+$<span class="w"> </span>ls<span class="w"> </span>/no/such/dir<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ls failed, running fallback"</span>
+ls:<span class="w"> </span>/no/such/dir:<span class="w"> </span>No<span class="w"> </span>such<span class="w"> </span>file<span class="w"> </span>or<span class="w"> </span>directory
+ls<span class="w"> </span>failed,<span class="w"> </span>running<span class="w"> </span>fallback
+</code></pre></div>
+<ul>
+<li><code>&amp;&amp;</code> runs the right side only if the left side succeeded (exit status 0)</li>
+<li><code>||</code> runs the right side only if the left side failed (exit status non-zero)</li>
+<li>This is how Git hooks work: return non-zero to abort the operation</li>
+</ul>
+<section class="exercise">
+<h2>Exercise: Exit Status of Python Scripts</h2>
+<ol>
+<li>
+<p>What exit status does Python use when a script raises an uncaught <code>ValueError</code>?
+    What about <code>KeyboardInterrupt</code>?</p>
+</li>
+<li>
+<p>Write a shell one-liner using <code>&amp;&amp;</code> that runs your test suite
+    and only prints "all tests passed" if the tests succeed.</p>
+</li>
+</ol>
+</section>
 <h2>Background Processes</h2>
 <ul>
 <li>Can run a process in the <a href="../glossary/#background_process">background</a><ul>

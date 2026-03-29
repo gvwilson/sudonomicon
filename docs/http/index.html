@@ -28,6 +28,7 @@
 <li><a href="../auth/">Authentication</a></li>
 <li><a href="../var/">Shell Variables</a></li>
 <li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../network/">Networking</a></li>
 <li><a href="../dock/">Virtualization</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
@@ -62,7 +63,7 @@ body:
 Start where you are, use what you have, help who you can.
 </code></pre></div>
 <ul>
-<li>Use the [<code>requests</code>][requests] module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
+<li>Use the <a href="https://requests.readthedocs.io/"><code>requests</code></a> module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
 <li>The URL identifies the file we want<ul>
 <li>Though as we'll see, the server can interpret it differently</li>
 </ul>
@@ -190,7 +191,7 @@ body length: 9115
 </ul>
 <section class="exercise">
 <h2>Exercise: Status Codes</h2>
-<p>Look at [this list of HTTP status codes][http_status_codes].</p>
+<p>Look at <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">this list of HTTP status codes</a>.</p>
 <ol>
 <li>
 <p>What is the difference between status code 403 and status code 404?</p>
@@ -243,7 +244,7 @@ body as JSON:
 <ul>
 <li>Pushing files to GitHub so that we can use them is annoying</li>
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
-<li>Use Python's [<code>http.server</code>][py_http_server] module to run a <a href="../glossary/#local_server">local server</a></li>
+<li>Use Python's <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module to run a <a href="../glossary/#local_server">local server</a></li>
 </ul>
 <div class="codehilite"><pre class="" tabindex="0"><span></span><code>python -m http.server -d site
 </code></pre></div>
@@ -407,7 +408,7 @@ body:
 </ul>
 <h2>Introducing <code>netcat</code></h2>
 <ul>
-<li>[<code>netcat</code>][netcat] (often just <code>nc</code>) is a computer networking tool</li>
+<li><a href="https://en.wikipedia.org/wiki/Netcat"><code>netcat</code></a> (often just <code>nc</code>) is a computer networking tool</li>
 <li>Open a connection, send exactly what the user types, and show exactly what is sent in response</li>
 </ul>
 <div class="codehilite"><pre class="" tabindex="0"><span></span><code>nc localhost 8000
@@ -556,7 +557,7 @@ What happens with each and why?</p>
         self.send_content(as_json, HTTPStatus.OK)
 </code></pre></div>
 <ul>
-<li>Use <code>urlparse</code> and <code>parse_qs</code> from [<code>urllib.parse</code>][py_urllib_parse] to get query parameters<ul>
+<li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters<ul>
 <li>(Key, list) dictionary</li>
 </ul>
 </li>

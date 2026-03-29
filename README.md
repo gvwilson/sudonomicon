@@ -30,6 +30,7 @@ Welcome, thrice welcome, to Unix systems programming.
 1.  [Authentication](@/auth/)
 1.  [Shell Variables](@/var/)
 1.  [Packages and Virtual Environments](@/packenv/)
+1.  [Networking](@/network/)
 1.  [Virtualization](@/dock/)
 1.  [Conclusion](@/finale/)
 

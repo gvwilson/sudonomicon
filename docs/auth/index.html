@@ -28,6 +28,7 @@
 <li><a class="active" href="../auth/">Authentication</a></li>
 <li><a href="../var/">Shell Variables</a></li>
 <li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../network/">Networking</a></li>
 <li><a href="../dock/">Virtualization</a></li>
 <li><a href="../finale/">Conclusion</a></li>
 </ul>
@@ -46,16 +47,399 @@
 </nav>
 <main id="main-content">
 <h1>Authentication</h1>
+<h2>The Three A's Revisited</h2>
 <ul>
-<li>FIXME</li>
-<li>chown</li>
-<li>how to change user/group ID in fork/exec</li>
-<li><code>sudo</code>/<code>su</code></li>
-<li>SSH keys<ul>
-<li>what to do for practical exercises?</li>
+<li>The filesystem chapter introduced authentication, authorization, and access control</li>
+<li>This chapter focuses on authentication: how the system establishes who you are</li>
+<li>Authentication is always a claim followed by evidence<ul>
+<li>"I am Ning" — but how does the system verify that?</li>
 </ul>
 </li>
-<li>Authenticating data (hashing)</li>
+<li>Two classic approaches:<ul>
+<li>Something you know (password, PIN)</li>
+<li>Something you have (a key, a hardware token, a phone)</li>
+<li>Something you are (fingerprint, face — biometrics)</li>
+</ul>
+</li>
+<li>Real systems increasingly combine more than one (multi-factor authentication)</li>
+</ul>
+<h2>User Accounts on Unix</h2>
+<ul>
+<li>Unix stores user account information in <code>/etc/passwd</code><ul>
+<li>Readable by everyone (programs need to look up user names)</li>
+<li>One line per account, colon-separated fields</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>grep<span class="w"> </span>tut<span class="w"> </span>/etc/passwd
+tut:x:501:20:Tutorial<span class="w"> </span>User:/Users/tut:/bin/bash
+</code></pre></div>
+<ul>
+<li>Fields in order: username, password placeholder, UID, GID, comment, home directory, shell</li>
+<li>The <code>x</code> in the password field means "look in /etc/shadow instead"<ul>
+<li>Historically passwords were stored here — hence the name "passwd"</li>
+<li>Moving them to <code>/etc/shadow</code> was a security improvement</li>
+</ul>
+</li>
+</ul>
+<h2>Password Storage</h2>
+<ul>
+<li>Passwords are never stored as <a href="../glossary/#cleartext">cleartext</a><ul>
+<li>If the file is leaked, attackers would have everyone's password immediately</li>
+</ul>
+</li>
+<li>Instead, the system stores a <a href="../glossary/#hash">hash</a> of the password<ul>
+<li>A one-way function: easy to compute hash from password, infeasible to reverse</li>
+<li>Deterministic: same password always produces same hash</li>
+</ul>
+</li>
+<li>When you log in:<ol>
+<li>You type your password</li>
+<li>The system hashes what you typed</li>
+<li>It compares the result to the stored hash</li>
+<li>If they match, you are authenticated</li>
+</ol>
+</li>
+<li><code>/etc/shadow</code> stores the hashed passwords; only readable by root</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/shadow<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tut
+tut:<span class="nv">$6$rounds</span><span class="o">=</span><span class="m">656000</span><span class="nv">$salt$hashedvalue</span>...:19831:0:99999:7:::
+</code></pre></div>
+<ul>
+<li>The hash field encodes:<ul>
+<li><code>$6$</code> — hashing algorithm (6 = SHA-512)</li>
+<li><code>$rounds=656000$</code> — work factor (how many iterations)</li>
+<li><code>$salt$</code> — random value mixed in before hashing (see below)</li>
+<li>The actual hash</li>
+</ul>
+</li>
+</ul>
+<h2>Salts and Rainbow Tables</h2>
+<ul>
+<li>A <a href="../glossary/#salt">salt</a> is a random value stored alongside the hash<ul>
+<li>Before hashing, concatenate the salt and the password</li>
+<li>Same password + different salt = different hash</li>
+</ul>
+</li>
+<li>Why bother?<ul>
+<li>Without salts, attackers can pre-compute a table of (password → hash) pairs</li>
+<li>Called a "rainbow table"</li>
+<li>With salts, the attacker must redo the computation for each account separately</li>
+</ul>
+</li>
+<li>In Python, <code>hashlib</code> provides low-level hashing;
+    use <code>passlib</code> or <code>bcrypt</code> for password storage in real applications</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Low-level: do not use this directly for passwords</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">"correct horse battery staple"</span>
+<span class="n">salt</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">hashed</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">pbkdf2_hmac</span><span class="p">(</span><span class="s2">"sha256"</span><span class="p">,</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">salt</span><span class="p">,</span> <span class="mi">260000</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"salt: </span><span class="si">{</span><span class="n">salt</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"hash: </span><span class="si">{</span><span class="n">hashed</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li><code>pbkdf2_hmac</code> is a "slow" hash function — intentionally expensive to compute<ul>
+<li>Makes brute-force attacks much slower</li>
+<li>The 260000 is the iteration count; higher = slower to crack, also slower to verify</li>
+</ul>
+</li>
+</ul>
+<section class="exercise">
+<h2>Exercise: Hash Properties</h2>
+<ol>
+<li>
+<p>Run the hash example above twice.
+    Are the outputs the same?
+    Why or why not?</p>
+</li>
+<li>
+<p>Change the password by one character and re-run.
+    How does the hash change?
+    What property of hash functions does this illustrate?</p>
+</li>
+</ol>
+</section>
+<h2>sudo and su</h2>
+<ul>
+<li>Principle of least privilege: run processes with only the permissions they need</li>
+<li><code>su username</code> — substitute user; switches to another account for the rest of the session<ul>
+<li>Requires the <em>target</em> user's password (or root password)</li>
+<li><code>su -</code> starts a fresh login shell as that user</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>whoami
+tut
+
+$<span class="w"> </span>su<span class="w"> </span>nobody
+Password:
+$<span class="w"> </span>whoami
+nobody
+
+$<span class="w"> </span><span class="nb">exit</span>
+$<span class="w"> </span>whoami
+tut
+</code></pre></div>
+<ul>
+<li><code>sudo command</code> — runs a single command as root (or another specified user)<ul>
+<li>Configured in <code>/etc/sudoers</code></li>
+<li>Uses <em>your</em> password, not root's</li>
+<li>Actions are logged (unlike <code>su</code>)</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/etc/shadow
+cat:<span class="w"> </span>/etc/shadow:<span class="w"> </span>Permission<span class="w"> </span>denied
+
+$<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/shadow<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span>
+root:*:19810:0:99999:7:::
+daemon:*:19810:0:99999:7:::
+tut:<span class="nv">$6$rounds</span><span class="o">=</span><span class="m">656000</span>$...
+</code></pre></div>
+<ul>
+<li><code>/etc/sudoers</code> controls who can run what as whom</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code># Allow tut to run any command as root (with password)
+tut ALL=(ALL) ALL
+
+# Allow deploy user to restart nginx without a password
+deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
+</code></pre></div>
+<ul>
+<li>Use <code>visudo</code> to edit <code>/etc/sudoers</code> — it validates syntax before saving</li>
+</ul>
+<section class="exercise">
+<h2>Exercise: sudo Logging</h2>
+<ol>
+<li>
+<p>Run <code>sudo ls /root</code> and then look at the system log (try <code>/var/log/auth.log</code>
+    on Linux or <code>log show --predicate 'process == "sudo"'</code> on macOS).
+    What information is recorded?</p>
+</li>
+<li>
+<p>Why is logging important for <code>sudo</code> but less important for <code>su</code>?</p>
+</li>
+</ol>
+</section>
+<h2>Windows Authentication</h2>
+<ul>
+<li>Windows stores local account credentials in the Security Account Manager (SAM) database<ul>
+<li>Located at <code>C:\Windows\System32\config\SAM</code></li>
+<li>Locked while Windows is running; readable only by the SYSTEM account</li>
+</ul>
+</li>
+<li>Passwords are hashed with NTLM (NT LAN Manager)<ul>
+<li>Historically used MD4 (now considered weak)</li>
+<li>Modern Windows also stores a more recent hash format</li>
+</ul>
+</li>
+<li>Domain environments use Active Directory (AD)<ul>
+<li>Kerberos protocol for authentication tickets</li>
+<li>Single sign-on across machines in the domain</li>
+</ul>
+</li>
+<li>Windows equivalents of Unix tools:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th scope="col">Unix</th>
+<th scope="col">Windows equivalent</th>
+<th scope="col">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>su</code></td>
+<td><code>runas /user:name cmd</code></td>
+<td>Run command as another user</td>
+</tr>
+<tr>
+<td><code>sudo</code></td>
+<td>UAC elevation prompt</td>
+<td>Temporarily raise privileges</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>whoami /all</code></td>
+<td>Show current user and groups</td>
+</tr>
+<tr>
+<td><code>passwd</code></td>
+<td><code>net user name *</code></td>
+<td>Change a user's password</td>
+</tr>
+<tr>
+<td><code>useradd</code></td>
+<td><code>net user name /add</code></td>
+<td>Create a new user account</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>User Account Control (UAC) is Windows' version of least-privilege enforcement<ul>
+<li>Prompts when a program requests elevated privileges</li>
+<li>Can be suppressed (but shouldn't be) for automation</li>
+</ul>
+</li>
+</ul>
+<h2>SSH Key Pairs</h2>
+<ul>
+<li>Password authentication has weaknesses<ul>
+<li>Passwords can be guessed, phished, or intercepted</li>
+<li>Typing a password into a remote terminal exposes it to the remote machine</li>
+</ul>
+</li>
+<li>Public key cryptography provides an alternative<ul>
+<li>Generate a key pair: a private key (keep secret) and a public key (share freely)</li>
+<li>Something encrypted with the public key can only be decrypted with the private key</li>
+<li>Something signed with the private key can be verified with the public key</li>
+</ul>
+</li>
+<li>For SSH: server challenges the client to prove it has the private key<ul>
+<li>Without ever transmitting the private key</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">"tut@example.com"</span>
+Generating<span class="w"> </span>public/private<span class="w"> </span>ed25519<span class="w"> </span>key<span class="w"> </span>pair.
+Enter<span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>which<span class="w"> </span>to<span class="w"> </span>save<span class="w"> </span>the<span class="w"> </span>key<span class="w"> </span><span class="o">(</span>/Users/tut/.ssh/id_ed25519<span class="o">)</span>:
+Enter<span class="w"> </span>passphrase<span class="w"> </span><span class="o">(</span>empty<span class="w"> </span><span class="k">for</span><span class="w"> </span>no<span class="w"> </span>passphrase<span class="o">)</span>:
+Your<span class="w"> </span>identification<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>saved<span class="w"> </span><span class="k">in</span><span class="w"> </span>/Users/tut/.ssh/id_ed25519
+Your<span class="w"> </span>public<span class="w"> </span>key<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>saved<span class="w"> </span><span class="k">in</span><span class="w"> </span>/Users/tut/.ssh/id_ed25519.pub
+</code></pre></div>
+<ul>
+<li><code>ed25519</code> is the recommended key type (newer and more secure than RSA)</li>
+<li>Add a passphrase to protect the private key if it is ever stolen</li>
+<li>Copy the public key to the remote server</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>ssh-copy-id<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_ed25519.pub<span class="w"> </span>tut@remote.example.com
+/usr/bin/ssh-copy-id:<span class="w"> </span>INFO:<span class="w"> </span>attempting<span class="w"> </span>to<span class="w"> </span>log<span class="w"> </span><span class="k">in</span><span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>new<span class="w"> </span>key<span class="o">(</span>s<span class="o">)</span>
+Number<span class="w"> </span>of<span class="w"> </span>key<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>added:<span class="w">        </span><span class="m">1</span>
+</code></pre></div>
+<ul>
+<li>This appends the public key to <code>~/.ssh/authorized_keys</code> on the remote machine</li>
+<li>SSH agent avoids re-typing the passphrase in each session</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="k">$(</span>ssh-agent<span class="k">)</span>
+Agent<span class="w"> </span>pid<span class="w"> </span><span class="m">12345</span>
+
+$<span class="w"> </span>ssh-add<span class="w"> </span>~/.ssh/id_ed25519
+Enter<span class="w"> </span>passphrase<span class="w"> </span><span class="k">for</span><span class="w"> </span>/Users/tut/.ssh/id_ed25519:
+Identity<span class="w"> </span>added:<span class="w"> </span>/Users/tut/.ssh/id_ed25519
+
+$<span class="w"> </span>ssh<span class="w"> </span>tut@remote.example.com
+<span class="c1"># No passphrase prompt — agent handles it</span>
+</code></pre></div>
+<ul>
+<li>Configure SSH behaviour in <code>~/.ssh/config</code></li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>Host remote
+    HostName remote.example.com
+    User tut
+    IdentityFile ~/.ssh/id_ed25519
+    ForwardAgent no
+</code></pre></div>
+<ul>
+<li>After this, <code>ssh remote</code> is equivalent to <code>ssh -i ~/.ssh/id_ed25519 tut@remote.example.com</code></li>
+</ul>
+<section class="exercise">
+<h2>Exercise: Key Inspection</h2>
+<ol>
+<li>
+<p>Generate a key pair with <code>ssh-keygen</code>.
+    What files are created?
+    What do the contents of the public key file look like?</p>
+</li>
+<li>
+<p>What does the <code>ForwardAgent no</code> setting in <code>~/.ssh/config</code> do,
+    and why might you want to keep it disabled on untrusted hosts?</p>
+</li>
+</ol>
+</section>
+<h2>Data Authentication: Hashing and HMAC</h2>
+<ul>
+<li>Authentication is not only about who you are — it can also mean verifying data integrity<ul>
+<li>"Did this file arrive without modification?"</li>
+<li>"Did this message really come from who it claims to?"</li>
+</ul>
+</li>
+<li>Checksums let you verify a file hasn't changed (accidentally or maliciously)</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>sha256sum<span class="w"> </span>site/birds.csv
+3f2a...<span class="w"> </span>site/birds.csv
+
+$<span class="w"> </span>sha256sum<span class="w"> </span>site/birds.csv
+3f2a...<span class="w"> </span>site/birds.csv
+
+$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"extra"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>site/birds.csv
+$<span class="w"> </span>sha256sum<span class="w"> </span>site/birds.csv
+9b1c...<span class="w"> </span>site/birds.csv<span class="w">   </span>←<span class="w"> </span>different<span class="w"> </span><span class="nb">hash</span>
+</code></pre></div>
+<ul>
+<li>A plain hash proves the data is unchanged, but not <em>who</em> produced it</li>
+<li>An <a href="../glossary/#hmac">HMAC</a> (Hash-based Message Authentication Code) uses a shared secret key</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"shared-secret-key"</span>
+<span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"the data we are authenticating"</span>
+
+<span class="n">mac</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"HMAC: </span><span class="si">{</span><span class="n">mac</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Verify: recompute and compare</span>
+<span class="n">expected</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+<span class="n">received</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">mac</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"valid: </span><span class="si">{</span><span class="n">hmac</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Use <code>hmac.compare_digest</code> rather than <code>==</code> to prevent timing attacks<ul>
+<li><code>==</code> short-circuits on the first mismatch, leaking timing information</li>
+<li><code>compare_digest</code> always takes the same amount of time</li>
+</ul>
+</li>
+</ul>
+<h2>Multi-Factor Authentication</h2>
+<ul>
+<li>Even strong passwords can be stolen; SSH keys can be copied</li>
+<li>Multi-factor authentication (MFA) requires two or more independent factors<ul>
+<li>Something you know + something you have is most common</li>
+</ul>
+</li>
+<li>TOTP (Time-Based One-Time Password) is the mechanism behind authenticator apps<ul>
+<li>Server and app share a secret key</li>
+<li>Every 30 seconds, both compute <code>HMAC(secret, current_time // 30)</code></li>
+<li>The app displays the result; you type it in</li>
+<li>An intercepted code is useless after 30 seconds</li>
+</ul>
+</li>
+<li>Hardware security keys (e.g., YubiKey) are more phishing-resistant<ul>
+<li>They verify the domain of the site before responding</li>
+</ul>
+</li>
+</ul>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyotp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="c1"># Server-side: generate a shared secret once and store it</span>
+<span class="n">secret</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">random_base32</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"secret (store securely): </span><span class="si">{</span><span class="n">secret</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># App-side: generate a code using the secret and current time</span>
+<span class="n">totp</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">TOTP</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">totp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"current code: </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Server-side: verify a submitted code</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"valid: </span><span class="si">{</span><span class="n">totp</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>Never implement your own TOTP: use a well-tested library</li>
 </ul>
 </main>
 <footer aria-label="Page navigation">
