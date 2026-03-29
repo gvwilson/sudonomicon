@@ -143,7 +143,7 @@ Compare it to what `env` shows.
 ## Important Environment Variables
 
 -   37 environment variables in my current shell
--   Most important are shown in [%t var_common %]
+-   Most important are shown below
 
 | Name     | Typical Value    | Purpose                           |
 | -------- | ---------------- | --------------------------------- |

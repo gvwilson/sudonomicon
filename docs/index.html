@@ -5,41 +5,46 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>The Sudonomicon</title>
-<link href="./static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="./static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="./_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="./_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="./_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="./">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="./intro/">Introduction</a>
-<a href="./fs/">The Filesystem</a>
-<a href="./proc/">Processes</a>
-<a href="./jobs/">Running Jobs</a>
-<a href="./http/">HTTP</a>
-<a href="./auth/">Authentication</a>
-<a href="./var/">Shell Variables</a>
-<a href="./packenv/">Packages and Virtual Environments</a>
-<a href="./dock/">Virtualization</a>
-<a href="./finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="./">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="./intro/">Introduction</a></li>
+<li><a href="./fs/">The Filesystem</a></li>
+<li><a href="./proc/">Processes</a></li>
+<li><a href="./jobs/">Running Jobs</a></li>
+<li><a href="./http/">HTTP</a></li>
+<li><a href="./auth/">Authentication</a></li>
+<li><a href="./var/">Shell Variables</a></li>
+<li><a href="./packenv/">Packages and Virtual Environments</a></li>
+<li><a href="./dock/">Virtualization</a></li>
+<li><a href="./finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="./license/">License</a>
-<a href="./conduct/">Code of Conduct</a>
-<a href="./contributing/">Contributing</a>
-<a href="./bibliography/">Bibliography</a>
-<a href="./glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="./license/">License</a></li>
+<li><a href="./conduct/">Code of Conduct</a></li>
+<li><a href="./contributing/">Contributing</a></li>
+<li><a href="./bibliography/">Bibliography</a></li>
+<li><a href="./glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>The Sudonomicon</h1>
 <p class="subtitle">An Introduction to Unix Systems for the Cautious and Weary</p>
 <p>Many think they know Unix.
@@ -53,36 +58,25 @@ that occasionally rise to the surface like ancient sea creatures believed long e
 Unix will outlive those who mock it.
 Welcome, then, to a world in which the strange will become familiar, and the familiar, strange.
 Welcome, thrice welcome, to Unix systems programming.</p>
-<ul>
-<li>
-<p>Please see <a href="https://gvwilson.github.io/sudonomicon/">the website</a> to view the current version of this tutorial.</p>
-</li>
-<li>
-<p>Contributions are very welcome;
-    please see the contributors' guide for background.
-    Please also see our <a href="./license/">license</a> for terms of use,
-    and note that all contributors are required to abide by our <a href="./conduct/">Code of Conduct</a>.</p>
-</li>
-</ul>
-<div class="callout">
-<p>These lesson notes and examples are for instructors to use as a starting point.
-We do <em>not</em> expect novices with only basic Python and Unix experience to be able to learn from this on their own.</p>
-</div>
+<div class="row">
+<div class="col-6">
 <h2>Lessons</h2>
 <div id="lessons">
 <ol>
-<li><a href="./intro/">Introduction</a>: who this is for and what it covers</li>
-<li><a href="./fs/">The Filesystem</a>: how to manage files, directories, and their stranger kin</li>
-<li><a href="./proc/">Processes</a>: how to create, signal, and interact with running programs</li>
-<li><a href="./jobs/">Running Jobs</a>: how to do work on demand</li>
-<li><a href="./http/">HTTP</a>: how to move data from place to place</li>
-<li><a href="./auth/">Authentication</a>: how to tell who someone is</li>
-<li><a href="./var/">Shell Variables</a>: what the shell remembers</li>
-<li><a href="./packenv/">Packages and Virtual Environments</a>: managing what you've installed</li>
-<li><a href="./dock/">Virtualization</a>: how and why to pretend you have lots of computers</li>
-<li><a href="./finale/">Conclusion</a>: where we've been and what comes next</li>
+<li><a href="./intro/">Introduction</a></li>
+<li><a href="./fs/">The Filesystem</a></li>
+<li><a href="./proc/">Processes</a></li>
+<li><a href="./jobs/">Running Jobs</a></li>
+<li><a href="./http/">HTTP</a></li>
+<li><a href="./auth/">Authentication</a></li>
+<li><a href="./var/">Shell Variables</a></li>
+<li><a href="./packenv/">Packages and Virtual Environments</a></li>
+<li><a href="./dock/">Virtualization</a></li>
+<li><a href="./finale/">Conclusion</a></li>
 </ol>
 </div>
+</div>
+<div class="col-6">
 <h2>Appendices</h2>
 <div id="appendices">
 <ol>
@@ -93,17 +87,12 @@ We do <em>not</em> expect novices with only basic Python and Unix experience to 
 <li><a href="./glossary/">Glossary</a></li>
 </ol>
 </div>
+</div>
+</div>
 <h2 id="acknowledgments">Acknowledgments</h2>
-<ul>
-<li><a href="https://third-bit.com/"><em>Greg Wilson</em></a> is a programmer, author, and educator based in Toronto.
-    He was the co-founder and first Executive Director of Software Carpentry
-    and received ACM SIGSOFT's Influential Educator Award in 2020.</li>
-</ul>
-<p>Our thanks to:</p>
-<ul>
-<li>Stefan Arentz, Julia Evans, Robert Kern, Matt Panaro, and Jean-Marc Saffroy for feedback.</li>
-<li>Alex Gold for [<a href="./bibliography/#Gold2024">Gold2024</a>]</li>
-</ul>
+<p><a href="https://third-bit.com/">Greg Wilson</a> is a programmer, author, and educator based in Toronto, Canada.
+He was the co-founder and first Executive Director of Software Carpentry
+and received ACM SIGSOFT's Influential Educator Award in 2020.</p>
 <p class="center">
 <em>
     start where you are
@@ -114,13 +103,13 @@ We do <em>not</em> expect novices with only basic Python and Unix experience to 
   </em>
 </p>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
 </div>
 <div class="col-6 center">
-<a href="./"></a>
-	  © 2025
+<a href="./">The Sudonomicon</a>
+	  ©
 	  <a href="./#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">

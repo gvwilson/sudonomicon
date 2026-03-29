@@ -5,41 +5,46 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Shell Variables</title>
-<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="../">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="../intro/">Introduction</a>
-<a href="../fs/">The Filesystem</a>
-<a href="../proc/">Processes</a>
-<a href="../jobs/">Running Jobs</a>
-<a href="../http/">HTTP</a>
-<a href="../auth/">Authentication</a>
-<a href="../var/">Shell Variables</a>
-<a href="../packenv/">Packages and Virtual Environments</a>
-<a href="../dock/">Virtualization</a>
-<a href="../finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../fs/">The Filesystem</a></li>
+<li><a href="../proc/">Processes</a></li>
+<li><a href="../jobs/">Running Jobs</a></li>
+<li><a href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a class="active" href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contributing/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>Shell Variables</h1>
 <h2>Operating System vs. Shell</h2>
 <ul>
@@ -53,10 +58,10 @@
 </ul>
 </li>
 <li>There are many different shells for Unix and Windows<ul>
-<li><a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">Bash</a> and <a href="https://en.wikipedia.org/wiki/Z_shell">Zsh</a> are compatible with the POSIX standard</li>
-<li><a href="https://en.wikipedia.org/wiki/Fish_(Unix_shell)">Fish</a> is nicer, but is not</li>
-<li><a href="https://www.nushell.sh/">Nushell</a> is even stranger</li>
-<li><a href="https://en.wikipedia.org/wiki/PowerShell">PowerShell</a> on Windows (and Unix) has a lot of nice features too</li>
+<li>[Bash][bash] and [Zsh][zsh] are compatible with the POSIX standard</li>
+<li>[Fish][fish] is nicer, but is not</li>
+<li>[Nushell][nushell] is even stranger</li>
+<li>[PowerShell][powershell] on Windows (and Unix) has a lot of nice features too</li>
 </ul>
 </li>
 <li>We use Bash in this tutorial but will discuss Nushell later</li>
@@ -74,15 +79,15 @@
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="shell_var_outer.sh">WINDOW="neighbor"
-echo "outer: window is ${WINDOW}"
-bash src/shell_var_inner.sh
-</code></pre>
-<pre class=""><code data-file="shell_var_inner.sh">echo "inner: window is ${window}"
-</code></pre>
-<pre class=""><code data-file="shell_var_outer.out">outer: window is neighbor
-inner: window is 
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">WINDOW</span><span class="o">=</span><span class="s2">"neighbor"</span>
+<span class="n">echo</span><span class="w"> </span><span class="s2">"outer: window is ${WINDOW}"</span>
+<span class="n">bash</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">shell_var_inner</span><span class="o">.</span><span class="n">sh</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>echo<span class="w"> </span>"inner:<span class="w"> </span>window<span class="w"> </span>is<span class="w"> </span><span class="cp">${</span><span class="n">window</span><span class="cp">}</span>"
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">outer</span><span class="o">:</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">neighbor</span>
+<span class="n">inner</span><span class="o">:</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="k">is</span><span class="w"> </span>
+</code></pre></div>
 <ul>
 <li>Note: variables usually written in upper case to distinguish them from filenames<ul>
 <li>So use underscores as separators</li>
@@ -99,16 +104,16 @@ to use single quotes instead of double quotes?</p>
 <li><a href="../glossary/#env_var">Environment variable</a> is inherited by new processes</li>
 <li>Use <code>export <em>name</em>=<em>value</em></code></li>
 </ul>
-<pre class=""><code data-file="env_var_outer.sh">WINDOW="neighbor"
-export THRESHOLD=0.5
-echo "outer: window is ${WINDOW} and threshold is ${THRESHOLD}"
-bash src/env_var_inner.sh
-</code></pre>
-<pre class=""><code data-file="env_var_inner.sh">echo "inner: window is ${window} and threshold is ${threshold}"
-</code></pre>
-<pre class=""><code data-file="env_var_outer.out">outer: window is neighbor and threshold is 0.5
-inner: window is  and threshold is 
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">WINDOW</span><span class="o">=</span><span class="s2">"neighbor"</span>
+<span class="k">export</span><span class="w"> </span><span class="n">THRESHOLD</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">echo</span><span class="w"> </span><span class="s2">"outer: window is ${WINDOW} and threshold is ${THRESHOLD}"</span>
+<span class="n">bash</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">env_var_inner</span><span class="o">.</span><span class="n">sh</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>echo<span class="w"> </span>"inner:<span class="w"> </span>window<span class="w"> </span>is<span class="w"> </span><span class="cp">${</span><span class="n">window</span><span class="cp">}</span><span class="w"> </span>and<span class="w"> </span>threshold<span class="w"> </span>is<span class="w"> </span><span class="cp">${</span><span class="n">threshold</span><span class="cp">}</span>"
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">outer</span><span class="o">:</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">neighbor</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">threshold</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mf">0.5</span>
+<span class="n">inner</span><span class="o">:</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="k">is</span><span class="w">  </span><span class="n">and</span><span class="w"> </span><span class="n">threshold</span><span class="w"> </span><span class="k">is</span><span class="w"> </span>
+</code></pre></div>
 <section class="exercise">
 <h2>Exercise: Setting in Children</h2>
 <p>If a child process sets shell or environment variables,
@@ -119,20 +124,20 @@ are they visible in the parent once the child finishes executing?</p>
 <li>Since environment variables are inherited by child processes,
     they are inherited by all programs run from the shell that has them</li>
 </ul>
-<pre class=""><code data-file="env_var_py.sh">WINDOW="neighbor"
-export THRESHOLD=0.5
-echo "outer: window is ${WINDOW} and threshold is ${THRESHOLD}"
-python src/env_var_py.py
-</code></pre>
-<pre class=""><code data-file="env_var_py.py">import os
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">WINDOW</span><span class="o">=</span><span class="s2">"neighbor"</span>
+<span class="k">export</span><span class="w"> </span><span class="n">THRESHOLD</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="n">echo</span><span class="w"> </span><span class="s2">"outer: window is ${WINDOW} and threshold is ${THRESHOLD}"</span>
+<span class="n">python</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">env_var_py</span><span class="o">.</span><span class="n">py</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-window = os.getenv("WINDOW", default="not set")
-threshold = os.getenv("THRESHOLD", default="not set")
-print(f"inner: window is {window} and threshold is {threshold}")
-</code></pre>
-<pre class=""><code data-file="env_var_py.out">outer: window is neighbor and threshold is 0.5
-inner: window is not set and threshold is 0.5
-</code></pre>
+<span class="n">window</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"WINDOW"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"not set"</span><span class="p">)</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"THRESHOLD"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">"not set"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"inner: window is </span><span class="si">{</span><span class="n">window</span><span class="si">}</span><span class="s2"> and threshold is </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">outer</span><span class="o">:</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">neighbor</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">threshold</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mf">0.5</span>
+<span class="n">inner</span><span class="o">:</span><span class="w"> </span><span class="n">window</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="kd">set</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">threshold</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="mf">0.5</span>
+</code></pre></div>
 <h2>Inspecting Variables</h2>
 <ul>
 <li><code>set</code> on its own lists variables<ul>
@@ -142,9 +147,9 @@ inner: window is not set and threshold is 0.5
 </li>
 <li><code>env</code> shows all environment variables</li>
 </ul>
-<pre class=""><code data-file="show_env_vars.sh">env | cut -d = -f 1 | sort | head -n 10
-</code></pre>
-<pre class=""><code data-file="show_env_vars.out">BASH_SILENCE_DEPRECATION_WARNING
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>env | cut -d = -f 1 | sort | head -n 10
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>BASH_SILENCE_DEPRECATION_WARNING
 CONDA_DEFAULT_ENV
 CONDA_EXE
 CONDA_PREFIX
@@ -154,11 +159,11 @@ CONDA_PYTHON_EXE
 CONDA_SHLVL
 EDITOR
 GEM_HOME
-</code></pre>
+</code></pre></div>
 <ul>
 <li>Many tools rely on variables to manage configuration<ul>
-<li><a href="https://github.com/nvm-sh/nvm">NVM</a> defines 4, <a href="https://docs.conda.io/">Conda</a> defines 8</li>
-<li>No guarantee that their names don't [%g name_collision "collide" %]</li>
+<li>[NVM][nvm] defines 4, [Conda][conda] defines 8</li>
+<li>No guarantee that their names don't <a class="gl-ref" href="../glossary/#name_collision">collide</a></li>
 </ul>
 </li>
 </ul>
@@ -179,14 +184,14 @@ Compare it to what <code>env</code> shows.</p>
 <h2>Important Environment Variables</h2>
 <ul>
 <li>37 environment variables in my current shell</li>
-<li>Most important are shown in [%t var_common %]</li>
+<li>Most important are shown below</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Typical Value</th>
-<th>Purpose</th>
+<th scope="col">Name</th>
+<th scope="col">Typical Value</th>
+<th scope="col">Purpose</th>
 </tr>
 </thead>
 <tbody>
@@ -243,28 +248,28 @@ Compare it to what <code>env</code> shows.</p>
 <li>Shell looks in these <em>in order</em> to find commands</li>
 <li>Reading at them all on one line is difficult, so use <code>tr</code> to split</li>
 </ul>
-<pre class=""><code data-file="show_path.sh">echo $PATH | tr : '\n'
-</code></pre>
-<pre class=""><code data-file="show_path.out">/Users/tut/google-cloud-sdk/bin
-/Users/tut/conda/envs/sys/bin
-/Users/tut/conda/condabin
-/Users/tut/.nvm/versions/node/v20.8.0/bin
-/Users/tut/bin
-/Applications/Postgres.app/Contents/Versions/14/bin
-/Users/tut/go/bin
-/usr/local/bin
-/System/Cryptexes/App/usr/bin
-/usr/bin
-/bin
-/usr/sbin
-/sbin
-/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin
-/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
-/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
-/Library/Apple/usr/bin
-/Library/TeX/texbin
-/usr/local/bin
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>echo $PATH | tr : '\n'
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tut</span><span class="o">/</span><span class="n">google</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">sdk</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tut</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tut</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">condabin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tut</span><span class="o">/.</span><span class="n">nvm</span><span class="o">/</span><span class="n">versions</span><span class="o">/</span><span class="n">node</span><span class="o">/</span><span class="n">v20</span><span class="o">.</span><span class="mf">8.0</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tut</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Postgres</span><span class="o">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">Versions</span><span class="o">/</span><span class="mi">14</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">tut</span><span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Cryptexes</span><span class="o">/</span><span class="n">App</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span>
+<span class="o">/</span><span class="n">sbin</span>
+<span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">com</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">cryptexd</span><span class="o">/</span><span class="n">codex</span><span class="o">.</span><span class="n">system</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">com</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">cryptexd</span><span class="o">/</span><span class="n">codex</span><span class="o">.</span><span class="n">system</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">com</span><span class="o">.</span><span class="n">apple</span><span class="o">.</span><span class="n">security</span><span class="o">.</span><span class="n">cryptexd</span><span class="o">/</span><span class="n">codex</span><span class="o">.</span><span class="n">system</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">appleinternal</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">Apple</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">TeX</span><span class="o">/</span><span class="n">texbin</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span>
+</code></pre></div>
 <ul>
 <li>Notice <code>/Users/tut/bin</code></li>
 <li>Common to have a <code>~/bin</code> directory with the user's own utilities</li>
@@ -278,15 +283,15 @@ Compare it to what <code>env</code> shows.</p>
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="change_path.sh">export PATH="/tmp/bin:${PATH}"
-echo $PATH | tr : '\n' | head -n 5
-</code></pre>
-<pre class=""><code data-file="change_path.out">/tmp/bin
-/Users/gregwilson/google-cloud-sdk/bin
-/Users/gregwilson/conda/envs/sys/bin
-/Users/gregwilson/conda/condabin
-/Users/gregwilson/.gem/ruby/3.1.2/bin
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="s2">"/tmp/bin:${PATH}"</span>
+<span class="n">echo</span><span class="w"> </span><span class="o">$</span><span class="n">PATH</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">tr</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">gregwilson</span><span class="o">/</span><span class="n">google</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">sdk</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">gregwilson</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">bin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">gregwilson</span><span class="o">/</span><span class="n">conda</span><span class="o">/</span><span class="n">condabin</span>
+<span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">gregwilson</span><span class="o">/</span><span class="p">.</span><span class="n">gem</span><span class="o">/</span><span class="n">ruby</span><span class="o">/</span><span class="mf">3.1.2</span><span class="o">/</span><span class="n">bin</span>
+</code></pre></div>
 <section class="exercise">
 <h2>Exercise: Shortening the Path</h2>
 <p>Removing a directory from <code>PATH</code> is harder than adding one.
@@ -305,39 +310,39 @@ complicated operations should be done in Python rather than in the shell.</p>
 <li>Bash shell runs commands in <code>~/.bash_profile</code> for login shells</li>
 <li>Bash shell runs commands in <code>~/.bashrc</code> for interactive shells</li>
 <li>Yes, the terminology is confusing</li>
-<li>Common to have <code>~/.bash_profile</code> [%g source_shell "source" %] <code>~/.bashrc</code><ul>
+<li>Common to have <code>~/.bash_profile</code> <a class="gl-ref" href="../glossary/#source_shell">source</a> <code>~/.bashrc</code><ul>
 <li>I.e., run those commands in the current shell</li>
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="source_bashrc.sh">source $HOME/.bashrc
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>source $HOME/.bashrc
+</code></pre></div>
 <h2 class="aside">Command Interpolation</h2>
 <ul>
 <li>Can use <code>outer $(<em>inner</em>)</code> to run <code>inner</code> and use its output as arguments to <code>outer</code></li>
 <li>Long-winded way to count lines in some text files</li>
 </ul>
-<pre class=""><code data-file="interpolate.sh">wc -l $(ls src/*.text)
-</code></pre>
-<pre class=""><code data-file="interpolate.out">      12 src/ctrl_z_background.text
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>wc -l $(ls src/*.text)
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>      12 src/ctrl_z_background.text
       12 src/kill_int.text
        6 src/kill_process.text
       30 total
-</code></pre>
+</code></pre></div>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-	  ⇐ <a href="../auth/">Authentication</a>
+<span aria-hidden="true">⇐</span> <a href="../auth/">Authentication</a>
 </div>
 <div class="col-6 center">
-<a href="../"></a>
-	  © 2025
+<a href="../">The Sudonomicon</a>
+	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../packenv/">Packages and Virtual Environments</a> ⇒
-	</div>
+<a href="../packenv/">Packages and Virtual Environments</a> <span aria-hidden="true">⇒</span>
+</div>
 </div>
 </footer>
 </body>

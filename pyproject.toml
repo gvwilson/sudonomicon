@@ -4,8 +4,7 @@ description = "An introduction to Unix systems for the cautious and weary"
 version = "0.3.0"
 requires-python = ">=3.12"
 dependencies = [
-    "linkchecker",
-    "mccole"
+    "mccole>=2.5.0",
 ]
 
 [tool.mccole]
@@ -22,4 +21,9 @@ skips = [
     "old/**",
     "uv.lock",
     "Dockerfile"
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.8",
 ]

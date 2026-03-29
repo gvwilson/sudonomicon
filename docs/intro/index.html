@@ -5,41 +5,46 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Introduction</title>
-<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="../">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="../intro/">Introduction</a>
-<a href="../fs/">The Filesystem</a>
-<a href="../proc/">Processes</a>
-<a href="../jobs/">Running Jobs</a>
-<a href="../http/">HTTP</a>
-<a href="../auth/">Authentication</a>
-<a href="../var/">Shell Variables</a>
-<a href="../packenv/">Packages and Virtual Environments</a>
-<a href="../dock/">Virtualization</a>
-<a href="../finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a class="active" href="../intro/">Introduction</a></li>
+<li><a href="../fs/">The Filesystem</a></li>
+<li><a href="../proc/">Processes</a></li>
+<li><a href="../jobs/">Running Jobs</a></li>
+<li><a href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contributing/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>Introduction</h1>
 <h2>Objective</h2>
 <ul>
@@ -58,7 +63,7 @@
 <li>Musical analogy<ul>
 <li>This is the chord changes and melody</li>
 <li>We expect instructors to create an arrangement and/or improvise while delivering</li>
-<li>See <a href="https://teachtogether.tech/"><em>Teaching Tech Together</em></a> for background</li>
+<li>See [<em>Teaching Tech Together</em>][t3] for background</li>
 </ul>
 </li>
 <li>Please see <a href="../license/">the license</a> for terms of use,
@@ -81,7 +86,7 @@ or run a pipeline in the cloud</li>
 </ul>
 <h2>Prerequisites</h2>
 <ul>
-<li>Unix shell commands covered in <a href="https://swcarpentry.github.io/shell-novice/">this Software Carpentry lesson</a>:<ul>
+<li>Unix shell commands covered in [this Software Carpentry lesson][sc_shell]:<ul>
 <li><code>pwd</code>; <code>ls</code>; <code>cd</code>; <code>.</code> and <code>..</code>; <code>rm</code> and <code>rmdir</code>; <code>mkdir</code>; <code>touch</code>;
     <code>mv</code>; <code>cp</code>; <code>tree</code>; <code>cat</code>; <code>wc</code>; <code>head</code>; <code>tail</code>; <code>less</code>; <code>cut</code>; <code>echo</code>;
     <code>history</code>; <code>find</code>; <code>grep</code>; <code>zip</code>; <code>man</code></li>
@@ -94,7 +99,7 @@ or run a pipeline in the cloud</li>
 <li>Variables; numbers and strings; lists; dictionaries; <code>for</code> and <code>while</code> loops;
     <code>if</code>/<code>else</code>; <code>with</code>; defining and calling functions; <code>sys.argv</code>, <code>sys.stdin</code>,
     and <code>sys.stdout</code>; simple regular expressions.</li>
-<li>Create a virtual environment with <a href="https://docs.astral.sh/uv/">uv</a>; activate it and install packages.</li>
+<li>Create a virtual environment with [uv][uv]; activate it and install packages.</li>
 </ul>
 </li>
 </ul>
@@ -109,7 +114,7 @@ or run a pipeline in the cloud</li>
 <li>Explain what a job is and use commands like <code>jobs</code>, <code>bg</code>, and <code>fg</code> to manage them.</li>
 <li>Explain what <code>cron</code> jobs are and how to create them.</li>
 <li>Explain the difference between a container and a virtual machine.</li>
-<li>Create and manage <a href="https://www.docker.com/">Docker</a> images.</li>
+<li>Create and manage [Docker][docker] images.</li>
 <li>Explain what ports are and write Python code that uses sockets and HTTP.</li>
 <li>Explain what certificates are and how they are used to support HTTPS.</li>
 <li>Explain what key pairs are and how to create and manage them.</li>
@@ -127,18 +132,18 @@ or run a pipeline in the cloud</li>
 </li>
 </ul>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
 </div>
 <div class="col-6 center">
-<a href="../"></a>
-	  © 2025
+<a href="../">The Sudonomicon</a>
+	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../fs/">The Filesystem</a> ⇒
-	</div>
+<a href="../fs/">The Filesystem</a> <span aria-hidden="true">⇒</span>
+</div>
 </div>
 </footer>
 </body>

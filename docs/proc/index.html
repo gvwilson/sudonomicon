@@ -5,41 +5,46 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Processes</title>
-<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="../">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="../intro/">Introduction</a>
-<a href="../fs/">The Filesystem</a>
-<a href="../proc/">Processes</a>
-<a href="../jobs/">Running Jobs</a>
-<a href="../http/">HTTP</a>
-<a href="../auth/">Authentication</a>
-<a href="../var/">Shell Variables</a>
-<a href="../packenv/">Packages and Virtual Environments</a>
-<a href="../dock/">Virtualization</a>
-<a href="../finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../fs/">The Filesystem</a></li>
+<li><a class="active" href="../proc/">Processes</a></li>
+<li><a href="../jobs/">Running Jobs</a></li>
+<li><a href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contributing/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>Processes</h1>
 <ul>
 <li>FIXME</li>
@@ -67,14 +72,14 @@
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="ps_a_l.sh">ps -a -l
-</code></pre>
-<pre class=""><code data-file="ps_a_l.out">  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>ps -a -l
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
     0 13215 83470     4106   0  31  0 408655632   9504   ttys001    0:00.02 login -pfl gvwilson /
   501 13216 13215     4006   0  31  0 408795632   5424   ttys001    0:00.04 -bash
   501 13569 13216     4046   0  31  0 408895008  20864   ttys001    0:00.10 python -m http.server
     0 13577 13216     4106   0  31  0 408766128   1888   ttys001    0:00.01 ps -a -l
-</code></pre>
+</code></pre></div>
 <ul>
 <li>Use <code>ps -a -x</code> to see (almost) all processes running on computer<ul>
 <li><code>ps -a -x | wc</code> tells me there are 655 processes running on my laptop right now</li>
@@ -110,12 +115,12 @@
 </li>
 <li><code>pstree $$</code> to see <a href="../glossary/#process_tree">process tree</a></li>
 </ul>
-<pre class=""><code data-file="pstree.out">-+= 34628 gvwilson -bash
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>-+= 34628 gvwilson -bash
  |--= 38255 gvwilson emacs 03_proc/index.md
  |-+= 38697 gvwilson pstree 34628
  | \--- 38699 root ps -axwwo user,pid,ppid,pgid,command
  \--- 38698 gvwilson pbcopy
-</code></pre>
+</code></pre></div>
 <h2>Signals</h2>
 <ul>
 <li>Can send a <a href="../glossary/#signal">signal</a> to a process<ul>
@@ -127,10 +132,10 @@
 <table>
 <thead>
 <tr>
-<th style="text-align: right;">Number</th>
-<th>Name</th>
-<th>Default Action</th>
-<th>Description</th>
+<th scope="col" style="text-align: right;">Number</th>
+<th scope="col">Name</th>
+<th scope="col">Default Action</th>
+<th scope="col">Description</th>
 </tr>
 </thead>
 <tbody>
@@ -220,29 +225,29 @@
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="catch_interrupt.py">import signal
-import sys
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">signal</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-COUNT = 0
+<span class="n">COUNT</span> <span class="o">=</span> <span class="mi">0</span>
 
-def handler(sig, frame):
-    global COUNT
-    COUNT += 1
-    print(f"interrupt {COUNT}")
-    if COUNT &gt;= 3:
-        sys.exit(0)
+<span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">COUNT</span>
+    <span class="n">COUNT</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"interrupt </span><span class="si">{</span><span class="n">COUNT</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">COUNT</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-signal.signal(signal.SIGINT, handler)
-print("use Ctrl-C three times")
-while True:
-    signal.pause()
-</code></pre>
-<pre class=""><code data-file="catch_interrupt.out">python src/catch_interrupt.py
+<span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"use Ctrl-C three times"</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">signal</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/catch_interrupt.py
 use Ctrl-C three times
 ^Cinterrupt 1
 ^Cinterrupt 2
 ^Cinterrupt 3
-</code></pre>
+</code></pre></div>
 <ul>
 <li><code>^C</code> shows where user typed Ctrl-C</li>
 </ul>
@@ -263,25 +268,25 @@ use Ctrl-C three times
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="show_timer.py">import time
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 
-for i in range(3):
-    print(f"loop {i}")
-    time.sleep(1)
-print("loop finished")
-</code></pre>
-<pre class=""><code data-file="show_timer.sh">python src/show_timer.py &amp;
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"loop </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"loop finished"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/show_timer.py &amp;
 ls site
-</code></pre>
-<pre class=""><code data-file="show_timer.out">$ src/show_timer.sh
-birds.csv       cert_authority.srl  sandbox         server.pem      species.csv
-cert_authority.key  motto.json      server.csr      server_first_cert.pem   yukon.db
-cert_authority.pem  motto.txt       server.key      server_first_key.pem
-loop 0
-$ loop 1
-loop 2
-loop finished
-</code></pre>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>src/show_timer.sh
+birds.csv<span class="w">       </span>cert_authority.srl<span class="w">  </span>sandbox<span class="w">         </span>server.pem<span class="w">      </span>species.csv
+cert_authority.key<span class="w">  </span>motto.json<span class="w">      </span>server.csr<span class="w">      </span>server_first_cert.pem<span class="w">   </span>yukon.db
+cert_authority.pem<span class="w">  </span>motto.txt<span class="w">       </span>server.key<span class="w">      </span>server_first_key.pem
+loop<span class="w"> </span><span class="m">0</span>
+$<span class="w"> </span>loop<span class="w"> </span><span class="m">1</span>
+loop<span class="w"> </span><span class="m">2</span>
+loop<span class="w"> </span>finished
+</code></pre></div>
 <ul>
 <li><code>&amp;</code> at end of command means "run in the background"</li>
 <li>So <code>ls</code> command executes immediately</li>
@@ -299,19 +304,19 @@ loop finished
 <li>Or <code>fg %<em>num</em></code> to <a href="../glossary/#foreground_process">foreground</a> the process
     to <a href="../glossary/#resume_process">resume</a> its execution</li>
 </ul>
-<pre class=""><code data-file="ctrl_z_background.text">$ python src/show_timer.py
-loop 0
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>python<span class="w"> </span>src/show_timer.py
+loop<span class="w"> </span><span class="m">0</span>
 ^Z
-[1]+  Stopped                 python src/show_timer.py
-$ jobs
-[1]+  Stopped                 python src/show_timer.py
-$ bg
-[1]+ python src/show_timer.py &amp;
-loop 1
-$ loop 2
-loop finished
-[1]+  Done                    python src/show_timer.py
-</code></pre>
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Stopped<span class="w">                 </span>python<span class="w"> </span>src/show_timer.py
+$<span class="w"> </span><span class="nb">jobs</span>
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Stopped<span class="w">                 </span>python<span class="w"> </span>src/show_timer.py
+$<span class="w"> </span><span class="nb">bg</span>
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w"> </span>python<span class="w"> </span>src/show_timer.py<span class="w"> </span><span class="p">&amp;</span>
+loop<span class="w"> </span><span class="m">1</span>
+$<span class="w"> </span>loop<span class="w"> </span><span class="m">2</span>
+loop<span class="w"> </span>finished
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Done<span class="w">                    </span>python<span class="w"> </span>src/show_timer.py
+</code></pre></div>
 <ul>
 <li>Note that input and output are mixed together</li>
 </ul>
@@ -335,13 +340,13 @@ loop finished
 <ul>
 <li>Use <code>kill</code> to send a signal to a process</li>
 </ul>
-<pre class=""><code data-file="kill_process.text">$ python src/show_timer.py
-loop 0
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>python<span class="w"> </span>src/show_timer.py
+loop<span class="w"> </span><span class="m">0</span>
 ^Z
-[1]+  Stopped                 python src/show_timer.py
-$ kill %1
-[1]+  Terminated: 15          python src/show_timer.py
-</code></pre>
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Stopped<span class="w">                 </span>python<span class="w"> </span>src/show_timer.py
+$<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>%1
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Terminated:<span class="w"> </span><span class="m">15</span><span class="w">          </span>python<span class="w"> </span>src/show_timer.py
+</code></pre></div>
 <ul>
 <li>By default, <code>kill</code> sends <code>SIGTERM</code> (terminate process)</li>
 <li>Variations:<ul>
@@ -350,19 +355,19 @@ $ kill %1
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="kill_int.text">$ python src/show_timer.py
-loop 0
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>python<span class="w"> </span>src/show_timer.py
+loop<span class="w"> </span><span class="m">0</span>
 ^Z
-[1]+  Stopped                 python src/show_timer.py
-$ kill -s INT %1
-[1]+  Stopped                 python src/show_timer.py
-$ fg
-python src/show_timer.py
-Traceback (most recent call last):
-  File "/tut/sys/src/show_timer.py", line 5, in &lt;module&gt;
-    time.sleep(1)
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Stopped<span class="w">                 </span>python<span class="w"> </span>src/show_timer.py
+$<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-s<span class="w"> </span>INT<span class="w"> </span>%1
+<span class="o">[</span><span class="m">1</span><span class="o">]</span>+<span class="w">  </span>Stopped<span class="w">                 </span>python<span class="w"> </span>src/show_timer.py
+$<span class="w"> </span><span class="nb">fg</span>
+python<span class="w"> </span>src/show_timer.py
+Traceback<span class="w"> </span><span class="o">(</span>most<span class="w"> </span>recent<span class="w"> </span>call<span class="w"> </span>last<span class="o">)</span>:
+<span class="w">  </span>File<span class="w"> </span><span class="s2">"/tut/sys/src/show_timer.py"</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">5</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>&lt;module&gt;
+<span class="w">    </span>time.sleep<span class="o">(</span><span class="m">1</span><span class="o">)</span>
 KeyboardInterrupt
-</code></pre>
+</code></pre></div>
 <h2>Fork</h2>
 <ul>
 <li><a href="../glossary/#fork_process">Fork</a> creates a duplicate of a process<ul>
@@ -371,19 +376,19 @@ KeyboardInterrupt
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="fork.py">import os
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-print(f"starting {os.getpid()}")
-pid = os.fork()
-if pid == 0:
-    print(f"child got {pid} is {os.getpid()}")
-else:
-    print(f"parent got {pid} is {os.getpid()}")
-</code></pre>
-<pre class=""><code data-file="fork.out">starting 41618
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"starting </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"child got </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"parent got </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>starting 41618
 parent got 41619 is 41618
 child got 0 is 41619
-</code></pre>
+</code></pre></div>
 <div class="callout">
 <ul>
 <li>Output shown above comes from running the program interactively</li>
@@ -409,21 +414,21 @@ child got 0 is 41619
 <ul>
 <li>Can force OS to do I/O <em>right now</em> by <a href="../glossary/#flush">flushing</a> its buffers</li>
 </ul>
-<pre class=""><code data-file="flush.py">import os
-import sys
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-print(f"starting {os.getpid()}")
-sys.stdout.flush()
-pid = os.fork()
-if pid == 0:
-    print(f"child got {pid} is {os.getpid()}")
-else:
-    print(f"parent got {pid} is {os.getpid()}")
-</code></pre>
-<pre class=""><code data-file="flush.out">starting 41536
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"starting </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"child got </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"parent got </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>starting 41536
 parent got 41537 is 41536
 child got 0 is 41537
-</code></pre>
+</code></pre></div>
 <h2>Exec</h2>
 <ul>
 <li>The <code>exec</code> family of functions in <code>os</code> execute a new program
@@ -434,21 +439,21 @@ child got 0 is 41537
 </li>
 <li>Use <code>fork</code>/<code>exec</code> to create a new process and then run a program in it</li>
 </ul>
-<pre class=""><code data-file="fork_exec.py">import os
-import sys
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-print(f"starting {os.getpid()}")
-sys.stdout.flush()
-pid = os.fork()
-if pid == 0:
-    os.execl("/bin/echo", "echo", f"child echoing {pid} from {os.getpid()}")
-else:
-    print(f"parent got {pid} is {os.getpid()}")
-</code></pre>
-<pre class=""><code data-file="fork_exec.out">starting 46713
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"starting </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+<span class="k">if</span> <span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">execl</span><span class="p">(</span><span class="s2">"/bin/echo"</span><span class="p">,</span> <span class="s2">"echo"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"child echoing </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"parent got </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>starting 46713
 parent got 46714 is 46713
 child echoing 0 from 46714
-</code></pre>
+</code></pre></div>
 <section class="exercise">
 <h2>Exercise: Different Kinds of <code>exec</code></h2>
 <ol>
@@ -457,19 +462,19 @@ child echoing 0 from 46714
 </ol>
 </section>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-	  ⇐ <a href="../fs/">The Filesystem</a>
+<span aria-hidden="true">⇐</span> <a href="../fs/">The Filesystem</a>
 </div>
 <div class="col-6 center">
-<a href="../"></a>
-	  © 2025
+<a href="../">The Sudonomicon</a>
+	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../jobs/">Running Jobs</a> ⇒
-	</div>
+<a href="../jobs/">Running Jobs</a> <span aria-hidden="true">⇒</span>
+</div>
 </div>
 </footer>
 </body>

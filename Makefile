@@ -1,13 +1,4 @@
-# Runnable tasks.
-
-SLUG=change
-
 all: commands
-
-## build: build HTML
-build:
-	@mccole build --src . --dst docs
-	@touch docs/.nojekyll
 
 ## commands: show available commands (*)
 commands:
@@ -15,28 +6,34 @@ commands:
 	| sed -e 's/## //g' \
 	| column -t -s ':'
 
+## check: check code issues
+check:
+	@ruff check .
+
 ## clean: clean up
 clean:
-	@find . -type f -name '*~' -exec rm {} \;
-	@find . -type d -name __pycache__ | xargs rm -r
-	@find . -type d -name .ruff_cache | xargs rm -r
+	@rm -rf ./dist
+	@find . -path ./.venv -prune -o -type d -name __pycache__ -exec rm -rf {} +
+	@find . -path ./.venv -prune -o -type d -name .ruff_cache -exec rm -rf {} +
+	@find . -path ./.venv -prune -o -type f -name '*~' -exec rm {} +
 
-## links: check links in published site
-links:
-	linkchecker -F text https://gvwilson.github.io/${SLUG}/
+## fix: fix code issues
+fix:
+	@ruff check --fix .
 
-## check: check code and project
-check:
+## format: format code
+format:
+	@ruff format .
+
+## html: check HTML
+html:
 	@mccole check --src . --dst docs
 
-## serve: serve generated HTML
+## site: build site
+site:
+	@mccole build --src . --dst docs
+	@touch docs/.nojekyll
+
+## serve: serve documentation
 serve:
-	@python -m http.server -d docs $(PORT)
-
-## spelling: check for unknown words
-spelling:
-	@cat *.md */*.md | aspell list | sort | uniq | diff - extras/words.txt
-
-## untab: remove tabs in Markdown files
-untab:
-	@find . -name '*.md' -type f -exec sh -c 'expand -t 8 "$$1" > "$$1.tmp" && mv "$$1.tmp" "$$1"' _ {} \;
+	python -m http.server -d docs

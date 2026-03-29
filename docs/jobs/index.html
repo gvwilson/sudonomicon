@@ -5,41 +5,46 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Running Jobs</title>
-<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="../">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="../intro/">Introduction</a>
-<a href="../fs/">The Filesystem</a>
-<a href="../proc/">Processes</a>
-<a href="../jobs/">Running Jobs</a>
-<a href="../http/">HTTP</a>
-<a href="../auth/">Authentication</a>
-<a href="../var/">Shell Variables</a>
-<a href="../packenv/">Packages and Virtual Environments</a>
-<a href="../dock/">Virtualization</a>
-<a href="../finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../fs/">The Filesystem</a></li>
+<li><a href="../proc/">Processes</a></li>
+<li><a class="active" href="../jobs/">Running Jobs</a></li>
+<li><a href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contributing/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>Running Jobs</h1>
 <ul>
 <li>FIXME</li>
@@ -52,18 +57,18 @@
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="watch_date.text">$ watch -n 5 date
-Every 5.0s: date              cherne: Mon Apr 22 16:11:48 2024
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>watch<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span>date
+Every<span class="w"> </span><span class="m">5</span>.0s:<span class="w"> </span>date<span class="w">              </span>cherne:<span class="w"> </span>Mon<span class="w"> </span>Apr<span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="m">16</span>:11:48<span class="w"> </span><span class="m">2024</span>
 
-Mon Apr 22 16:11:53 EDT 2024
-</code></pre>
+Mon<span class="w"> </span>Apr<span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="m">16</span>:11:53<span class="w"> </span>EDT<span class="w"> </span><span class="m">2024</span>
+</code></pre></div>
 <ul>
 <li><code>-n 5</code>: every five seconds</li>
 <li>Less distracting to show without title (<code>-t</code>)</li>
 </ul>
-<pre class=""><code data-file="watch_date_no_title.text">$ watch -t -n 5 date
-Mon Apr 22 16:11:53 EDT 2024
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>watch<span class="w"> </span>-t<span class="w"> </span>-n<span class="w"> </span><span class="m">5</span><span class="w"> </span>date
+Mon<span class="w"> </span>Apr<span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="m">16</span>:11:53<span class="w"> </span>EDT<span class="w"> </span><span class="m">2024</span>
+</code></pre></div>
 <ul>
 <li>More useful to show differences with <code>-d</code></li>
 <li>Each successive update highlights the difference from the previous one<ul>
@@ -77,14 +82,14 @@ Mon Apr 22 16:11:53 EDT 2024
 <ul>
 <li>Use <code>fswatch</code> (file system watch)</li>
 </ul>
-<pre class=""><code data-file="fswatch_example.text">$ fswatch -l 1 -x Created -x Removed /tmp
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>fswatch<span class="w"> </span>-l<span class="w"> </span><span class="m">1</span><span class="w"> </span>-x<span class="w"> </span>Created<span class="w"> </span>-x<span class="w"> </span>Removed<span class="w"> </span>/tmp
 
-# touch /tmp/a.txt
-/private/tmp/a.txt Created IsFile
+<span class="c1"># touch /tmp/a.txt</span>
+/private/tmp/a.txt<span class="w"> </span>Created<span class="w"> </span>IsFile
 
-# rm /tmp/a.txt
-/private/tmp/a.txt Created IsFile Removed
-</code></pre>
+<span class="c1"># rm /tmp/a.txt</span>
+/private/tmp/a.txt<span class="w"> </span>Created<span class="w"> </span>IsFile<span class="w"> </span>Removed
+</code></pre></div>
 <ul>
 <li><code>-l 1</code>: latency of one second (i.e., how often to report)</li>
 <li><code>-x Created -x Removed</code>: what events to watch for</li>
@@ -103,7 +108,7 @@ Mon Apr 22 16:11:53 EDT 2024
 </ul>
 </li>
 <li>Most research programmers won't ever need it</li>
-<li>If you do, consult <a href="https://crontab.guru/">crontab.guru</a></li>
+<li>If you do, consult [crontab.guru][crontab-guru]</li>
 </ul>
 <h2>Git Hooks</h2>
 <ul>
@@ -119,73 +124,73 @@ Mon Apr 22 16:11:53 EDT 2024
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="pre_commit_always_fail.text"># Make a place for this example.
-$ mkdir example
-$ cd example
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>#<span class="w"> </span><span class="nv">Make</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">place</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">example</span>.
+$<span class="w"> </span><span class="nv">mkdir</span><span class="w"> </span><span class="nv">example</span>
+$<span class="w"> </span><span class="nv">cd</span><span class="w"> </span><span class="nv">example</span>
 
-# Turn it into a Git repository.
-$ git init .
-Initialized empty Git repository in /Users/tut/example/.git/
+#<span class="w"> </span><span class="nv">Turn</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">into</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">Git</span><span class="w"> </span><span class="nv">repository</span>.
+$<span class="w"> </span><span class="nv">git</span><span class="w"> </span><span class="nv">init</span><span class="w"> </span>.
+<span class="nv">Initialized</span><span class="w"> </span><span class="nv">empty</span><span class="w"> </span><span class="nv">Git</span><span class="w"> </span><span class="nv">repository</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="o">/</span><span class="nv">Users</span><span class="o">/</span><span class="nv">tut</span><span class="o">/</span><span class="nv">example</span><span class="o">/</span>.<span class="nv">git</span><span class="o">/</span>
 
-# Create a pre-commit script that always fails (i.e., exits with non-zero status).
-$ cat &gt; .git/hooks/pre-commit.sh
-#!/bin/sh
-echo "hook running"
-exit 1
+#<span class="w"> </span><span class="nv">Create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">pre</span><span class="o">-</span><span class="nv">commit</span><span class="w"> </span><span class="nv">script</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">always</span><span class="w"> </span><span class="nv">fails</span><span class="w"> </span><span class="ss">(</span><span class="nv">i</span>.<span class="nv">e</span>.,<span class="w"> </span><span class="nv">exits</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">non</span><span class="o">-</span><span class="nv">zero</span><span class="w"> </span><span class="nv">status</span><span class="ss">)</span>.
+$<span class="w"> </span><span class="nv">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>.<span class="nv">git</span><span class="o">/</span><span class="nv">hooks</span><span class="o">/</span><span class="nv">pre</span><span class="o">-</span><span class="nv">commit</span>.<span class="nv">sh</span>
+#<span class="o">!/</span><span class="nv">bin</span><span class="o">/</span><span class="nv">sh</span>
+<span class="nv">echo</span><span class="w"> </span><span class="s2">"hook running"</span>
+<span class="k">exit</span><span class="w"> </span><span class="mi">1</span>
 
-# Make that script executable.
-$ chmod 755 .git/hooks/pre-commit.sh
+#<span class="w"> </span><span class="nv">Make</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">script</span><span class="w"> </span><span class="nv">executable</span>.
+$<span class="w"> </span><span class="nv">chmod</span><span class="w"> </span><span class="mi">755</span><span class="w"> </span>.<span class="nv">git</span><span class="o">/</span><span class="nv">hooks</span><span class="o">/</span><span class="nv">pre</span><span class="o">-</span><span class="nv">commit</span>.<span class="nv">sh</span>
 
-# Run it and check its exit status.
-$ .git/hooks/pre-commit.sh
-hook running
+#<span class="w"> </span><span class="nv">Run</span><span class="w"> </span><span class="nv">it</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">check</span><span class="w"> </span><span class="nv">its</span><span class="w"> </span><span class="k">exit</span><span class="w"> </span><span class="nv">status</span>.
+$<span class="w"> </span>.<span class="nv">git</span><span class="o">/</span><span class="nv">hooks</span><span class="o">/</span><span class="nv">pre</span><span class="o">-</span><span class="nv">commit</span>.<span class="nv">sh</span>
+<span class="nv">hook</span><span class="w"> </span><span class="nv">running</span>
 
-$ echo $?
-1
+$<span class="w"> </span><span class="nv">echo</span><span class="w"> </span>$?
+<span class="mi">1</span>
 
-# Create some content.
-$ cat &gt; a.txt
-content
+#<span class="w"> </span><span class="nv">Create</span><span class="w"> </span><span class="nv">some</span><span class="w"> </span><span class="nv">content</span>.
+$<span class="w"> </span><span class="nv">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">a</span>.<span class="nv">txt</span>
+<span class="nv">content</span>
 
-# Try committing it.
-# The hook should print "hook running" and the commit should be prevented.
-$ git add a.txt
+#<span class="w"> </span><span class="nv">Try</span><span class="w"> </span><span class="nv">committing</span><span class="w"> </span><span class="nv">it</span>.
+#<span class="w"> </span><span class="nv">The</span><span class="w"> </span><span class="nv">hook</span><span class="w"> </span><span class="nv">should</span><span class="w"> </span><span class="nv">print</span><span class="w"> </span><span class="s2">"hook running"</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">commit</span><span class="w"> </span><span class="nv">should</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">prevented</span>.
+$<span class="w"> </span><span class="nv">git</span><span class="w"> </span><span class="nv">add</span><span class="w"> </span><span class="nv">a</span>.<span class="nv">txt</span>
 
-$ git commit -m "should not work"
-hook running
+$<span class="w"> </span><span class="nv">git</span><span class="w"> </span><span class="nv">commit</span><span class="w"> </span><span class="o">-</span><span class="nv">m</span><span class="w"> </span><span class="s2">"should not work"</span>
+<span class="nv">hook</span><span class="w"> </span><span class="nv">running</span>
 
-$ git status
-On branch main
-Changes to be committed:
-  (use "git restore --staged &lt;file&gt;..." to unstage)
-    modified:   a.txt
-</code></pre>
+$<span class="w"> </span><span class="nv">git</span><span class="w"> </span><span class="nv">status</span>
+<span class="nv">On</span><span class="w"> </span><span class="nv">branch</span><span class="w"> </span><span class="nv">main</span>
+<span class="nv">Changes</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">be</span><span class="w"> </span><span class="nv">committed</span>:
+<span class="w">  </span><span class="ss">(</span><span class="nv">use</span><span class="w"> </span><span class="s2">"git restore --staged &lt;file&gt;..."</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">unstage</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">modified</span>:<span class="w">   </span><span class="nv">a</span>.<span class="nv">txt</span>
+</code></pre></div>
 <ul>
 <li>More useful to check the files or something else</li>
 </ul>
-<pre class=""><code data-file="pre_commit_ruff.text">$ cat &gt; .git/hooks/pre-commit
-ruff check
-exit $?
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">$</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">.</span><span class="n">git</span><span class="o">/</span><span class="n">hooks</span><span class="o">/</span><span class="n">pre</span><span class="o">-</span><span class="k">commit</span>
+<span class="n">ruff</span><span class="w"> </span><span class="k">check</span>
+<span class="k">exit</span><span class="w"> </span><span class="n">$</span><span class="nv">?</span>
 
-$ cat &gt; a.py
-x = not_defined
+<span class="n">$</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">py</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">not_defined</span>
 
-$ git add .
-$ git commit
-a.py:1:5: F821 Undefined name `not_defined`
-Found 1 error.
+<span class="n">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="p">.</span>
+<span class="n">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">commit</span>
+<span class="n">a</span><span class="p">.</span><span class="n">py</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="o">:</span><span class="w"> </span><span class="n">F821</span><span class="w"> </span><span class="k">Undefined</span><span class="w"> </span><span class="k">name</span><span class="w"> </span><span class="n n-Quoted">`not_defined`</span>
+<span class="k">Found</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">error</span><span class="p">.</span>
 
-$ cat &gt; a.py
-x = 0
+<span class="n">$</span><span class="w"> </span><span class="n">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">py</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 
-$ git add .
-$ git commit -m "this commit works"
-All checks passed!
-[main 7c01aee] this commit works
- 1 file changed, 1 insertion(+), 1 deletion(-)
-</code></pre>
+<span class="n">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="p">.</span>
+<span class="n">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">commit</span><span class="w"> </span><span class="o">-</span><span class="n">m</span><span class="w"> </span><span class="s2">"this commit works"</span>
+<span class="k">All</span><span class="w"> </span><span class="n">checks</span><span class="w"> </span><span class="n">passed</span><span class="o">!</span>
+<span class="err">[</span><span class="n">main</span><span class="w"> </span><span class="n">7c01aee</span><span class="err">]</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="k">commit</span><span class="w"> </span><span class="n">works</span>
+<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">file</span><span class="w"> </span><span class="k">changed</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">insertion</span><span class="p">(</span><span class="o">+</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">deletion</span><span class="p">(</span><span class="o">-</span><span class="p">)</span>
+</code></pre></div>
 <ul>
-<li>Use <a href="https://astral.sh/ruff">ruff</a> to <a href="../glossary/#lint">lint</a> the project's Python code</li>
+<li>Use [ruff][ruff] to <a href="../glossary/#lint">lint</a> the project's Python code</li>
 <li>Exit with whatever exit status it returned<ul>
 <li><code>$?</code> is the exit status of the most recently run process in the shell</li>
 </ul>
@@ -198,19 +203,19 @@ All checks passed!
 <li>And re-running these commands <em>and</em> capturing all their output is also hard</li>
 </ul>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-	  ⇐ <a href="../proc/">Processes</a>
+<span aria-hidden="true">⇐</span> <a href="../proc/">Processes</a>
 </div>
 <div class="col-6 center">
-<a href="../"></a>
-	  © 2025
+<a href="../">The Sudonomicon</a>
+	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../http/">HTTP</a> ⇒
-	</div>
+<a href="../http/">HTTP</a> <span aria-hidden="true">⇒</span>
+</div>
 </div>
 </footer>
 </body>

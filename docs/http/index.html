@@ -5,60 +5,64 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>HTTP</title>
-<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="../">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="../intro/">Introduction</a>
-<a href="../fs/">The Filesystem</a>
-<a href="../proc/">Processes</a>
-<a href="../jobs/">Running Jobs</a>
-<a href="../http/">HTTP</a>
-<a href="../auth/">Authentication</a>
-<a href="../var/">Shell Variables</a>
-<a href="../packenv/">Packages and Virtual Environments</a>
-<a href="../dock/">Virtualization</a>
-<a href="../finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../fs/">The Filesystem</a></li>
+<li><a href="../proc/">Processes</a></li>
+<li><a href="../jobs/">Running Jobs</a></li>
+<li><a class="active" href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contributing/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>HTTP</h1>
 <ul>
 <li>FIXME</li>
 </ul>
 <h2>Start with Something Simple</h2>
-<pre class=""><code data-file="get_remote.py">import requests
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
-response = requests.get(url)
-print(f"status code: {response.status_code}")
-print(f"body:\n{response.text}")
-</code></pre>
-<pre class=""><code data-file="get_remote.out">status code: 200
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 200
 body:
 Start where you are, use what you have, help who you can.
-
-</code></pre>
+</code></pre></div>
 <ul>
-<li>Use the <a href="https://requests.readthedocs.io/"><code>requests</code></a> module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
+<li>Use the [<code>requests</code>][requests] module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
 <li>The URL identifies the file we want<ul>
 <li>Though as we'll see, the server can interpret it differently</li>
 </ul>
@@ -85,22 +89,21 @@ Start where you are, use what you have, help who you can.
 <li><code>requests</code> parses the response and creates a Python object for us</li>
 </ul>
 <h2>Request Structure</h2>
-<pre class=""><code data-file="dump_structure.py">import requests
-from requests_toolbelt.utils import dump
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">requests_toolbelt.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">dump</span>
 
-url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
-response = requests.get(url)
-data = dump.dump_all(response)
-print(str(data, "utf-8"))
-</code></pre>
-<pre class=""><code data-file="dump_structure.out">GET /sudonomicon/static/motto.txt HTTP/1.1
-Host: gvwilson.github.io
-User-Agent: python-requests/2.31.0
-Accept-Encoding: gzip, deflate
-Accept: */*
-Connection: keep-alive
-
-</code></pre>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dump</span><span class="o">.</span><span class="n">dump_all</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">"utf-8"</span><span class="p">))</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nf">GET</span> <span class="nn">/sudonomicon/static/motto.txt</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">gvwilson.github.io</span>
+<span class="na">User-Agent</span><span class="o">:</span> <span class="l">python-requests/2.31.0</span>
+<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">*/*</span>
+<span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
+</code></pre></div>
 <ul>
 <li>First line is <a href="../glossary/#http_method">method</a>, URL, and protocol version</li>
 <li>Every HTTP request can have <a href="../glossary/#http_header">headers</a> with extra information<ul>
@@ -113,33 +116,33 @@ Connection: keep-alive
 </li>
 </ul>
 <h2>Response Structure</h2>
-<pre class=""><code data-file="response_headers.py">import requests
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-url = "https://gvwilson.github.io/sudonomicon/static/motto.txt"
-response = requests.get(url)
-for key, value in response.headers.items():
-    print(f"{key}: {value}")
-</code></pre>
-<pre class=""><code data-file="response_headers.out">Connection: keep-alive
-Content-Length: 5142
-Server: GitHub.com
-Content-Type: text/html; charset=utf-8
-permissions-policy: interest-cohort=()
-ETag: W/"65c56fc7-239b"
-Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; img-src data:; connect-src 'self'
-Content-Encoding: gzip
-X-GitHub-Request-Id: A08C:5A357:7CF794:9CEA06:65D13923
-Accept-Ranges: bytes
-Date: Sat, 17 Feb 2024 22:54:27 GMT
-Via: 1.1 varnish
-Age: 0
-X-Served-By: cache-yyz4563-YYZ
-X-Cache: MISS
-X-Cache-Hits: 0
-X-Timer: S1708210467.301651,VS0,VE20
-Vary: Accept-Encoding
-X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
-</code></pre>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">Connection</span><span class="o">:</span><span class="w"> </span><span class="n">keep</span><span class="o">-</span><span class="n">alive</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Length</span><span class="o">:</span><span class="w"> </span><span class="mi">5142</span>
+<span class="n">Server</span><span class="o">:</span><span class="w"> </span><span class="n">GitHub</span><span class="o">.</span><span class="na">com</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="o">;</span><span class="w"> </span><span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
+<span class="n">permissions</span><span class="o">-</span><span class="n">policy</span><span class="o">:</span><span class="w"> </span><span class="n">interest</span><span class="o">-</span><span class="n">cohort</span><span class="o">=()</span>
+<span class="n">ETag</span><span class="o">:</span><span class="w"> </span><span class="n">W</span><span class="o">/</span><span class="s2">"65c56fc7-239b"</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Security</span><span class="o">-</span><span class="n">Policy</span><span class="o">:</span><span class="w"> </span><span class="k">default</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="s1">'none'</span><span class="o">;</span><span class="w"> </span><span class="n">style</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="s1">'unsafe-inline'</span><span class="o">;</span><span class="w"> </span><span class="n">img</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="n">data</span><span class="o">:;</span><span class="w"> </span><span class="n">connect</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="s1">'self'</span>
+<span class="n">Content</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span><span class="w"> </span><span class="n">gzip</span>
+<span class="n">X</span><span class="o">-</span><span class="n">GitHub</span><span class="o">-</span><span class="n">Request</span><span class="o">-</span><span class="n">Id</span><span class="o">:</span><span class="w"> </span><span class="n">A08C</span><span class="o">:</span><span class="mi">5</span><span class="n">A357</span><span class="o">:</span><span class="mi">7</span><span class="n">CF794</span><span class="o">:</span><span class="mi">9</span><span class="n">CEA06</span><span class="o">:</span><span class="mi">65</span><span class="n">D13923</span>
+<span class="n">Accept</span><span class="o">-</span><span class="n">Ranges</span><span class="o">:</span><span class="w"> </span><span class="n">bytes</span>
+<span class="n">Date</span><span class="o">:</span><span class="w"> </span><span class="n">Sat</span><span class="o">,</span><span class="w"> </span><span class="mi">17</span><span class="w"> </span><span class="n">Feb</span><span class="w"> </span><span class="mi">2024</span><span class="w"> </span><span class="mi">22</span><span class="o">:</span><span class="mi">54</span><span class="o">:</span><span class="mi">27</span><span class="w"> </span><span class="n">GMT</span>
+<span class="n">Via</span><span class="o">:</span><span class="w"> </span><span class="mf">1.1</span><span class="w"> </span><span class="n">varnish</span>
+<span class="n">Age</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Served</span><span class="o">-</span><span class="n">By</span><span class="o">:</span><span class="w"> </span><span class="n">cache</span><span class="o">-</span><span class="n">yyz4563</span><span class="o">-</span><span class="n">YYZ</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Cache</span><span class="o">:</span><span class="w"> </span><span class="n">MISS</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Cache</span><span class="o">-</span><span class="n">Hits</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Timer</span><span class="o">:</span><span class="w"> </span><span class="n">S1708210467</span><span class="o">.</span><span class="mi">301651</span><span class="o">,</span><span class="n">VS0</span><span class="o">,</span><span class="n">VE20</span>
+<span class="n">Vary</span><span class="o">:</span><span class="w"> </span><span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span>
+<span class="n">X</span><span class="o">-</span><span class="n">Fastly</span><span class="o">-</span><span class="n">Request</span><span class="o">-</span><span class="n">ID</span><span class="o">:</span><span class="w"> </span><span class="n">cb16df2dfa73aaf6de87924c743dd1e50a0ce570</span>
+</code></pre></div>
 <ul>
 <li>Every HTTP response also has with extra information<ul>
 <li>Does <em>not</em> include status code: that appears in the first line</li>
@@ -167,16 +170,16 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
 </ol>
 </section>
 <h2>When Things Go Wrong</h2>
-<pre class=""><code data-file="get_404.py">import requests
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-url = "https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"
-response = requests.get(url)
-print(f"status code: {response.status_code}")
-print(f"body length: {len(response.text)}")
-</code></pre>
-<pre class=""><code data-file="get_404.out">status code: 404
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 404
 body length: 9115
-</code></pre>
+</code></pre></div>
 <ul>
 <li>The 404 status code tells us something went wrong</li>
 <li>The 9 kilobyte response is an HTML page with an embedded image (the GitHub logo)</li>
@@ -187,7 +190,7 @@ body length: 9115
 </ul>
 <section class="exercise">
 <h2>Exercise: Status Codes</h2>
-<p>Look at <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">this list of HTTP status codes</a>.</p>
+<p>Look at [this list of HTTP status codes][http_status_codes].</p>
 <ol>
 <li>
 <p>What is the difference between status code 403 and status code 404?</p>
@@ -201,20 +204,20 @@ body length: 9115
 </ol>
 </section>
 <h2>Getting JSON</h2>
-<pre class=""><code data-file="get_json.py">import requests
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-url = "https://gvwilson.github.io/sudonomicon/static/motto.json"
-response = requests.get(url)
-print(f"status code: {response.status_code}")
-print(f"body as text: {len(response.text)} bytes")
-as_json = response.json()
-print(f"body as JSON:\n{as_json}")
-</code></pre>
-<pre class=""><code data-file="get_json.out">status code: 200
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.json"</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body as text: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="si">}</span><span class="s2"> bytes"</span><span class="p">)</span>
+<span class="n">as_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body as JSON:</span><span class="se">\n</span><span class="si">{</span><span class="n">as_json</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 200
 body as text: 107 bytes
 body as JSON:
 {'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}
-</code></pre>
+</code></pre></div>
 <ul>
 <li>Parsing data out of HTML is called <a href="../glossary/#web_scraping">web scraping</a><ul>
 <li>Painful and error prone</li>
@@ -240,10 +243,10 @@ body as JSON:
 <ul>
 <li>Pushing files to GitHub so that we can use them is annoying</li>
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
-<li>Use Python's <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module to run a <a href="../glossary/#local_server">local server</a></li>
+<li>Use Python's [<code>http.server</code>][py_http_server] module to run a <a href="../glossary/#local_server">local server</a></li>
 </ul>
-<pre class=""><code data-file="local_server.sh">python -m http.server -d site
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python -m http.server -d site
+</code></pre></div>
 <ul>
 <li>Host name is <a href="../glossary/#localhost"><code>localhost</code></a></li>
 <li>Uses <a href="../glossary/#port">port</a> 8000 by default<ul>
@@ -257,20 +260,19 @@ body as JSON:
 </li>
 </ul>
 <h2>Talk to Local Server</h2>
-<pre class=""><code data-file="get_local.py">import requests
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-URL = "http://localhost:8000/motto.txt"
+<span class="n">URL</span> <span class="o">=</span> <span class="s2">"http://localhost:8000/motto.txt"</span>
 
-response = requests.get(URL)
-print(f"status code: {response.status_code}")
-print(f"body:\n{response.text}")
-</code></pre>
-<pre class=""><code data-file="get_local.out">::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
 status code: 200
 body:
 Start where you are, use what you have, help who you can.
-
-</code></pre>
+</code></pre></div>
 <ul>
 <li><a href="../glossary/#concurrency">Concurrent</a> systems are hard to debug<ul>
 <li>Multiple streams of activity</li>
@@ -280,21 +282,21 @@ Start where you are, use what you have, help who you can.
 </li>
 </ul>
 <h2>Our Own File Server</h2>
-<pre class=""><code data-file="file_server_unsafe.py:do_get">class RequestHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        try:
-            url_path = self.path.lstrip("/")
-            full_path = Path.cwd().joinpath(url_path)
-            print(f"'{self.path}' =&gt; '{full_path}'")
-            if not full_path.exists():
-                raise ServerException(f"{self.path} not found")
-            elif not full_path.is_file():
-                raise ServerException(f"{self.path} not file")
-            else:
-                self.handle_file(self.path, full_path)
-        except Exception as msg:
-            self.handle_error(msg)
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">class</span> <span class="n">RequestHandler</span>(<span class="n">BaseHTTPRequestHandler</span>):
+    <span class="n">def</span> <span class="n">do_GET</span>(<span class="nb">self</span>):
+        <span class="n">try:</span>
+            <span class="n">url_path</span> = <span class="nb">self</span>.<span class="nb">path</span>.<span class="n">lstrip</span>(<span class="s">"/"</span>)
+            <span class="n">full_path</span> = <span class="n">Path</span>.<span class="n">cwd</span>().<span class="n">joinpath</span>(<span class="n">url_path</span>)
+            <span class="nb">print</span>(<span class="nb">f</span><span class="s">"'{self.path}' =&gt; '{full_path}'"</span>)
+            <span class="k">if</span> <span class="nb">not</span> <span class="n">full_path</span>.<span class="n">exists</span>():
+                <span class="n">raise</span> <span class="n">ServerException</span>(<span class="nb">f</span><span class="s">"{self.path} not found"</span>)
+            <span class="n">elif</span> <span class="nb">not</span> <span class="n">full_path</span>.<span class="n">is_file</span>():
+                <span class="n">raise</span> <span class="n">ServerException</span>(<span class="nb">f</span><span class="s">"{self.path} not file"</span>)
+            <span class="n">else:</span>
+                <span class="nb">self</span>.<span class="n">handle_file</span>(<span class="nb">self</span>.<span class="nb">path</span>, <span class="n">full_path</span>)
+        <span class="n">except</span> <span class="nb">Exception</span> <span class="n">as</span> <span class="n">msg:</span>
+            <span class="nb">self</span>.<span class="n">handle_error</span>(<span class="n">msg</span>)
+</code></pre></div>
 <ul>
 <li>Our <code>RequestHandler</code> handles a single <code>GET</code> request</li>
 <li>Combine working directory with requested file path to get local path to file</li>
@@ -304,46 +306,46 @@ Start where you are, use what you have, help who you can.
 <ul>
 <li>Serve files</li>
 </ul>
-<pre class=""><code data-file="file_server_unsafe.py:send_content">    def send_content(self, content, status):
-        self.send_response(int(status))
-        self.send_header("Content-Type", "text/html; charset=utf-8")
-        self.send_header("Content-Length", str(len(content)))
-        self.end_headers()
-        self.wfile.write(content)
-    ```
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="w">    </span>def<span class="w"> </span>send_content(self,<span class="w"> </span>content,<span class="w"> </span>status):
+<span class="w">        </span>self.send_response(int(status))
+<span class="w">        </span>self.send_header("Content-Type",<span class="w"> </span>"text/html;<span class="w"> </span>charset=utf-8")
+<span class="w">        </span>self.send_header("Content-Length",<span class="w"> </span>str(len(content)))
+<span class="w">        </span>self.end_headers()
+<span class="w">        </span>self.wfile.write(content)
+<span class="w">    </span>```
 
--   Handle errors
+-<span class="w">   </span>Handle<span class="w"> </span>errors
 
 ```{data-file="file_server_unsafe.py:error_page"}
-ERROR_PAGE = """\
-&lt;html&gt;
-  &lt;head&gt;&lt;title&gt;Error accessing {path}&lt;/title&gt;&lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Error accessing {path}: {msg}&lt;/h1&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
+ERROR_PAGE<span class="w"> </span>=<span class="w"> </span>"""\
+<span class="nt">&lt;html&gt;</span>
+<span class="w">  </span><span class="nt">&lt;head&gt;&lt;title&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>{path}<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="w">  </span><span class="nt">&lt;body&gt;</span>
+<span class="w">    </span><span class="nt">&lt;h1&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>{path}:<span class="w"> </span>{msg}<span class="nt">&lt;/h1&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 """
-</code></pre>
-<pre class=""><code data-file="file_server_unsafe.py:handle_error">    def handle_error(self, msg):
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>    def handle_error(self, msg):
         content = ERROR_PAGE.format(path=self.path, msg=msg)
         content = bytes(content, "utf-8")
         self.send_content(content, HTTPStatus.NOT_FOUND)
     ```
 
--   Define our own exceptions so we're sure we're only catching what we expect
+<span class="k">-</span>   Define our own exceptions so we're sure we're only catching what we expect
 
 ```{data-file="file_server_unsafe.py:exception"}
 class ServerException(Exception):
     pass
-</code></pre>
+</code></pre></div>
 <h2>Running Our File Server</h2>
-<pre class=""><code data-file="file_server_unsafe.py:main">if __name__ == "__main__":
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>if __name__ == "__main__":
     os.chdir(sys.argv[1])
     serverAddress = ("", 8000)
     server = HTTPServer(serverAddress, RequestHandler)
     print(f"serving in {os.getcwd()}...")
     server.serve_forever()
-</code></pre>
+</code></pre></div>
 <ul>
 <li>And then get <code>motto.txt</code> as before</li>
 </ul>
@@ -351,15 +353,15 @@ class ServerException(Exception):
 <ul>
 <li>Modify <code>requests</code> script to take URL as command-line parameter</li>
 </ul>
-<pre class=""><code data-file="get_url.py">import requests
-import sys
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-URL = sys.argv[1]
+<span class="n">URL</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-response = requests.get(URL)
-print(f"status code: {response.status_code}")
-print(f"body:\n{response.text}")
-</code></pre>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
 <ul>
 <li>Add a sub-directory to <code>site</code> called <code>sandbox</code> with a file <code>example.txt</code><ul>
 <li>Called a <a href="../glossary/#sandbox">sandbox</a> because it's a safe place to play</li>
@@ -367,37 +369,37 @@ print(f"body:\n{response.text}")
 </li>
 <li>Serve that sub-directory</li>
 </ul>
-<pre class=""><code data-file="file_server_sandbox.sh">python src/file_server_unsafe.py site/sandbox
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/file_server_unsafe.py site/sandbox
+</code></pre></div>
 <ul>
 <li>Can get files from that directory</li>
 </ul>
-<pre class=""><code data-file="get_url_allowed.sh">python src/get_url.py http://localhost:8000/example.txt
-</code></pre>
-<pre class=""><code data-file="get_url_allowed_server.out">'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/get_url.py http://localhost:8000/example.txt
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
 127.0.0.1 - - [21/Feb/2024 06:04:32] "GET /example.txt HTTP/1.1" 200 -
-</code></pre>
-<pre class=""><code data-file="get_url_allowed_client.out">status code: 200
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 200
 body:
 example file
-</code></pre>
+</code></pre></div>
 <ul>
 <li>But not from parent directory (which isn't part of sandbox)</li>
 </ul>
-<pre class=""><code data-file="get_url_disallowed.sh">python src/requests_local_url.py http://localhost:8000/motto.txt
-</code></pre>
-<pre class=""><code data-file="get_url_disallowed_server.out">'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/requests_local_url.py http://localhost:8000/motto.txt
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
 127.0.0.1 - - [21/Feb/2024 06:04:38] "GET /motto.txt HTTP/1.1" 404 -
-</code></pre>
-<pre class=""><code data-file="get_url_disallowed_client.out">status code: 404
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status<span class="w"> </span>code:<span class="w"> </span>404
 body:
-&lt;html&gt;
-  &lt;head&gt;&lt;title&gt;Error accessing /motto.txt&lt;/title&gt;&lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Error accessing /motto.txt: /motto.txt not found&lt;/h1&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<span class="nt">&lt;html&gt;</span>
+<span class="w">  </span><span class="nt">&lt;head&gt;&lt;title&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>/motto.txt<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="w">  </span><span class="nt">&lt;body&gt;</span>
+<span class="w">    </span><span class="nt">&lt;h1&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>/motto.txt:<span class="w"> </span>/motto.txt<span class="w"> </span>not<span class="w"> </span>found<span class="nt">&lt;/h1&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
 <ul>
 <li><code>requests</code> strips the leading <code>..</code> off the path before sending it</li>
 <li>And if we try that URL in the browser, same thing happens</li>
@@ -405,36 +407,34 @@ body:
 </ul>
 <h2>Introducing <code>netcat</code></h2>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Netcat"><code>netcat</code></a> (often just <code>nc</code>) is a computer networking tool</li>
+<li>[<code>netcat</code>][netcat] (often just <code>nc</code>) is a computer networking tool</li>
 <li>Open a connection, send exactly what the user types, and show exactly what is sent in response</li>
 </ul>
-<pre class=""><code data-file="nc_localhost.sh">nc localhost 8000
-</code></pre>
-<pre class=""><code data-file="nc_allowed.text">GET /example.txt HTTP/1.1
-
-</code></pre>
-<pre class=""><code data-file="nc_allowed.out">HTTP/1.0 200 OK
-Server: BaseHTTP/0.6 Python/3.12.1
-Date: Thu, 22 Feb 2024 18:37:37 GMT
-Content-Type: text/html; charset=utf-8
-Content-Length: 13
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>nc localhost 8000
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nf">GET</span> <span class="nn">/example.txt</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Server</span><span class="o">:</span> <span class="l">BaseHTTP/0.6 Python/3.12.1</span>
+<span class="na">Date</span><span class="o">:</span> <span class="l">Thu, 22 Feb 2024 18:37:37 GMT</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=utf-8</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">13</span>
 
 example file
-</code></pre>
+</code></pre></div>
 <ul>
 <li>Let's see what happens if we <em>do</em> send a URL with <code>..</code> in it</li>
 </ul>
-<pre class=""><code data-file="nc_disallowed.text">GET ../motto.txt HTTP/1.1
-
-</code></pre>
-<pre class=""><code data-file="nc_disallowed.out">HTTP/1.0 200 OK
-Server: BaseHTTP/0.6 Python/3.12.1
-Date: Thu, 22 Feb 2024 18:38:50 GMT
-Content-Type: text/html; charset=utf-8
-Content-Length: 58
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nf">GET</span> <span class="nn">../motto.txt</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Server</span><span class="o">:</span> <span class="l">BaseHTTP/0.6 Python/3.12.1</span>
+<span class="na">Date</span><span class="o">:</span> <span class="l">Thu, 22 Feb 2024 18:38:50 GMT</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=utf-8</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">58</span>
 
 Start where you are, use what you have, help who you can.
-</code></pre>
+</code></pre></div>
 <ul>
 <li>We shouldn't be able to see files outside the sandbox</li>
 <li>But if someone doesn't strip out the <code>..</code> characters, users can escape</li>
@@ -451,96 +451,96 @@ and <code>netcat</code>.
 What happens with each and why?</p>
 </section>
 <h2>A Safer File Server</h2>
-<pre class=""><code data-file="file_server_safe.py:handle_file">    def handle_file(self, given_path, full_path):
-        try:
-            resolved_path = str(full_path.resolve())
-            sandbox = str(Path.cwd().resolve())
-            if not resolved_path.startswith(sandbox):
-                raise ServerException(f"Cannot access {given_path}")
-            with open(full_path, "rb") as reader:
-                content = reader.read()
-            self.send_content(content, HTTPStatus.OK)
-        except FileNotFoundError:
-            raise ServerException(f"Cannot find {given_path}")
-        except IOError:
-            raise ServerException(f"Cannot read {given_path}")
-    ```
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">handle_file</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span><span class="w"> </span><span class="n">given_path</span><span class="p">,</span><span class="w"> </span><span class="n">full_path</span><span class="p">)</span><span class="o">:</span>
+<span class="w">        </span><span class="nl">try</span><span class="p">:</span>
+<span class="w">            </span><span class="n">resolved_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="p">(</span><span class="n">full_path</span><span class="p">.</span><span class="n">resolve</span><span class="p">())</span>
+<span class="w">            </span><span class="n">sandbox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">cwd</span><span class="p">().</span><span class="n">resolve</span><span class="p">())</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">resolved_path</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">sandbox</span><span class="p">)</span><span class="o">:</span>
+<span class="w">                </span><span class="n">raise</span><span class="w"> </span><span class="n">ServerException</span><span class="p">(</span><span class="n">f</span><span class="s">"Cannot access {given_path}"</span><span class="p">)</span>
+<span class="w">            </span><span class="n">with</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span><span class="w"> </span><span class="s">"rb"</span><span class="p">)</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">reader</span><span class="o">:</span>
+<span class="w">                </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+<span class="w">            </span><span class="nb">self</span><span class="p">.</span><span class="n">send_content</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">HTTPStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
+<span class="w">        </span><span class="n">except</span><span class="w"> </span><span class="n">FileNotFoundError</span><span class="o">:</span>
+<span class="w">            </span><span class="n">raise</span><span class="w"> </span><span class="n">ServerException</span><span class="p">(</span><span class="n">f</span><span class="s">"Cannot find {given_path}"</span><span class="p">)</span>
+<span class="w">        </span><span class="n">except</span><span class="w"> </span><span class="n">IOError</span><span class="o">:</span>
+<span class="w">            </span><span class="n">raise</span><span class="w"> </span><span class="n">ServerException</span><span class="p">(</span><span class="n">f</span><span class="s">"Cannot read {given_path}"</span><span class="p">)</span>
+<span class="w">    </span><span class="err">```</span>
 
--   [Resolve](g:resolve_path) the constructed path
--   Then check that it's below the current working directory (i.e., the sandbox)
--   And fail if it isn't
-    -   Using our own `ServerException` guarantees that all errors are handled the same way
+<span class="o">-</span><span class="w">   </span><span class="p">[</span><span class="n">Resolve</span><span class="p">](</span><span class="n">g</span><span class="o">:</span><span class="n">resolve_path</span><span class="p">)</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">constructed</span><span class="w"> </span><span class="n">path</span>
+<span class="o">-</span><span class="w">   </span><span class="n">Then</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">it</span><span class="err">'</span><span class="n">s</span><span class="w"> </span><span class="n">below</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">working</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">e</span><span class="p">.,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">sandbox</span><span class="p">)</span>
+<span class="o">-</span><span class="w">   </span><span class="n">And</span><span class="w"> </span><span class="n">fail</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">isn</span><span class="err">'</span><span class="n">t</span>
+<span class="w">    </span><span class="o">-</span><span class="w">   </span><span class="n">Using</span><span class="w"> </span><span class="n">our</span><span class="w"> </span><span class="n">own</span><span class="w"> </span><span class="err">`</span><span class="n">ServerException</span><span class="err">`</span><span class="w"> </span><span class="n">guarantees</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">handled</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">way</span>
 
-&lt;section class="exercise" markdown="1"&gt;
+<span class="o">&lt;</span><span class="n">section</span><span class="w"> </span><span class="k">class</span><span class="o">=</span><span class="s">"exercise"</span><span class="w"> </span><span class="n">markdown</span><span class="o">=</span><span class="s">"1"</span><span class="o">&gt;</span>
 
-## Exercise: Cleaning Up Code
+<span class="cp">## Exercise: Cleaning Up Code</span>
 
-[Refactor](g:refactor) the `do_GET` and `handle_file` methods in `RequestHandler`
-so that all checks are in one place.
-Does this make the code easier to understand overall?
-Do you think making code easier to understand also makes it safer?
+<span class="p">[</span><span class="n">Refactor</span><span class="p">](</span><span class="n">g</span><span class="o">:</span><span class="n">refactor</span><span class="p">)</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="err">`</span><span class="n">do_GET</span><span class="err">`</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="err">`</span><span class="n">handle_file</span><span class="err">`</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="err">`</span><span class="n">RequestHandler</span><span class="err">`</span>
+<span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">checks</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">place</span><span class="p">.</span>
+<span class="n">Does</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">easier</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">understand</span><span class="w"> </span><span class="n">overall</span><span class="o">?</span>
+<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">think</span><span class="w"> </span><span class="n">making</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">easier</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">understand</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">makes</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">safer</span><span class="o">?</span>
 
-&lt;/section&gt;
+<span class="o">&lt;/</span><span class="n">section</span><span class="o">&gt;</span>
 
-## Serving Data
+<span class="cp">## Serving Data</span>
 
--   Rarely have JSON lying around as [static files](g:static_file)
--   More common to have either CSV or a database
+<span class="o">-</span><span class="w">   </span><span class="n">Rarely</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">JSON</span><span class="w"> </span><span class="n">lying</span><span class="w"> </span><span class="n">around</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="p">[</span><span class="k">static</span><span class="w"> </span><span class="n">files</span><span class="p">](</span><span class="n">g</span><span class="o">:</span><span class="n">static_file</span><span class="p">)</span>
+<span class="o">-</span><span class="w">   </span><span class="n">More</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">either</span><span class="w"> </span><span class="n">CSV</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">database</span>
 
-```{data-file="birds_head.sh"}
-head -n 10 site/birds.csv
-</code></pre>
-<pre class=""><code data-file="birds_head.out">loc_id,latitude,longitude,region,year,month,day,species_id,num
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,redcro,3.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,rebnut,1.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,comred,13.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,dowwoo,1.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,bkcchi,3.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,haiwoo,1.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,8,nobird,
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,rebnut,2.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
-</code></pre>
+<span class="err">```</span><span class="p">{</span><span class="n">data</span><span class="o">-</span><span class="n">file</span><span class="o">=</span><span class="s">"birds_head.sh"</span><span class="p">}</span>
+<span class="n">head</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">site</span><span class="o">/</span><span class="n">birds</span><span class="p">.</span><span class="n">csv</span>
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">loc_id</span><span class="p">,</span><span class="n">latitude</span><span class="p">,</span><span class="n">longitude</span><span class="p">,</span><span class="n">region</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">species_id</span><span class="p">,</span><span class="n">num</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">redcro</span><span class="p">,</span><span class="mf">3.0</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">rebnut</span><span class="p">,</span><span class="mf">1.0</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">comred</span><span class="p">,</span><span class="mf">13.0</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">dowwoo</span><span class="p">,</span><span class="mf">1.0</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">bkcchi</span><span class="p">,</span><span class="mf">3.0</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">haiwoo</span><span class="p">,</span><span class="mf">1.0</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">8</span><span class="p">,</span><span class="n">nobird</span><span class="p">,</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">15</span><span class="p">,</span><span class="n">rebnut</span><span class="p">,</span><span class="mf">2.0</span>
+<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">15</span><span class="p">,</span><span class="n">bkcchi</span><span class="p">,</span><span class="mf">3.0</span>
+</code></pre></div>
 <ul>
 <li>Modify server to generate it dynamically</li>
 <li>Main program</li>
 </ul>
-<pre class=""><code data-file="bird_server_whole.py:main">def main():
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>def main():
     sandbox, filename = sys.argv[1], sys.argv[2]
     os.chdir(sandbox)
     df = pl.read_csv(filename)
     serverAddress = ("", 8000)
     server = BirdServer(df, serverAddress, RequestHandler)
     server.serve_forever()
-</code></pre>
+</code></pre></div>
 <ul>
 <li>Create our own server class because we want to pass the dataframe in the constructor</li>
 </ul>
-<pre class=""><code data-file="bird_server_whole.py:server">class BirdServer(HTTPServer):
-    def __init__(self, data, server_address, request_handler):
-        super().__init__(server_address, request_handler)
-        self._data = data
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">BirdServer</span><span class="p">(</span><span class="nx">HTTPServer</span><span class="p">):</span>
+<span class="w">    </span><span class="nx">def</span><span class="w"> </span><span class="nx">__init__</span><span class="p">(</span><span class="kp">self</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">server_address</span><span class="p">,</span><span class="w"> </span><span class="nx">request_handler</span><span class="p">):</span>
+<span class="w">        </span><span class="nx">super</span><span class="p">().</span><span class="nx">__init__</span><span class="p">(</span><span class="nx">server_address</span><span class="p">,</span><span class="w"> </span><span class="nx">request_handler</span><span class="p">)</span>
+<span class="w">        </span><span class="kp">self</span><span class="p">.</span><span class="nx">_data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">data</span>
+</code></pre></div>
 <ul>
 <li><code>do_GET</code> converts the dataframe to JSON (will modify later to do more than this)</li>
 </ul>
-<pre class=""><code data-file="bird_server_whole.py:get">class RequestHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        result = self.server._data.write_json(row_oriented=True)
-        self.send_content(result, HTTPStatus.OK)
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">class</span> <span class="n">RequestHandler</span>(<span class="n">BaseHTTPRequestHandler</span>):
+    <span class="n">def</span> <span class="n">do_GET</span>(<span class="nb">self</span>):
+        <span class="nb">result</span> = <span class="nb">self</span>.<span class="n">server</span>.<span class="n">_data</span>.<span class="n">write_json</span>(<span class="n">row_oriented</span>=<span class="nb">True</span>)
+        <span class="nb">self</span>.<span class="n">send_content</span>(<span class="nb">result</span>, <span class="n">HTTPStatus</span>.<span class="n">OK</span>)
+</code></pre></div>
 <ul>
 <li><code>send_content</code> <a href="../glossary/#character_encoding">encodes</a> the JSON string as <a href="../glossary/#utf_8">UTF-8</a>
     and sets the MIME type to <code>application/json</code></li>
 </ul>
-<pre class=""><code data-file="bird_server_whole.py:send">    def send_content(self, content, status):
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>    def send_content(self, content, status):
         content = bytes(content, "utf-8")
         self.send_response(int(status))
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(content)))
         self.end_headers()
         self.wfile.write(content)
-</code></pre>
+</code></pre></div>
 <ul>
 <li>Can view in browser at <code>http://localhost:8000</code> or use <code>requests</code> to fetch as before</li>
 </ul>
@@ -550,13 +550,13 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 <li>Want <code>http://localhost:8000/?year=2021&amp;species=rebnut</code> to select red-breasted nuthatches in 2021</li>
 <li>Put slicing in a method of its own</li>
 </ul>
-<pre class=""><code data-file="bird_server_slice.py:get">    def do_GET(self):
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>    def do_GET(self):
         result = self.filter_data()
         as_json = result.to_json(orient="records")
         self.send_content(as_json, HTTPStatus.OK)
-</code></pre>
+</code></pre></div>
 <ul>
-<li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters<ul>
+<li>Use <code>urlparse</code> and <code>parse_qs</code> from [<code>urllib.parse</code>][py_urllib_parse] to get query parameters<ul>
 <li>(Key, list) dictionary</li>
 </ul>
 </li>
@@ -599,19 +599,19 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 </ol>
 </section>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-	  ⇐ <a href="../jobs/">Running Jobs</a>
+<span aria-hidden="true">⇐</span> <a href="../jobs/">Running Jobs</a>
 </div>
 <div class="col-6 center">
-<a href="../"></a>
-	  © 2025
+<a href="../">The Sudonomicon</a>
+	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../auth/">Authentication</a> ⇒
-	</div>
+<a href="../auth/">Authentication</a> <span aria-hidden="true">⇒</span>
+</div>
 </div>
 </footer>
 </body>

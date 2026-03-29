@@ -5,41 +5,46 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>The Filesystem</title>
-<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="../">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="../intro/">Introduction</a>
-<a href="../fs/">The Filesystem</a>
-<a href="../proc/">Processes</a>
-<a href="../jobs/">Running Jobs</a>
-<a href="../http/">HTTP</a>
-<a href="../auth/">Authentication</a>
-<a href="../var/">Shell Variables</a>
-<a href="../packenv/">Packages and Virtual Environments</a>
-<a href="../dock/">Virtualization</a>
-<a href="../finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="../intro/">Introduction</a></li>
+<li><a class="active" href="../fs/">The Filesystem</a></li>
+<li><a href="../proc/">Processes</a></li>
+<li><a href="../jobs/">Running Jobs</a></li>
+<li><a href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contributing/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>The Filesystem</h1>
 <ul>
 <li>FIXME</li>
@@ -77,28 +82,28 @@
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="ls_long_tmp.sh">ls -a -i -l -s tmp
-</code></pre>
-<pre class=""><code data-file="ls_long_tmp.out">total 8
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>ls -a -i -l -s tmp
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>total 8
 99138261 0 drwxr-xr-x   3 tut  staff   96 Apr 20 07:50 ./
 94560701 0 drwxr-xr-x  22 tut  staff  704 Apr 20 07:53 ../
 99138262 8 -rw-r--r--   1 tut  staff  174 Apr 20 07:50 bibliography.html
-</code></pre>
+</code></pre></div>
 <ul>
 <li>It's a shame there's no option for column titles, but we can add them manually</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th>inode</th>
-<th>blocks</th>
-<th>permissions</th>
-<th>links</th>
-<th>owner</th>
-<th>group</th>
-<th>bytes</th>
-<th>date</th>
-<th>name</th>
+<th scope="col">inode</th>
+<th scope="col">blocks</th>
+<th scope="col">permissions</th>
+<th scope="col">links</th>
+<th scope="col">owner</th>
+<th scope="col">group</th>
+<th scope="col">bytes</th>
+<th scope="col">date</th>
+<th scope="col">name</th>
 </tr>
 </thead>
 <tbody>
@@ -192,10 +197,10 @@
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="id_no_args.sh">id
-</code></pre>
-<pre class=""><code data-file="id_no_args.out">uid=501(tut) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),…and 15 others…
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>id
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>uid=501(tut) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),…and 15 others…
+</code></pre></div>
 <ul>
 <li>Tells us:<ul>
 <li>User ID is 501 and name is <code>tut</code></li>
@@ -206,11 +211,11 @@
 <li>Reports by default on the user associated with the currently-running process</li>
 <li>Can provide an account name to get details of a particular account</li>
 </ul>
-<pre class=""><code data-file="id_nobody.sh">id -p nobody
-</code></pre>
-<pre class=""><code data-file="id_nobody.out">uid nobody
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>id -p nobody
+</code></pre></div>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>uid nobody
 groups  nobody everyone localaccounts
-</code></pre>
+</code></pre></div>
 <h2>Capabilities</h2>
 <ul>
 <li>A <a href="../glossary/#capability">capability</a> is something that someone may or may not be able to do to a thing</li>
@@ -219,10 +224,10 @@ groups  nobody everyone localaccounts
 <table>
 <thead>
 <tr>
-<th>Name</th>
-<th>Abbreviation</th>
-<th>File</th>
-<th>Directory</th>
+<th scope="col">Name</th>
+<th scope="col">Abbreviation</th>
+<th scope="col">File</th>
+<th scope="col">Directory</th>
 </tr>
 </thead>
 <tbody>
@@ -282,35 +287,35 @@ groups  nobody everyone localaccounts
 </li>
 <li>Reminder: <code>echo</code> prints its arguments</li>
 </ul>
-<pre class=""><code data-file="chmod_example.text">$ echo "original content" &gt; /tmp/somefile.txt
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"original content"</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/somefile.txt
 
-$ ls -l /tmp/somefile.txt
--rw-r--r--  1 gvwilson  staff  17 Apr 20 16:15 /tmp/somefile.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/somefile.txt
+-rw-r--r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>gvwilson<span class="w">  </span>staff<span class="w">  </span><span class="m">17</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">16</span>:15<span class="w"> </span>/tmp/somefile.txt
 
-$ cat /tmp/somefile.txt
-original content
+$<span class="w"> </span>cat<span class="w"> </span>/tmp/somefile.txt
+original<span class="w"> </span>content
 
-$ chmod u=,g=,o= /tmp/somefile.txt
+$<span class="w"> </span>chmod<span class="w"> </span><span class="nv">u</span><span class="o">=</span>,g<span class="o">=</span>,o<span class="o">=</span><span class="w"> </span>/tmp/somefile.txt
 
-$ ls -l /tmp/somefile.txt
-----------  1 gvwilson  staff  17 Apr 20 16:15 /tmp/somefile.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/somefile.txt
+----------<span class="w">  </span><span class="m">1</span><span class="w"> </span>gvwilson<span class="w">  </span>staff<span class="w">  </span><span class="m">17</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">16</span>:15<span class="w"> </span>/tmp/somefile.txt
 
-$ cat /tmp/somefile.txt
-cat: /tmp/somefile.txt: Permission denied
+$<span class="w"> </span>cat<span class="w"> </span>/tmp/somefile.txt
+cat:<span class="w"> </span>/tmp/somefile.txt:<span class="w"> </span>Permission<span class="w"> </span>denied
 
-$ echo "revised content" &gt; /tmp/somefile.txt
-src/fs/chmod_example.sh: line 9: /tmp/somefile.txt: Permission denied
+$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"revised content"</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/somefile.txt
+src/fs/chmod_example.sh:<span class="w"> </span>line<span class="w"> </span><span class="m">9</span>:<span class="w"> </span>/tmp/somefile.txt:<span class="w"> </span>Permission<span class="w"> </span>denied
 
-$ chmod u=rw /tmp/somefile.txt
+$<span class="w"> </span>chmod<span class="w"> </span><span class="nv">u</span><span class="o">=</span>rw<span class="w"> </span>/tmp/somefile.txt
 
-$ echo "revised content" &gt; /tmp/somefile.txt
+$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"revised content"</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/somefile.txt
 
-$ ls -l /tmp/somefile.txt
--rw-------  1 gvwilson  staff  16 Apr 20 16:15 /tmp/somefile.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/somefile.txt
+-rw-------<span class="w">  </span><span class="m">1</span><span class="w"> </span>gvwilson<span class="w">  </span>staff<span class="w">  </span><span class="m">16</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">16</span>:15<span class="w"> </span>/tmp/somefile.txt
 
-$ cat /tmp/somefile.txt
-revised content
-</code></pre>
+$<span class="w"> </span>cat<span class="w"> </span>/tmp/somefile.txt
+revised<span class="w"> </span>content
+</code></pre></div>
 <h2>Changing Permissions Programmatically</h2>
 <ul>
 <li><code>ls</code>, <code>chmod</code>, and other programs use <a href="../glossary/#system_call">system calls</a> to get information and change things<ul>
@@ -319,29 +324,29 @@ revised content
 </li>
 <li>Other programs can also use those system calls</li>
 </ul>
-<pre class=""><code data-file="chmod_example.py:create">import os
-import stat
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stat</span>
 
-filename = "/tmp/somefile.txt"
-with open(filename, "w") as writer:
-    writer.write("original content")
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">"/tmp/somefile.txt"</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"original content"</span><span class="p">)</span>
 
-status = os.stat(filename)
+<span class="n">status</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
-print(status)
-# os.stat_result(st_mode=33188, st_ino=99159112, st_dev=16777234, st_nlink=1, st_uid=501,
-#                st_gid=0, st_size=16, st_atime=1713644644, st_mtime=1713644747,
-#                st_ctime=1713644747)
+<span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+<span class="c1"># os.stat_result(st_mode=33188, st_ino=99159112, st_dev=16777234, st_nlink=1, st_uid=501,</span>
+<span class="c1">#                st_gid=0, st_size=16, st_atime=1713644644, st_mtime=1713644747,</span>
+<span class="c1">#                st_ctime=1713644747)</span>
 
-print(status.st_mode)
-# 33188
+<span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">st_mode</span><span class="p">)</span>
+<span class="c1"># 33188</span>
 
-print(stat.filemode(status.st_mode))
-# -rw-r--r--
+<span class="nb">print</span><span class="p">(</span><span class="n">stat</span><span class="o">.</span><span class="n">filemode</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">st_mode</span><span class="p">))</span>
+<span class="c1"># -rw-r--r--</span>
 
-print(f"user ID {status.st_uid} group ID {status.st_gid}")
-# user ID 501 group ID 0
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"user ID </span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">st_uid</span><span class="si">}</span><span class="s2"> group ID </span><span class="si">{</span><span class="n">status</span><span class="o">.</span><span class="n">st_gid</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># user ID 501 group ID 0</span>
+</code></pre></div>
 <ul>
 <li><code>os.stat</code> returns a tuple with named fields<ul>
 <li>All start with <code>st_</code> prefix because that's what the original C structure did</li>
@@ -353,19 +358,19 @@ print(f"user ID {status.st_uid} group ID {status.st_gid}")
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="chmod_example.py:lockdown">os.chmod(filename, 0)
-status = os.stat(filename)
-print(stat.filemode(status.st_mode))
-# ----------
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nx">os</span><span class="p">.</span><span class="nx">chmod</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="nx">status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">stat</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">stat</span><span class="p">.</span><span class="nx">filemode</span><span class="p">(</span><span class="nx">status</span><span class="p">.</span><span class="nx">st_mode</span><span class="p">))</span>
+<span class="err">#</span><span class="w"> </span><span class="o">----------</span>
 
-try:
-    with open(filename, "r") as reader:
-        content = reader.read()
-except OSError as exc:
-    print(f"trying to open and read: {type(exc)} {exc}")
-# trying to open and read: &lt;class 'PermissionError'&gt;
-# [Errno 13] Permission denied: '/tmp/somefile.txt
-</code></pre>
+<span class="nx">try</span><span class="p">:</span>
+<span class="w">    </span><span class="nx">with</span><span class="w"> </span><span class="nx">open</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span><span class="w"> </span><span class="s">"r"</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">reader</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">content</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">reader</span><span class="p">.</span><span class="nx">read</span><span class="p">()</span>
+<span class="nx">except</span><span class="w"> </span><span class="nx">OSError</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">exc</span><span class="p">:</span>
+<span class="w">    </span><span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s">"trying to open and read: {type(exc)} {exc}"</span><span class="p">)</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">trying</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">open</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">read</span><span class="p">:</span><span class="w"> </span><span class="p">&lt;</span><span class="kd">class</span><span class="w"> </span><span class="err">'</span><span class="nx">PermissionError</span><span class="err">'</span><span class="p">&gt;</span>
+<span class="err">#</span><span class="w"> </span><span class="p">[</span><span class="nx">Errno</span><span class="w"> </span><span class="mi">13</span><span class="p">]</span><span class="w"> </span><span class="nx">Permission</span><span class="w"> </span><span class="nx">denied</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="o">/</span><span class="nx">tmp</span><span class="o">/</span><span class="nx">somefile</span><span class="p">.</span><span class="nx">txt</span>
+</code></pre></div>
 <ul>
 <li>Use <code>os.chmod</code> to set the permission to nothing-nothing-nothing (i.e., 0)</li>
 <li>Trying to read/write file after that causes <code>PermissionError</code> (a subclass of <code>OSError</code>)</li>
@@ -398,26 +403,26 @@ except OSError as exc:
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="hard_link.text">$ echo "file content" &gt; /tmp/original.txt
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"file content"</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/original.txt
 
-$ ls -l /tmp/*.txt
--rw-r--r--  1 tut  staff  13 Apr 20 20:13 /tmp/original.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/*.txt
+-rw-r--r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">13</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:13<span class="w"> </span>/tmp/original.txt
 
-$ ln /tmp/original.txt /tmp/duplicate.txt
-$ ls -l /tmp/*.txt
--rw-r--r--  2 tut  staff  13 Apr 20 20:13 /tmp/duplicate.txt
--rw-r--r--  2 tut  staff  13 Apr 20 20:13 /tmp/original.txt
+$<span class="w"> </span>ln<span class="w"> </span>/tmp/original.txt<span class="w"> </span>/tmp/duplicate.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/*.txt
+-rw-r--r--<span class="w">  </span><span class="m">2</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">13</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:13<span class="w"> </span>/tmp/duplicate.txt
+-rw-r--r--<span class="w">  </span><span class="m">2</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">13</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:13<span class="w"> </span>/tmp/original.txt
 
-$ cat /tmp/duplicate.txt
-file content
+$<span class="w"> </span>cat<span class="w"> </span>/tmp/duplicate.txt
+file<span class="w"> </span>content
 
-$ rm /tmp/original.txt
-$ ls -l /tmp/*.txt
--rw-r--r--  1 tut  staff  13 Apr 20 20:13 /tmp/duplicate.txt
+$<span class="w"> </span>rm<span class="w"> </span>/tmp/original.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/*.txt
+-rw-r--r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">13</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:13<span class="w"> </span>/tmp/duplicate.txt
 
-$ cat /tmp/duplicate.txt
-file content
-</code></pre>
+$<span class="w"> </span>cat<span class="w"> </span>/tmp/duplicate.txt
+file<span class="w"> </span>content
+</code></pre></div>
 <ul>
 <li>Note the number of links to <code>original.txt</code> and <code>duplicate.txt</code> is 2 when they both exist</li>
 </ul>
@@ -429,29 +434,29 @@ file content
 <img alt="Relationship between hard and symbolic Links" src="links.svg"/>
 <figcaption>Figure 1: Figure 1: Hard and Symbolic Links</figcaption>
 </figure>
-<pre class=""><code data-file="sym_link.text">$ echo "file content" &gt; /tmp/original.txt
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"file content"</span><span class="w"> </span>&gt;<span class="w"> </span>/tmp/original.txt
 
-$ ls -l /tmp/*.txt
--rw-r--r--  1 tut  staff  13 Apr 20 20:20 /tmp/original.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/*.txt
+-rw-r--r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">13</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:20<span class="w"> </span>/tmp/original.txt
 
-$ ln -s /tmp/original.txt /tmp/duplicate.txt
-$ ls -l /tmp/*.txt
-lrwxr-xr-x  1 tut  staff  17 Apr 20 20:20 /tmp/duplicate.txt -&gt; /tmp/original.txt
--rw-r--r--  1 tut  staff  13 Apr 20 20:20 /tmp/original.txt
+$<span class="w"> </span>ln<span class="w"> </span>-s<span class="w"> </span>/tmp/original.txt<span class="w"> </span>/tmp/duplicate.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/*.txt
+lrwxr-xr-x<span class="w">  </span><span class="m">1</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">17</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:20<span class="w"> </span>/tmp/duplicate.txt<span class="w"> </span>-&gt;<span class="w"> </span>/tmp/original.txt
+-rw-r--r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">13</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:20<span class="w"> </span>/tmp/original.txt
 
-$ cat /tmp/duplicate.txt
-file content
+$<span class="w"> </span>cat<span class="w"> </span>/tmp/duplicate.txt
+file<span class="w"> </span>content
 
-$ readlink /tmp/duplicate.txt
+$<span class="w"> </span>readlink<span class="w"> </span>/tmp/duplicate.txt
 /tmp/original.txt
 
-$ rm /tmp/original.txt
-$ ls -l /tmp/*.txt
-lrwxr-xr-x  1 tut  staff  17 Apr 20 20:20 /tmp/duplicate.txt@ -&gt; /tmp/original.txt
+$<span class="w"> </span>rm<span class="w"> </span>/tmp/original.txt
+$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>/tmp/*.txt
+lrwxr-xr-x<span class="w">  </span><span class="m">1</span><span class="w"> </span>tut<span class="w">  </span>staff<span class="w">  </span><span class="m">17</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="m">20</span>:20<span class="w"> </span>/tmp/duplicate.txt@<span class="w"> </span>-&gt;<span class="w"> </span>/tmp/original.txt
 
-$ cat /tmp/duplicate.txt
-cat: /tmp/duplicate.txt: No such file or directory
-</code></pre>
+$<span class="w"> </span>cat<span class="w"> </span>/tmp/duplicate.txt
+cat:<span class="w"> </span>/tmp/duplicate.txt:<span class="w"> </span>No<span class="w"> </span>such<span class="w"> </span>file<span class="w"> </span>or<span class="w"> </span>directory
+</code></pre></div>
 <ul>
 <li>Soft links can have different permissions<ul>
 <li>Hard links all refer to the same inode, which is where permissions are stored</li>
@@ -491,27 +496,27 @@ cat: /tmp/duplicate.txt: No such file or directory
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="random_bits.py">with open("/dev/urandom", "rb") as reader:
-    bytes = reader.read(8)
-print([hex(b) for b in bytes])```
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">with</span><span class="w"> </span><span class="k">open</span><span class="p">(</span><span class="s2">"/dev/urandom"</span><span class="p">,</span><span class="w"> </span><span class="s2">"rb"</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">reader</span><span class="o">:</span>
+<span class="w">    </span><span class="n">bytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="k">read</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="err">[</span><span class="nf">hex</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">bytes</span><span class="err">]</span><span class="p">)</span><span class="n n-Quoted">`</span><span class="n n-Quoted n-Quoted-Escape">``</span>
 
-## Disks
+<span class="n n-Quoted">## Disks</span>
 
--   Run the `df` command (for "disk free space")
+<span class="n n-Quoted">-   Run the `</span><span class="n">df</span><span class="n n-Quoted">` command (for "disk free space")</span>
 
-```{data-file="df_output.out"}
-Filesystem     512-blocks      Used  Available Capacity iused      ifree %iused  Mounted on
-/dev/disk3s1s1 1942700360  20008776 1812103064     2%  403755 4294159622    0%   /
-devfs                 414       414          0   100%     722          0  100%   /dev
-/dev/disk3s6   1942700360        40 1812103064     1%       0 9060515320    0%   /System/Volumes/VM
-/dev/disk3s2   1942700360  11963032 1812103064     1%    1069 9060515320    0%   /System/Volumes/Preboot
-/dev/disk3s4   1942700360      7664 1812103064     1%      52 9060515320    0%   /System/Volumes/Update
-/dev/disk1s2      1024000     12328     984504     2%       1    4922520    0%   /System/Volumes/xarts
-/dev/disk1s1      1024000     12544     984504     2%      28    4922520    0%   /System/Volumes/iSCPreboot
-/dev/disk1s3      1024000      4904     984504     1%      89    4922520    0%   /System/Volumes/Hardware
-/dev/disk3s5   1942700360  96389600 1812103064     6%  955583 9060515320    0%   /System/Volumes/Data
-map auto_home           0         0          0   100%       0          0     -   /System/Volumes/Data/home
-</code></pre>
+<span class="n n-Quoted n-Quoted-Escape">``</span><span class="n n-Quoted">`</span><span class="err">{</span><span class="k">data</span><span class="o">-</span><span class="k">file</span><span class="o">=</span><span class="s2">"df_output.out"</span><span class="err">}</span>
+<span class="n">Filesystem</span><span class="w">     </span><span class="mi">512</span><span class="o">-</span><span class="n">blocks</span><span class="w">      </span><span class="n">Used</span><span class="w">  </span><span class="n">Available</span><span class="w"> </span><span class="n">Capacity</span><span class="w"> </span><span class="n">iused</span><span class="w">      </span><span class="n">ifree</span><span class="w"> </span><span class="o">%</span><span class="n">iused</span><span class="w">  </span><span class="n">Mounted</span><span class="w"> </span><span class="k">on</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk3s1s1</span><span class="w"> </span><span class="mi">1942700360</span><span class="w">  </span><span class="mi">20008776</span><span class="w"> </span><span class="mi">1812103064</span><span class="w">     </span><span class="mi">2</span><span class="o">%</span><span class="w">  </span><span class="mi">403755</span><span class="w"> </span><span class="mi">4294159622</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span>
+<span class="n">devfs</span><span class="w">                 </span><span class="mi">414</span><span class="w">       </span><span class="mi">414</span><span class="w">          </span><span class="mi">0</span><span class="w">   </span><span class="mi">100</span><span class="o">%</span><span class="w">     </span><span class="mi">722</span><span class="w">          </span><span class="mi">0</span><span class="w">  </span><span class="mi">100</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="n">dev</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk3s6</span><span class="w">   </span><span class="mi">1942700360</span><span class="w">        </span><span class="mi">40</span><span class="w"> </span><span class="mi">1812103064</span><span class="w">     </span><span class="mi">1</span><span class="o">%</span><span class="w">       </span><span class="mi">0</span><span class="w"> </span><span class="mi">9060515320</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">VM</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk3s2</span><span class="w">   </span><span class="mi">1942700360</span><span class="w">  </span><span class="mi">11963032</span><span class="w"> </span><span class="mi">1812103064</span><span class="w">     </span><span class="mi">1</span><span class="o">%</span><span class="w">    </span><span class="mi">1069</span><span class="w"> </span><span class="mi">9060515320</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">Preboot</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk3s4</span><span class="w">   </span><span class="mi">1942700360</span><span class="w">      </span><span class="mi">7664</span><span class="w"> </span><span class="mi">1812103064</span><span class="w">     </span><span class="mi">1</span><span class="o">%</span><span class="w">      </span><span class="mi">52</span><span class="w"> </span><span class="mi">9060515320</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="k">Update</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk1s2</span><span class="w">      </span><span class="mi">1024000</span><span class="w">     </span><span class="mi">12328</span><span class="w">     </span><span class="mi">984504</span><span class="w">     </span><span class="mi">2</span><span class="o">%</span><span class="w">       </span><span class="mi">1</span><span class="w">    </span><span class="mi">4922520</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">xarts</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk1s1</span><span class="w">      </span><span class="mi">1024000</span><span class="w">     </span><span class="mi">12544</span><span class="w">     </span><span class="mi">984504</span><span class="w">     </span><span class="mi">2</span><span class="o">%</span><span class="w">      </span><span class="mi">28</span><span class="w">    </span><span class="mi">4922520</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">iSCPreboot</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk1s3</span><span class="w">      </span><span class="mi">1024000</span><span class="w">      </span><span class="mi">4904</span><span class="w">     </span><span class="mi">984504</span><span class="w">     </span><span class="mi">1</span><span class="o">%</span><span class="w">      </span><span class="mi">89</span><span class="w">    </span><span class="mi">4922520</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="n">Hardware</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">disk3s5</span><span class="w">   </span><span class="mi">1942700360</span><span class="w">  </span><span class="mi">96389600</span><span class="w"> </span><span class="mi">1812103064</span><span class="w">     </span><span class="mi">6</span><span class="o">%</span><span class="w">  </span><span class="mi">955583</span><span class="w"> </span><span class="mi">9060515320</span><span class="w">    </span><span class="mi">0</span><span class="o">%</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="k">Data</span>
+<span class="n">map</span><span class="w"> </span><span class="n">auto_home</span><span class="w">           </span><span class="mi">0</span><span class="w">         </span><span class="mi">0</span><span class="w">          </span><span class="mi">0</span><span class="w">   </span><span class="mi">100</span><span class="o">%</span><span class="w">       </span><span class="mi">0</span><span class="w">          </span><span class="mi">0</span><span class="w">     </span><span class="o">-</span><span class="w">   </span><span class="o">/</span><span class="k">System</span><span class="o">/</span><span class="n">Volumes</span><span class="o">/</span><span class="k">Data</span><span class="o">/</span><span class="n">home</span>
+</code></pre></div>
 <ul>
 <li>The physical disk in this laptop is divided into several filesystems<ul>
 <li>Each has its own inodes</li>
@@ -533,9 +538,9 @@ map auto_home           0         0          0   100%       0          0     -  
 <ul>
 <li>Use the <code>du</code> command with <code>-h</code> for human-readable suffixes and <code>-s</code> for summary</li>
 </ul>
-<pre class=""><code data-file="du_h_s.text">$ du -h -s .
-4.9M    .
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>du<span class="w"> </span>-h<span class="w"> </span>-s<span class="w"> </span>.
+<span class="m">4</span>.9M<span class="w">    </span>.
+</code></pre></div>
 <ul>
 <li>But this doesn't include <code>.git</code> or other files and directories whose names start with <code>.</code></li>
 <li>Simple solution <code>du -h -s .*</code> tries to summarize <code>..</code>, which isn't what we want</li>
@@ -544,40 +549,40 @@ map auto_home           0         0          0   100%       0          0     -  
 </ul>
 </li>
 </ul>
-<pre class=""><code data-file="du_h_s_all.text">$ du -h -s $(ls -A)
-1.8M    .git
-4.0K    .gitignore
-4.0K    .vscode
-4.0K    CODE_OF_CONDUCT.md
-8.0K    CONTRIBUTING.md
-8.0K    LICENSE.md
-4.0K    Makefile
-4.0K    README.md
-4.0K    brew.txt
-4.0K    config.py
-812K    docs
- 28K    info
-360K    lib
-1.1M    old
-4.0K    requirements.txt
-524K    res
-408K    src
-4.0K    tmp
-</code></pre>
+<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>du<span class="w"> </span>-h<span class="w"> </span>-s<span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>-A<span class="k">)</span>
+<span class="m">1</span>.8M<span class="w">    </span>.git
+<span class="m">4</span>.0K<span class="w">    </span>.gitignore
+<span class="m">4</span>.0K<span class="w">    </span>.vscode
+<span class="m">4</span>.0K<span class="w">    </span>CODE_OF_CONDUCT.md
+<span class="m">8</span>.0K<span class="w">    </span>CONTRIBUTING.md
+<span class="m">8</span>.0K<span class="w">    </span>LICENSE.md
+<span class="m">4</span>.0K<span class="w">    </span>Makefile
+<span class="m">4</span>.0K<span class="w">    </span>README.md
+<span class="m">4</span>.0K<span class="w">    </span>brew.txt
+<span class="m">4</span>.0K<span class="w">    </span>config.py
+812K<span class="w">    </span>docs
+<span class="w"> </span>28K<span class="w">    </span>info
+360K<span class="w">    </span>lib
+<span class="m">1</span>.1M<span class="w">    </span>old
+<span class="m">4</span>.0K<span class="w">    </span>requirements.txt
+524K<span class="w">    </span>res
+408K<span class="w">    </span>src
+<span class="m">4</span>.0K<span class="w">    </span>tmp
+</code></pre></div>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-	  ⇐ <a href="../intro/">Introduction</a>
+<span aria-hidden="true">⇐</span> <a href="../intro/">Introduction</a>
 </div>
 <div class="col-6 center">
-<a href="../"></a>
-	  © 2025
+<a href="../">The Sudonomicon</a>
+	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../proc/">Processes</a> ⇒
-	</div>
+<a href="../proc/">Processes</a> <span aria-hidden="true">⇒</span>
+</div>
 </div>
 </footer>
 </body>

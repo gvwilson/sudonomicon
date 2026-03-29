@@ -5,190 +5,84 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Contributing</title>
-<link href="../static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../static/page.css" rel="stylesheet" type="text/css"/>
+<meta content="The Sudonomicon" name="description"/>
+<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
+<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<nav>
-<a href="../">Home</a>
-      ·
-      <span class="dropdown">
-<a href="#">Lessons</a>
-<span class="dropdown-content" id="nav-lessons">
-<a href="../intro/">Introduction</a>
-<a href="../fs/">The Filesystem</a>
-<a href="../proc/">Processes</a>
-<a href="../jobs/">Running Jobs</a>
-<a href="../http/">HTTP</a>
-<a href="../auth/">Authentication</a>
-<a href="../var/">Shell Variables</a>
-<a href="../packenv/">Packages and Virtual Environments</a>
-<a href="../dock/">Virtualization</a>
-<a href="../finale/">Conclusion</a>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav aria-label="Site navigation">
+<a href="../">The Sudonomicon</a>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
+<ul class="dropdown-content" id="nav-lessons" role="list">
+<li><a href="../intro/">Introduction</a></li>
+<li><a href="../fs/">The Filesystem</a></li>
+<li><a href="../proc/">Processes</a></li>
+<li><a href="../jobs/">Running Jobs</a></li>
+<li><a href="../http/">HTTP</a></li>
+<li><a href="../auth/">Authentication</a></li>
+<li><a href="../var/">Shell Variables</a></li>
+<li><a href="../packenv/">Packages and Virtual Environments</a></li>
+<li><a href="../dock/">Virtualization</a></li>
+<li><a href="../finale/">Conclusion</a></li>
+</ul>
 </span>
-</span>
-      ·
-      <span class="dropdown">
-<a href="#">Appendices</a>
-<span class="dropdown-content" id="nav-appendices">
-<a href="../license/">License</a>
-<a href="../conduct/">Code of Conduct</a>
-<a href="../contributing/">Contributing</a>
-<a href="../bibliography/">Bibliography</a>
-<a href="../glossary/">Glossary</a>
-</span>
+<span aria-hidden="true">·</span>
+<span class="dropdown">
+<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
+<ul class="dropdown-content" id="nav-appendices" role="list">
+<li><a href="../license/">License</a></li>
+<li><a href="../conduct/">Code of Conduct</a></li>
+<li><a class="active" href="../contributing/">Contributing</a></li>
+<li><a href="../bibliography/">Bibliography</a></li>
+<li><a href="../glossary/">Glossary</a></li>
+</ul>
 </span>
 </nav>
-<main>
+<main id="main-content">
 <h1>Contributing</h1>
 <p>Contributions are very welcome;
-please contact us <a href="mailto:gvwilson@third-bit.com">by email</a> or by filing an issue in <a href="https://github.com/lessonomicon/sudonomicon">our repository</a>.
-All contributors must abide by our <a href="./CODE_OF_CONDUCT.md">Code of Conduct</a>.</p>
+please contact us <a href="mailto:gvwilson@third-bit.com">by email</a> or by filing an issue in <a href="https://github.com/gvwilson/unbreak">our repository</a>.
+All contributors must abide by our Code of Conduct.</p>
 <h2>Setup and Operation</h2>
 <ul>
-<li>Install <a href="https://docs.astral.sh/uv/">uv</a></li>
-<li>Create a virtual environment by running <code>uv venv</code> in the root directory</li>
-<li>Activate it by running <code>source .venv/bin/activate</code> in your shell</li>
-<li>Install dependencies by running <code>uv pip install -r pyproject.toml</code></li>
-<li>This project uses <a href="https://pypi.org/project/mccole/">McCole</a> to generate HTML and check the project's structure</li>
-<li>Run <code>make</code> on its own to see a list of common commands</li>
+<li>Install <a href="https://github.com/astral-sh/uv">uv</a>.</li>
+<li>Create a virtual environment by running <code>uv venv</code> in the root directory.</li>
+<li>Activate it by running <code>source .venv/bin/activate</code> in your shell.</li>
+<li>Install dependencies by running <code>uv sync</code>.</li>
+<li>Run <code>task --list</code> on its own to see a list of common commands.</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>make task</th>
-<th>effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>clean</td>
-<td>clean up</td>
-</tr>
-<tr>
-<td>commands</td>
-<td>show available commands (default)</td>
-</tr>
-<tr>
-<td>lint</td>
-<td>check code and project</td>
-</tr>
-<tr>
-<td>render</td>
-<td>convert to HTML</td>
-</tr>
-<tr>
-<td>serve</td>
-<td>serve generated HTML</td>
-</tr>
-<tr>
-<td>stats</td>
-<td>basic site statistics</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>If you are on MacOS you may want to use <a href="https://brew.sh/">Homebrew</a> to install:<ul>
-<li><code>fswatch</code></li>
-<li><code>pstree</code></li>
-<li><code>tree</code></li>
-<li><code>watch</code></li>
-</ul>
-</li>
-</ul>
-<h2>Labels</h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-<th>Color</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>change</td>
-<td>something different</td>
-<td>#FBCA04</td>
-</tr>
-<tr>
-<td>feature</td>
-<td>new feature</td>
-<td>#B60205</td>
-</tr>
-<tr>
-<td>fix</td>
-<td>something broken</td>
-<td>#5319E7</td>
-</tr>
-<tr>
-<td>good first issue</td>
-<td>newcomers are always welcome</td>
-<td>#D4C5F9</td>
-</tr>
-<tr>
-<td>talk</td>
-<td>question or discussion</td>
-<td>#0E8A16</td>
-</tr>
-<tr>
-<td>task</td>
-<td>one-off task</td>
-<td>#1D76DB</td>
-</tr>
-</tbody>
-</table>
-<p>Please use <a href="https://www.conventionalcommits.org/">Conventional Commits</a> style for pull requests
-by using <code>change:</code>, <code>feature:</code>, <code>fix:</code>, or <code>task:</code> as the first word
-in the title of the commit message.
-You may also use <code>publish:</code> if the PR just rebuilds the HTML version of the lesson.</p>
 <h2>FAQ</h2>
 <dl>
-<dt>Do you need any help?</dt>
-<dd>Yes—please see the issues in <a href="https://github.com/lessonomicon/sudonomicon">our repository</a>.</dd>
+<dt>Do you need help?</dt>
+<dd>Yes: please see the issues in <a href="https://github.com/gvwilson/unbreak">our repository</a>.</dd>
 <dt>What sort of feedback would be useful?</dt>
 <dd>Everything is welcome,
-from pointing out mistakes in the code to suggestions for better explanations.</dd>
+from pointing out mistakes to suggestions for better explanations.</dd>
 <dt>Can I add a new section?</dt>
-<dd>Absolutely, but please <a href="mailto:gvwilson@third-bit.com">reach out</a> before doing so.</dd>
-<dt>Why is this material free to read?</dt>
+<dd>Possibly, but please <a href="mailto:gvwilson@third-bit.com">reach out</a> before doing so.</dd>
+<dt>Why is this material free?</dt>
 <dd>Because if we all give a little, we all get a lot.</dd>
 </dl>
-<h2>Colophon</h2>
-<ul>
-<li>
-<p>The CSS files used to style code were obtained from <a href="https://numist.github.io/highlight-css/">highlight-css</a>;
-    legibility was checked using <a href="https://wave.webaim.org/">WebAIM WAVE</a>.</p>
-</li>
-<li>
-<p>Diagrams were created with the desktop version of <a href="https://www.drawio.com/">draw.io</a>.</p>
-</li>
-<li>
-<p>The site is hosted on <a href="https://pages.github.com/">GitHub Pages</a>.</p>
-</li>
-<li>
-<p>Thanks to the authors of <a href="https://pypi.org/project/beautifulsoup4/">BeautifulSoup</a>,
-    <a href="https://pypi.org/project/html5validator/">html5validator</a>,
-    <a href="https://astral.sh/ruff">ruff</a>,
-    and all the other software used in this project.
-    If we all give a little,
-    we all get a lot.</p>
-</li>
-</ul>
 </main>
-<footer>
+<footer aria-label="Page navigation">
 <div class="row">
 <div class="col-3 left">
-	  ⇐ <a href="../conduct/">Code of Conduct</a>
+<span aria-hidden="true">⇐</span> <a href="../conduct/">Code of Conduct</a>
 </div>
 <div class="col-6 center">
-<a href="../"></a>
-	  © 2025
+<a href="../">The Sudonomicon</a>
+	  ©
 	  <a href="../#acknowledgments">the authors</a>
 </div>
 <div class="col-3 right">
-<a href="../bibliography/">Bibliography</a> ⇒
-	</div>
+<a href="../bibliography/">Bibliography</a> <span aria-hidden="true">⇒</span>
+</div>
 </div>
 </footer>
 </body>
