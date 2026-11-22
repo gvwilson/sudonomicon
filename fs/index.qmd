@@ -1,0 +1,234 @@
+# The Filesystem
+
+-   FIXME
+
+## Definitions
+
+-   {{< g ball_and_stick "Ball-and-stick model" >}}
+    -   Computer's hard drive has files and directories
+    -   Directories can contain other directories but don't contain data
+    -   Files contain data but can't contain other files (or directories)
+    -   Everything forms a tree under the {{< g root_directory "root directory" >}} `/`
+-   More accurate model
+    -   Computer may have many storage devices, each with its own {{< g filesystem "filesystem" >}}
+    -   Each file is made up of one or more fixed-size {{< g block_filesystem "blocks" >}}
+    -   The filesystem keeps track of which blocks belong to which files
+        -   Adds or recycles blocks as necessary
+    -   A directory is a special kind of file that keeps track of other files
+        -   Files aren't physically "in" a directory
+
+## Information About Files and Directories
+
+-   `ls` command flags:
+    -   `-a`: show directories whose names begin with `.`
+    -   `-i`: show inode numbers
+    -   `-l`: long form (i.e., include several pieces of information)
+    -   `-s`: show the number of blocks
+
+{{< inc fs/ls_long_tmp.sh >}}
+{{< inc fs/ls_long_tmp.out >}}
+
+-   It's a shame there's no option for column titles, but we can add them manually
+
+| inode    | blocks | permissions | links | owner | group | bytes | date         | name              |
+| -------- | ------ | ----------- | ----- | ----- | ----- | ----- | ------------ | ----------------- |
+| 99138261 | 0      | drwxr-xr-x  |     3 | tut   | staff |    96 | Apr 20 07:50 | ./                |
+| 94560701 | 0      | drwxr-xr-x  |    22 | tut   | staff |   704 | Apr 20 07:53 | ../               |
+| 99138262 | 8      | -rw-r--r--  |     1 | tut   | staff |   174 | Apr 20 07:50 | bibliography.html |
+
+-   The {{< g inode "inode" >}} stores attributes and IDs of disk blocks
+    -   No-one is sure any longer what the "i" stands for
+    -   Each inode has a unique ID that stays the same despite renaming
+    -   Design pattern: always generate and manage your own IDs
+-   Number of blocks
+    -   Each block is typically 4kbyte, but that may vary
+    -   FIXME: why 8 blocks for bibliography which is only 174 bytes?
+-   Permissions (discussed below)
+-   Number of {{< g link_hard "hard links" >}}
+    -   I.e., the number of things that point to this file or directory
+    -   Also discussed below
+-   Names of user and group that own the file or directory
+    -   Also discussed below
+-   Size in bytes (i.e., what `wc -c` reports)
+-   Finally the name
+-   So now we have a bunch of concepts to explain
+
+## Permissions in Principle
+
+-   The three A's
+    -   {{< g authentication "Authentication" >}}: who are you
+        (or more accurately, what is your identity on this computer system)?
+    -   {{< g authorization "Authorization" >}}: who is allowed to do what?
+    -   {{< g access_control "Access control" >}}: how does the system enforce those rules?
+-   So operating systems needs to:
+    -   Match a person to an account (we will discuss [elsewhere](../06_auth/))
+    -   Keep track of which account each process belongs to
+    -   Keep track of what operations are permitted to whom
+    -   Enforce those rules (which we won't go into)
+
+## User and Group IDs
+
+-   Each user account has a unique name and a unique numeric ID
+    -   The numeric user ID is often called a {{< g uid "uid" >}}
+    -   Not to be confused with {{< g uuid "UUID" >}}
+-   Each user can belong to one or more {{< g user_group "groups" >}}
+    -   Each of which also has a unique name and a unique group ID (or {{< g gid "gid" >}})
+
+{{< inc fs/id_no_args.sh >}}
+{{< inc fs/id_no_args.out >}}
+
+-   Tells us:
+    -   User ID is 501 and name is `tut`
+    -   Primary group ID is 20 (`staff`)
+    -   Also belongs to 12 (`everyone`) and 61 (`localaccounts`)
+-   Reports by default on the user associated with the currently-running process
+-   Can provide an account name to get details of a particular account
+
+{{< inc fs/id_nobody.sh >}}
+{{< inc fs/id_nobody.out >}}
+
+## Capabilities
+
+-   A {{< g capability "capability" >}} is something that someone may or may not be able to do to a thing
+-   Files and directories capabilities are shown below
+
+| Name    | Abbreviation | File            | Directory                       |
+| ------- | ------------ | --------------- | ------------------------------- |
+| Read    | r            | Inspect content | See what the directory contains |
+| Write   | w            | Modify content  | Add or remove contents          |
+| Execute | x            | Run program     | Enter or pass through directory |
+
+-   Read and write make sense
+-   Execute on files makes sense: runnable program
+    -   See below for how the operating system figures out how to run a file
+-   Execute on directories is basically "we needed something and this bit was available"
+    -   Want to be able to run `dir/program`
+    -   *Without* seeing what else is in `dir`
+    -   Use the "execute" bit on the directory `dir`
+
+## Permissions in Practice
+
+-   Go back to permissions
+-   First letter is `-` for a regular file and `d` for a directory
+    -   We will see other things below
+-   Then show read-write-execute permissions for user, group, and other (i.e., everyone else)
+-   So `drwxr-xr-x` means "a directory with owner=RWX, group=RX, and other=RX"
+-   And `-rw-r--r--` means "a file with owner=RW, group=R, and other=R"
+
+## Changing Permissions
+
+-   Change permissions with `chmod` ("change mode")
+    -   Unfortunately one of the more confusing Unix shell commands
+-   Simplest form: `chmod u=rw,g=r,o=r`
+    -   Specify read-write-execute explicitly for user-group-other
+-   Reminder: `echo` prints its arguments
+
+{{< inc fs/chmod_example.text >}}
+
+## Changing Permissions Programmatically
+
+-   `ls`, `chmod`, and other programs use {{< g system_call "system calls" >}} to get information and change things
+    -   A function provided by the operating system
+-   Other programs can also use those system calls
+
+{{< inc fs/chmod_example.py mark=create >}}
+
+-   `os.stat` returns a tuple with named fields
+    -   All start with `st_` prefix because that's what the original C structure did
+-   `status.st_mode` doesn't make much sense in decimal
+    -   Often printed in {{< g octal "octal" >}}
+    -   Much easier to use `stat.filemode` to turn it into an `ls`-style string
+
+{{< inc fs/chmod_example.py mark=lockdown >}}
+
+-   Use `os.chmod` to set the permission to nothing-nothing-nothing (i.e., 0)
+-   Trying to read/write file after that causes `PermissionError` (a subclass of `OSError`)
+-   `stat` defines constants representing various permissions
+-   Add the ones we want
+
+## Not Important Until It Is
+
+-   Permissions are less important on laptops than they were on multi-user systems…
+-   …until we start to run web servers and databases that other people can access
+
+## What *Is* "Systems Programming"?
+
+-   Not a precise term
+-   But if it means anything,
+    it includes things at this level
+
+## Hard Links
+
+-   One of the columns in earlier table is "links"
+    -   How many references there are to a file in the filesystem
+-   Can create more links to an existing file
+    -   What we think of as "files" are bookkeeping entries in the filesystem that refer to inodes
+-   Use the `ln` command to create a hard link
+    -   Syntax is like `mv`: existing first, then new name
+
+{{< inc fs/hard_link.text >}}
+
+-   Note the number of links to `original.txt` and `duplicate.txt` is 2 when they both exist
+
+## Symbolic Links
+
+-   A {{< g link_sym "symbolic link" >}} (or symlink) is a file that refers to another file
+
+![Hard and Symbolic Links](links.svg){#fig-fs_links fig-alt="Relationship between hard and symbolic Links"}
+
+{{< inc fs/sym_link.text >}}
+
+-   Soft links can have different permissions
+    -   Hard links all refer to the same inode, which is where permissions are stored
+-   Often use soft links to hide version numbers of installed applications
+    -   E.g., `~/conda/bin/python` is a symlink to `~/conda/bin/python3.11`
+    -   Running the former actually launches the latter
+
+## Other Kinds of "Files"
+
+-   Unix (and other modern operating systems) make {{< g device "devices" >}} look like files
+    -   Reading from the keyboard and writing to the screen are like file I/O
+-   The pseudofiles that represent devices live in `/dev`
+-   `ls /dev` on my machine shows 345 different devices
+-   Key difference between different kinds of devices is whether access is {{< g buffer_verb "buffered" >}}
+    -   Does the operating system read a block at a time and then give the user access to the block?
+    -   Does it store data in a block temporarily and write that block all at once?
+-   A {{< g character_device "character device" >}} allows direct (unbuffered) access
+    -   Example: terminals whose names are `/dev/tty*`
+    -   `ls -l` shows `c` as the first letter instead of `d` for directory
+-   A {{< g block_device "block device" >}} always buffers
+    -   Example: a disk whose name is `/dev/disk*`
+    -   `ls -l` shows `b` instead of `c`, `d`, `l`, or `-`
+-   There are stranger things as well
+    -   `dev/urandom` produces random bits
+
+{{< inc fs/random_bits.py >}}
+
+## Disks
+
+-   Run the `df` command (for "disk free space")
+
+{{< inc fs/df_output.out >}}
+
+-   The physical disk in this laptop is divided into several filesystems
+    -   Each has its own inodes
+-   How many 512-byte blocks does each have?
+-   How many are used and available?
+-   How many inodes are used and available?
+-   Where is the filesystem {{< g mount "mounted" >}}?
+    -   I.e., what path do we use to tell the operating system we want that data?
+-   Most people won't ever have to worry about disks at this level
+    -   But we *will* think about mounting [elsewhere](../07_virt/)
+
+## Disk Usage
+
+-   Use the `du` command with `-h` for human-readable suffixes and `-s` for summary
+
+{{< inc fs/du_h_s.text >}}
+
+-   But this doesn't include `.git` or other files and directories whose names start with `.`
+-   Simple solution `du -h -s .*` tries to summarize `..`, which isn't what we want
+-   Use {{< g command_interpolation "command interpolation" >}} and `ls -A`
+    -   All of these tools evolved piece by piece over time, and it shows
+
+{{< inc fs/du_h_s_all.text >}}

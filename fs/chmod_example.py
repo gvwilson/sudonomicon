@@ -1,4 +1,4 @@
-# [create]
+# mccole:create
 import os
 import stat
 
@@ -21,9 +21,8 @@ print(stat.filemode(status.st_mode))
 
 print(f"user ID {status.st_uid} group ID {status.st_gid}")
 # user ID 501 group ID 0
-# [/create]
-
-# [lockdown]
+# mccole:/create
+# mccole:lockdown
 os.chmod(filename, 0)
 status = os.stat(filename)
 print(stat.filemode(status.st_mode))
@@ -36,11 +35,10 @@ except OSError as exc:
     print(f"trying to open and read: {type(exc)} {exc}")
 # trying to open and read: <class 'PermissionError'>
 # [Errno 13] Permission denied: '/tmp/somefile.txt
-# [/lockdown]
-
-# [enable]
+# mccole:/lockdown
+# mccole:enable
 os.chmod(filename, stat.S_IRUSR + stat.S_IWUSR)
 status = os.stat(filename)
 print(stat.filemode(status.st_mode))
 # -rw-------
-# [/enable]
+# mccole:/enable

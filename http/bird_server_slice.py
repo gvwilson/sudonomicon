@@ -13,14 +13,13 @@ class BirdServer(HTTPServer):
 
 
 class RequestHandler(BaseHTTPRequestHandler):
-    # [get]
+    # mccole:get
     def do_GET(self):
         result = self.filter_data()
         as_json = result.to_json(orient="records")
         self.send_content(as_json, HTTPStatus.OK)
-    # [/get]
-
-    # [filter]
+    # mccole:/get
+    # mccole:filter
     def filter_data(self):
         params = parse_qs(urlparse(self.path).query)
         result = self.server._data
@@ -31,8 +30,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             year = int(params["year"][0])
             result = result[result["year"] == year]
         return result
-    # [/filter]
-
+    # mccole:/filter
     def send_content(self, content, status):
         content = bytes(content, "utf-8")
         self.send_response(int(status))

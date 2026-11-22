@@ -31,7 +31,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         except Exception as msg:
             self.handle_error(msg)
 
-    # [handle_file]
+    # mccole:handle_file
     def handle_file(self, given_path, full_path):
         try:
             resolved_path = str(full_path.resolve())
@@ -45,8 +45,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             raise ServerException(f"Cannot find {given_path}")
         except IOError:
             raise ServerException(f"Cannot read {given_path}")
-    # [/handle_file]
-
+    # mccole:/handle_file
     def handle_error(self, msg):
         content = ERROR_PAGE.format(path=self.path, msg=msg)
         content = bytes(content, "utf-8")

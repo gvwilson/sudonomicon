@@ -1,9 +1,0 @@
-Variable name,Data Type,Definition
-loc_id,categorical,Unique identifier for survey site
-latitude,continuous,Latitude in decimal degrees for survey site
-longitude,continuous,Longitude in decimal degrees for survey site
-year,date,Year of first day of two-day observation period
-month,date,Month of first day of two-day observation period
-day,date,Day of first day of two-day observation period
-species_id,categorical,Bird species observed (6-letter species code)
-num,continuous,Maximum number of individuals seen at one time

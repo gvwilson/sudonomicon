@@ -1,278 +1,536 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Authentication</title>
-<meta content="The Sudonomicon" name="description"/>
-<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
-<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Authentication – The Sudonomicon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../var/index.html" rel="next">
+<link href="../http/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation">
-<a href="../">The Sudonomicon</a>
-<span aria-hidden="true">·</span>
-<span class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons" role="list">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../fs/">The Filesystem</a></li>
-<li><a href="../proc/">Processes</a></li>
-<li><a href="../jobs/">Running Jobs</a></li>
-<li><a href="../http/">HTTP</a></li>
-<li><a class="active" href="../auth/">Authentication</a></li>
-<li><a href="../var/">Shell Variables</a></li>
-<li><a href="../packenv/">Packages and Virtual Environments</a></li>
-<li><a href="../network/">Networking</a></li>
-<li><a href="../dock/">Virtualization</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
-</span>
-<span aria-hidden="true">·</span>
-<span class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices" role="list">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</span>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../auth/index.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">The Sudonomicon</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/sudonomicon" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Filesystem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../proc/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../jobs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Running Jobs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../http/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../auth/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../var/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shell Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../packenv/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Packages and Virtual Environments</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../network/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dock/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
 </nav>
-<main id="main-content">
-<h1>Authentication</h1>
-<h2>The Three A's Revisited</h2>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-three-as-revisited" id="toc-the-three-as-revisited" class="nav-link active" data-scroll-target="#the-three-as-revisited"><span class="header-section-number">6.1</span> The Three A’s Revisited</a></li>
+  <li><a href="#user-accounts-on-unix" id="toc-user-accounts-on-unix" class="nav-link" data-scroll-target="#user-accounts-on-unix"><span class="header-section-number">6.2</span> User Accounts on Unix</a></li>
+  <li><a href="#password-storage" id="toc-password-storage" class="nav-link" data-scroll-target="#password-storage"><span class="header-section-number">6.3</span> Password Storage</a></li>
+  <li><a href="#salts-and-rainbow-tables" id="toc-salts-and-rainbow-tables" class="nav-link" data-scroll-target="#salts-and-rainbow-tables"><span class="header-section-number">6.4</span> Salts and Rainbow Tables</a></li>
+  <li><a href="#exercise-hash-properties" id="toc-exercise-hash-properties" class="nav-link" data-scroll-target="#exercise-hash-properties"><span class="header-section-number">6.5</span> Exercise: Hash Properties</a></li>
+  <li><a href="#sudo-and-su" id="toc-sudo-and-su" class="nav-link" data-scroll-target="#sudo-and-su"><span class="header-section-number">6.6</span> sudo and su</a></li>
+  <li><a href="#exercise-sudo-logging" id="toc-exercise-sudo-logging" class="nav-link" data-scroll-target="#exercise-sudo-logging"><span class="header-section-number">6.7</span> Exercise: sudo Logging</a></li>
+  <li><a href="#windows-authentication" id="toc-windows-authentication" class="nav-link" data-scroll-target="#windows-authentication"><span class="header-section-number">6.8</span> Windows Authentication</a></li>
+  <li><a href="#ssh-key-pairs" id="toc-ssh-key-pairs" class="nav-link" data-scroll-target="#ssh-key-pairs"><span class="header-section-number">6.9</span> SSH Key Pairs</a></li>
+  <li><a href="#exercise-key-inspection" id="toc-exercise-key-inspection" class="nav-link" data-scroll-target="#exercise-key-inspection"><span class="header-section-number">6.10</span> Exercise: Key Inspection</a></li>
+  <li><a href="#data-authentication-hashing-and-hmac" id="toc-data-authentication-hashing-and-hmac" class="nav-link" data-scroll-target="#data-authentication-hashing-and-hmac"><span class="header-section-number">6.11</span> Data Authentication: Hashing and HMAC</a></li>
+  <li><a href="#multi-factor-authentication" id="toc-multi-factor-authentication" class="nav-link" data-scroll-target="#multi-factor-authentication"><span class="header-section-number">6.12</span> Multi-Factor Authentication</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/auth/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/auth/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-three-as-revisited" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-three-as-revisited"><span class="header-section-number">6.1</span> The Three A’s Revisited</h2>
 <ul>
 <li>The filesystem chapter introduced authentication, authorization, and access control</li>
 <li>This chapter focuses on authentication: how the system establishes who you are</li>
-<li>Authentication is always a claim followed by evidence<ul>
-<li>"I am Ning" — but how does the system verify that?</li>
-</ul>
-</li>
-<li>Two classic approaches:<ul>
+<li>Authentication is always a claim followed by evidence
+<ul>
+<li>“I am Ning” — but how does the system verify that?</li>
+</ul></li>
+<li>Two classic approaches:
+<ul>
 <li>Something you know (password, PIN)</li>
 <li>Something you have (a key, a hardware token, a phone)</li>
 <li>Something you are (fingerprint, face — biometrics)</li>
-</ul>
-</li>
+</ul></li>
 <li>Real systems increasingly combine more than one (multi-factor authentication)</li>
 </ul>
-<h2>User Accounts on Unix</h2>
+</section>
+<section id="user-accounts-on-unix" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="user-accounts-on-unix"><span class="header-section-number">6.2</span> User Accounts on Unix</h2>
 <ul>
-<li>Unix stores user account information in <code>/etc/passwd</code><ul>
+<li>Unix stores user account information in <code>/etc/passwd</code>
+<ul>
 <li>Readable by everyone (programs need to look up user names)</li>
 <li>One line per account, colon-separated fields</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>grep<span class="w"> </span>tut<span class="w"> </span>/etc/passwd
-tut:x:501:20:Tutorial<span class="w"> </span>User:/Users/tut:/bin/bash
-</code></pre></div>
+<pre><code>$ grep tut /etc/passwd
+tut:x:501:20:Tutorial User:/Users/tut:/bin/bash</code></pre>
 <ul>
 <li>Fields in order: username, password placeholder, UID, GID, comment, home directory, shell</li>
-<li>The <code>x</code> in the password field means "look in /etc/shadow instead"<ul>
-<li>Historically passwords were stored here — hence the name "passwd"</li>
-<li>Moving them to <code>/etc/shadow</code> was a security improvement</li>
-</ul>
-</li>
-</ul>
-<h2>Password Storage</h2>
+<li>The <code>x</code> in the password field means “look in /etc/shadow instead”
 <ul>
-<li>Passwords are never stored as <a href="../glossary/#cleartext">cleartext</a><ul>
-<li>If the file is leaked, attackers would have everyone's password immediately</li>
+<li>Historically passwords were stored here — hence the name “passwd”</li>
+<li>Moving them to <code>/etc/shadow</code> was a security improvement</li>
+</ul></li>
 </ul>
-</li>
-<li>Instead, the system stores a <a href="../glossary/#hash">hash</a> of the password<ul>
+</section>
+<section id="password-storage" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="password-storage"><span class="header-section-number">6.3</span> Password Storage</h2>
+<ul>
+<li>Passwords are never stored as <a href="../glossary/index.html#cleartext">cleartext</a>
+<ul>
+<li>If the file is leaked, attackers would have everyone’s password immediately</li>
+</ul></li>
+<li>Instead, the system stores a <a href="../glossary/index.html#hash">hash</a> of the password
+<ul>
 <li>A one-way function: easy to compute hash from password, infeasible to reverse</li>
 <li>Deterministic: same password always produces same hash</li>
-</ul>
-</li>
-<li>When you log in:<ol>
+</ul></li>
+<li>When you log in:
+<ol type="1">
 <li>You type your password</li>
 <li>The system hashes what you typed</li>
 <li>It compares the result to the stored hash</li>
 <li>If they match, you are authenticated</li>
-</ol>
-</li>
+</ol></li>
 <li><code>/etc/shadow</code> stores the hashed passwords; only readable by root</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/shadow<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>tut
-tut:<span class="nv">$6$rounds</span><span class="o">=</span><span class="m">656000</span><span class="nv">$salt$hashedvalue</span>...:19831:0:99999:7:::
-</code></pre></div>
+<pre><code>$ sudo cat /etc/shadow | grep tut
+tut:$6$rounds=656000$salt$hashedvalue...:19831:0:99999:7:::</code></pre>
 <ul>
-<li>The hash field encodes:<ul>
+<li>The hash field encodes:
+<ul>
 <li><code>$6$</code> — hashing algorithm (6 = SHA-512)</li>
 <li><code>$rounds=656000$</code> — work factor (how many iterations)</li>
 <li><code>$salt$</code> — random value mixed in before hashing (see below)</li>
 <li>The actual hash</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2>Salts and Rainbow Tables</h2>
+</section>
+<section id="salts-and-rainbow-tables" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="salts-and-rainbow-tables"><span class="header-section-number">6.4</span> Salts and Rainbow Tables</h2>
 <ul>
-<li>A <a href="../glossary/#salt">salt</a> is a random value stored alongside the hash<ul>
+<li>A <a href="../glossary/index.html#salt">salt</a> is a random value stored alongside the hash
+<ul>
 <li>Before hashing, concatenate the salt and the password</li>
 <li>Same password + different salt = different hash</li>
-</ul>
-</li>
-<li>Why bother?<ul>
-<li>Without salts, attackers can pre-compute a table of (password → hash) pairs</li>
-<li>Called a "rainbow table"</li>
-<li>With salts, the attacker must redo the computation for each account separately</li>
-</ul>
-</li>
-<li>In Python, <code>hashlib</code> provides low-level hashing;
-    use <code>passlib</code> or <code>bcrypt</code> for password storage in real applications</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-
-<span class="c1"># Low-level: do not use this directly for passwords</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">"correct horse battery staple"</span>
-<span class="n">salt</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
-<span class="n">hashed</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">pbkdf2_hmac</span><span class="p">(</span><span class="s2">"sha256"</span><span class="p">,</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">salt</span><span class="p">,</span> <span class="mi">260000</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"salt: </span><span class="si">{</span><span class="n">salt</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"hash: </span><span class="si">{</span><span class="n">hashed</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
+</ul></li>
+<li>Why bother?
 <ul>
-<li><code>pbkdf2_hmac</code> is a "slow" hash function — intentionally expensive to compute<ul>
+<li>Without salts, attackers can pre-compute a table of (password → hash) pairs</li>
+<li>Called a “rainbow table”</li>
+<li>With salts, the attacker must redo the computation for each account separately</li>
+</ul></li>
+<li>In Python, <code>hashlib</code> provides low-level hashing; use <code>passlib</code> or <code>bcrypt</code> for password storage in real applications</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Low-level: do not use this directly for passwords</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>password <span class="op">=</span> <span class="st">"correct horse battery staple"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>salt <span class="op">=</span> os.urandom(<span class="dv">16</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>hashed <span class="op">=</span> hashlib.pbkdf2_hmac(<span class="st">"sha256"</span>, password.encode(), salt, <span class="dv">260000</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"salt: </span><span class="sc">{</span>salt<span class="sc">.</span><span class="bu">hex</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"hash: </span><span class="sc">{</span>hashed<span class="sc">.</span><span class="bu">hex</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>pbkdf2_hmac</code> is a “slow” hash function — intentionally expensive to compute
+<ul>
 <li>Makes brute-force attacks much slower</li>
 <li>The 260000 is the iteration count; higher = slower to crack, also slower to verify</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<section class="exercise">
-<h2>Exercise: Hash Properties</h2>
-<ol>
-<li>
-<p>Run the hash example above twice.
-    Are the outputs the same?
-    Why or why not?</p>
-</li>
-<li>
-<p>Change the password by one character and re-run.
-    How does the hash change?
-    What property of hash functions does this illustrate?</p>
-</li>
+</section>
+<section id="exercise-hash-properties" class="level2 exercise" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="exercise-hash-properties"><span class="header-section-number">6.5</span> Exercise: Hash Properties</h2>
+<ol type="1">
+<li><p>Run the hash example above twice. Are the outputs the same? Why or why not?</p></li>
+<li><p>Change the password by one character and re-run. How does the hash change? What property of hash functions does this illustrate?</p></li>
 </ol>
 </section>
-<h2>sudo and su</h2>
+<section id="sudo-and-su" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="sudo-and-su"><span class="header-section-number">6.6</span> sudo and su</h2>
 <ul>
 <li>Principle of least privilege: run processes with only the permissions they need</li>
-<li><code>su username</code> — substitute user; switches to another account for the rest of the session<ul>
-<li>Requires the <em>target</em> user's password (or root password)</li>
+<li><code>su username</code> — substitute user; switches to another account for the rest of the session
+<ul>
+<li>Requires the <em>target</em> user’s password (or root password)</li>
 <li><code>su -</code> starts a fresh login shell as that user</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>whoami
+<pre><code>$ whoami
 tut
 
-$<span class="w"> </span>su<span class="w"> </span>nobody
+$ su nobody
 Password:
-$<span class="w"> </span>whoami
+$ whoami
 nobody
 
-$<span class="w"> </span><span class="nb">exit</span>
-$<span class="w"> </span>whoami
-tut
-</code></pre></div>
+$ exit
+$ whoami
+tut</code></pre>
 <ul>
-<li><code>sudo command</code> — runs a single command as root (or another specified user)<ul>
+<li><code>sudo command</code> — runs a single command as root (or another specified user)
+<ul>
 <li>Configured in <code>/etc/sudoers</code></li>
-<li>Uses <em>your</em> password, not root's</li>
+<li>Uses <em>your</em> password, not root’s</li>
 <li>Actions are logged (unlike <code>su</code>)</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/etc/shadow
-cat:<span class="w"> </span>/etc/shadow:<span class="w"> </span>Permission<span class="w"> </span>denied
+<pre><code>$ cat /etc/shadow
+cat: /etc/shadow: Permission denied
 
-$<span class="w"> </span>sudo<span class="w"> </span>cat<span class="w"> </span>/etc/shadow<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span>
+$ sudo cat /etc/shadow | head -n 3
 root:*:19810:0:99999:7:::
 daemon:*:19810:0:99999:7:::
-tut:<span class="nv">$6$rounds</span><span class="o">=</span><span class="m">656000</span>$...
-</code></pre></div>
+tut:$6$rounds=656000$...</code></pre>
 <ul>
 <li><code>/etc/sudoers</code> controls who can run what as whom</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code># Allow tut to run any command as root (with password)
+<pre><code># Allow tut to run any command as root (with password)
 tut ALL=(ALL) ALL
 
 # Allow deploy user to restart nginx without a password
-deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
-</code></pre></div>
+deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx</code></pre>
 <ul>
 <li>Use <code>visudo</code> to edit <code>/etc/sudoers</code> — it validates syntax before saving</li>
 </ul>
-<section class="exercise">
-<h2>Exercise: sudo Logging</h2>
-<ol>
-<li>
-<p>Run <code>sudo ls /root</code> and then look at the system log (try <code>/var/log/auth.log</code>
-    on Linux or <code>log show --predicate 'process == "sudo"'</code> on macOS).
-    What information is recorded?</p>
-</li>
-<li>
-<p>Why is logging important for <code>sudo</code> but less important for <code>su</code>?</p>
-</li>
+</section>
+<section id="exercise-sudo-logging" class="level2 exercise" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="exercise-sudo-logging"><span class="header-section-number">6.7</span> Exercise: sudo Logging</h2>
+<ol type="1">
+<li><p>Run <code>sudo ls /root</code> and then look at the system log (try <code>/var/log/auth.log</code> on Linux or <code>log show --predicate 'process == "sudo"'</code> on macOS). What information is recorded?</p></li>
+<li><p>Why is logging important for <code>sudo</code> but less important for <code>su</code>?</p></li>
 </ol>
 </section>
-<h2>Windows Authentication</h2>
+<section id="windows-authentication" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="windows-authentication"><span class="header-section-number">6.8</span> Windows Authentication</h2>
 <ul>
-<li>Windows stores local account credentials in the Security Account Manager (SAM) database<ul>
+<li>Windows stores local account credentials in the Security Account Manager (SAM) database
+<ul>
 <li>Located at <code>C:\Windows\System32\config\SAM</code></li>
 <li>Locked while Windows is running; readable only by the SYSTEM account</li>
-</ul>
-</li>
-<li>Passwords are hashed with NTLM (NT LAN Manager)<ul>
+</ul></li>
+<li>Passwords are hashed with NTLM (NT LAN Manager)
+<ul>
 <li>Historically used MD4 (now considered weak)</li>
 <li>Modern Windows also stores a more recent hash format</li>
-</ul>
-</li>
-<li>Domain environments use Active Directory (AD)<ul>
+</ul></li>
+<li>Domain environments use Active Directory (AD)
+<ul>
 <li>Kerberos protocol for authentication tickets</li>
 <li>Single sign-on across machines in the domain</li>
-</ul>
-</li>
+</ul></li>
 <li>Windows equivalents of Unix tools:</li>
 </ul>
-<table>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 35%">
+<col style="width: 49%">
+</colgroup>
 <thead>
-<tr>
-<th scope="col">Unix</th>
-<th scope="col">Windows equivalent</th>
-<th scope="col">Purpose</th>
+<tr class="header">
+<th>Unix</th>
+<th>Windows equivalent</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>su</code></td>
 <td><code>runas /user:name cmd</code></td>
 <td>Run command as another user</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>sudo</code></td>
 <td>UAC elevation prompt</td>
 <td>Temporarily raise privileges</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>id</code></td>
 <td><code>whoami /all</code></td>
 <td>Show current user and groups</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>passwd</code></td>
 <td><code>net user name *</code></td>
-<td>Change a user's password</td>
+<td>Change a user’s password</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>useradd</code></td>
 <td><code>net user name /add</code></td>
 <td>Create a new user account</td>
@@ -280,182 +538,655 @@ deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
 </tbody>
 </table>
 <ul>
-<li>User Account Control (UAC) is Windows' version of least-privilege enforcement<ul>
-<li>Prompts when a program requests elevated privileges</li>
-<li>Can be suppressed (but shouldn't be) for automation</li>
-</ul>
-</li>
-</ul>
-<h2>SSH Key Pairs</h2>
+<li>User Account Control (UAC) is Windows’ version of least-privilege enforcement
 <ul>
-<li>Password authentication has weaknesses<ul>
+<li>Prompts when a program requests elevated privileges</li>
+<li>Can be suppressed (but shouldn’t be) for automation</li>
+</ul></li>
+</ul>
+</section>
+<section id="ssh-key-pairs" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="ssh-key-pairs"><span class="header-section-number">6.9</span> SSH Key Pairs</h2>
+<ul>
+<li>Password authentication has weaknesses
+<ul>
 <li>Passwords can be guessed, phished, or intercepted</li>
 <li>Typing a password into a remote terminal exposes it to the remote machine</li>
-</ul>
-</li>
-<li>Public key cryptography provides an alternative<ul>
+</ul></li>
+<li>Public key cryptography provides an alternative
+<ul>
 <li>Generate a key pair: a private key (keep secret) and a public key (share freely)</li>
 <li>Something encrypted with the public key can only be decrypted with the private key</li>
 <li>Something signed with the private key can be verified with the public key</li>
-</ul>
-</li>
-<li>For SSH: server challenges the client to prove it has the private key<ul>
+</ul></li>
+<li>For SSH: server challenges the client to prove it has the private key
+<ul>
 <li>Without ever transmitting the private key</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">"tut@example.com"</span>
-Generating<span class="w"> </span>public/private<span class="w"> </span>ed25519<span class="w"> </span>key<span class="w"> </span>pair.
-Enter<span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>which<span class="w"> </span>to<span class="w"> </span>save<span class="w"> </span>the<span class="w"> </span>key<span class="w"> </span><span class="o">(</span>/Users/tut/.ssh/id_ed25519<span class="o">)</span>:
-Enter<span class="w"> </span>passphrase<span class="w"> </span><span class="o">(</span>empty<span class="w"> </span><span class="k">for</span><span class="w"> </span>no<span class="w"> </span>passphrase<span class="o">)</span>:
-Your<span class="w"> </span>identification<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>saved<span class="w"> </span><span class="k">in</span><span class="w"> </span>/Users/tut/.ssh/id_ed25519
-Your<span class="w"> </span>public<span class="w"> </span>key<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>saved<span class="w"> </span><span class="k">in</span><span class="w"> </span>/Users/tut/.ssh/id_ed25519.pub
-</code></pre></div>
+<pre><code>$ ssh-keygen -t ed25519 -C "tut@example.com"
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/Users/tut/.ssh/id_ed25519):
+Enter passphrase (empty for no passphrase):
+Your identification has been saved in /Users/tut/.ssh/id_ed25519
+Your public key has been saved in /Users/tut/.ssh/id_ed25519.pub</code></pre>
 <ul>
 <li><code>ed25519</code> is the recommended key type (newer and more secure than RSA)</li>
 <li>Add a passphrase to protect the private key if it is ever stolen</li>
 <li>Copy the public key to the remote server</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>ssh-copy-id<span class="w"> </span>-i<span class="w"> </span>~/.ssh/id_ed25519.pub<span class="w"> </span>tut@remote.example.com
-/usr/bin/ssh-copy-id:<span class="w"> </span>INFO:<span class="w"> </span>attempting<span class="w"> </span>to<span class="w"> </span>log<span class="w"> </span><span class="k">in</span><span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>new<span class="w"> </span>key<span class="o">(</span>s<span class="o">)</span>
-Number<span class="w"> </span>of<span class="w"> </span>key<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>added:<span class="w">        </span><span class="m">1</span>
-</code></pre></div>
+<pre><code>$ ssh-copy-id -i ~/.ssh/id_ed25519.pub tut@remote.example.com
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s)
+Number of key(s) added:        1</code></pre>
 <ul>
 <li>This appends the public key to <code>~/.ssh/authorized_keys</code> on the remote machine</li>
 <li>SSH agent avoids re-typing the passphrase in each session</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="k">$(</span>ssh-agent<span class="k">)</span>
-Agent<span class="w"> </span>pid<span class="w"> </span><span class="m">12345</span>
+<pre><code>$ eval $(ssh-agent)
+Agent pid 12345
 
-$<span class="w"> </span>ssh-add<span class="w"> </span>~/.ssh/id_ed25519
-Enter<span class="w"> </span>passphrase<span class="w"> </span><span class="k">for</span><span class="w"> </span>/Users/tut/.ssh/id_ed25519:
-Identity<span class="w"> </span>added:<span class="w"> </span>/Users/tut/.ssh/id_ed25519
+$ ssh-add ~/.ssh/id_ed25519
+Enter passphrase for /Users/tut/.ssh/id_ed25519:
+Identity added: /Users/tut/.ssh/id_ed25519
 
-$<span class="w"> </span>ssh<span class="w"> </span>tut@remote.example.com
-<span class="c1"># No passphrase prompt — agent handles it</span>
-</code></pre></div>
+$ ssh tut@remote.example.com
+# No passphrase prompt — agent handles it</code></pre>
 <ul>
 <li>Configure SSH behaviour in <code>~/.ssh/config</code></li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>Host remote
+<pre><code>Host remote
     HostName remote.example.com
     User tut
     IdentityFile ~/.ssh/id_ed25519
-    ForwardAgent no
-</code></pre></div>
+    ForwardAgent no</code></pre>
 <ul>
 <li>After this, <code>ssh remote</code> is equivalent to <code>ssh -i ~/.ssh/id_ed25519 tut@remote.example.com</code></li>
 </ul>
-<section class="exercise">
-<h2>Exercise: Key Inspection</h2>
-<ol>
-<li>
-<p>Generate a key pair with <code>ssh-keygen</code>.
-    What files are created?
-    What do the contents of the public key file look like?</p>
-</li>
-<li>
-<p>What does the <code>ForwardAgent no</code> setting in <code>~/.ssh/config</code> do,
-    and why might you want to keep it disabled on untrusted hosts?</p>
-</li>
+</section>
+<section id="exercise-key-inspection" class="level2 exercise" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="exercise-key-inspection"><span class="header-section-number">6.10</span> Exercise: Key Inspection</h2>
+<ol type="1">
+<li><p>Generate a key pair with <code>ssh-keygen</code>. What files are created? What do the contents of the public key file look like?</p></li>
+<li><p>What does the <code>ForwardAgent no</code> setting in <code>~/.ssh/config</code> do, and why might you want to keep it disabled on untrusted hosts?</p></li>
 </ol>
 </section>
-<h2>Data Authentication: Hashing and HMAC</h2>
+<section id="data-authentication-hashing-and-hmac" class="level2" data-number="6.11">
+<h2 data-number="6.11" class="anchored" data-anchor-id="data-authentication-hashing-and-hmac"><span class="header-section-number">6.11</span> Data Authentication: Hashing and HMAC</h2>
 <ul>
-<li>Authentication is not only about who you are — it can also mean verifying data integrity<ul>
-<li>"Did this file arrive without modification?"</li>
-<li>"Did this message really come from who it claims to?"</li>
+<li>Authentication is not only about who you are — it can also mean verifying data integrity
+<ul>
+<li>“Did this file arrive without modification?”</li>
+<li>“Did this message really come from who it claims to?”</li>
+</ul></li>
+<li>Checksums let you verify a file hasn’t changed (accidentally or maliciously)</li>
 </ul>
-</li>
-<li>Checksums let you verify a file hasn't changed (accidentally or maliciously)</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>$<span class="w"> </span>sha256sum<span class="w"> </span>site/birds.csv
-3f2a...<span class="w"> </span>site/birds.csv
+<pre><code>$ sha256sum site/birds.csv
+3f2a... site/birds.csv
 
-$<span class="w"> </span>sha256sum<span class="w"> </span>site/birds.csv
-3f2a...<span class="w"> </span>site/birds.csv
+$ sha256sum site/birds.csv
+3f2a... site/birds.csv
 
-$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"extra"</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>site/birds.csv
-$<span class="w"> </span>sha256sum<span class="w"> </span>site/birds.csv
-9b1c...<span class="w"> </span>site/birds.csv<span class="w">   </span>←<span class="w"> </span>different<span class="w"> </span><span class="nb">hash</span>
-</code></pre></div>
+$ echo "extra" &gt;&gt; site/birds.csv
+$ sha256sum site/birds.csv
+9b1c... site/birds.csv   ← different hash</code></pre>
 <ul>
 <li>A plain hash proves the data is unchanged, but not <em>who</em> produced it</li>
-<li>An <a href="../glossary/#hmac">HMAC</a> (Hash-based Message Authentication Code) uses a shared secret key</li>
+<li>An <a href="../glossary/index.html#hmac">HMAC</a> (Hash-based Message Authentication Code) uses a shared secret key</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">hmac</span>
-
-<span class="n">key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"shared-secret-key"</span>
-<span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">"the data we are authenticating"</span>
-
-<span class="n">mac</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"HMAC: </span><span class="si">{</span><span class="n">mac</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># Verify: recompute and compare</span>
-<span class="n">expected</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
-<span class="n">received</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">mac</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"valid: </span><span class="si">{</span><span class="n">hmac</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span><span class="w"> </span><span class="n">received</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hmac</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>key <span class="op">=</span> <span class="st">b"shared-secret-key"</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> <span class="st">b"the data we are authenticating"</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>mac <span class="op">=</span> hmac.new(key, message, hashlib.sha256).hexdigest()</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HMAC: </span><span class="sc">{</span>mac<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify: recompute and compare</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> hmac.new(key, message, hashlib.sha256).digest()</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>received <span class="op">=</span> <span class="bu">bytes</span>.fromhex(mac)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"valid: </span><span class="sc">{</span>hmac<span class="sc">.</span>compare_digest(expected, received)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Use <code>hmac.compare_digest</code> rather than <code>==</code> to prevent timing attacks<ul>
+<li>Use <code>hmac.compare_digest</code> rather than <code>==</code> to prevent timing attacks
+<ul>
 <li><code>==</code> short-circuits on the first mismatch, leaking timing information</li>
 <li><code>compare_digest</code> always takes the same amount of time</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2>Multi-Factor Authentication</h2>
+</section>
+<section id="multi-factor-authentication" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="multi-factor-authentication"><span class="header-section-number">6.12</span> Multi-Factor Authentication</h2>
 <ul>
 <li>Even strong passwords can be stolen; SSH keys can be copied</li>
-<li>Multi-factor authentication (MFA) requires two or more independent factors<ul>
+<li>Multi-factor authentication (MFA) requires two or more independent factors
+<ul>
 <li>Something you know + something you have is most common</li>
-</ul>
-</li>
-<li>TOTP (Time-Based One-Time Password) is the mechanism behind authenticator apps<ul>
+</ul></li>
+<li>TOTP (Time-Based One-Time Password) is the mechanism behind authenticator apps
+<ul>
 <li>Server and app share a secret key</li>
 <li>Every 30 seconds, both compute <code>HMAC(secret, current_time // 30)</code></li>
 <li>The app displays the result; you type it in</li>
 <li>An intercepted code is useless after 30 seconds</li>
-</ul>
-</li>
-<li>Hardware security keys (e.g., YubiKey) are more phishing-resistant<ul>
+</ul></li>
+<li>Hardware security keys (e.g., YubiKey) are more phishing-resistant
+<ul>
 <li>They verify the domain of the site before responding</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pyotp</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
-<span class="c1"># Server-side: generate a shared secret once and store it</span>
-<span class="n">secret</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">random_base32</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"secret (store securely): </span><span class="si">{</span><span class="n">secret</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># App-side: generate a code using the secret and current time</span>
-<span class="n">totp</span> <span class="o">=</span> <span class="n">pyotp</span><span class="o">.</span><span class="n">TOTP</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
-<span class="n">code</span> <span class="o">=</span> <span class="n">totp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"current code: </span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># Server-side: verify a submitted code</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"valid: </span><span class="si">{</span><span class="n">totp</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyotp</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Server-side: generate a shared secret once and store it</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>secret <span class="op">=</span> pyotp.random_base32()</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"secret (store securely): </span><span class="sc">{</span>secret<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># App-side: generate a code using the secret and current time</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>totp <span class="op">=</span> pyotp.TOTP(secret)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>code <span class="op">=</span> totp.now()</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"current code: </span><span class="sc">{</span>code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Server-side: verify a submitted code</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"valid: </span><span class="sc">{</span>totp<span class="sc">.</span>verify(code)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Never implement your own TOTP: use a well-tested library</li>
 </ul>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../http/">HTTP</a>
-</div>
-<div class="col-6 center">
-<a href="../">The Sudonomicon</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
-</div>
-<div class="col-3 right">
-<a href="../var/">Shell Variables</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-</body>
-</html>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../http/index.html" class="pagination-link" aria-label="HTTP">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../var/index.html" class="pagination-link" aria-label="Shell Variables">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shell Variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/auth/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/auth/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

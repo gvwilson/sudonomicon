@@ -1,5 +1,0 @@
-ERROR: HTTPSConnectionPool(host='localhost', port=1443):
-Max retries exceeded with url: /test.txt
-(Caused by SSLError(SSLCertVerificationError(1,
-"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed:
-Hostname mismatch, certificate is not valid for 'localhost'. (_ssl.c:1000)")))

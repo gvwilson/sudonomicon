@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import sys
 
-# [error_page]
+# mccole:error_page
 ERROR_PAGE = """\
 <html>
   <head><title>Error accessing {path}</title></head>
@@ -13,14 +13,12 @@ ERROR_PAGE = """\
   </body>
 </html>
 """
-# [/error_page]
-
-# [exception]
+# mccole:/error_page
+# mccole:exception
 class ServerException(Exception):
     pass
-# [/exception]
-
-# [do_get]
+# mccole:/exception
+# mccole:do_get
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
@@ -35,9 +33,8 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.handle_file(self.path, full_path)
         except Exception as msg:
             self.handle_error(msg)
-# [/do_get]
-
-    # [handle_file]
+# mccole:/do_get
+    # mccole:handle_file
     def handle_file(self, given_path, full_path):
         try:
             with open(full_path, "rb") as reader:
@@ -45,29 +42,26 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.send_content(content, HTTPStatus.OK)
         except IOError:
             raise ServerException(f"Cannot read {given_path}")
-    # [/handle_file]
-
-    # [handle_error]
+    # mccole:/handle_file
+    # mccole:handle_error
     def handle_error(self, msg):
         content = ERROR_PAGE.format(path=self.path, msg=msg)
         content = bytes(content, "utf-8")
         self.send_content(content, HTTPStatus.NOT_FOUND)
-    # [/handle_error]
-
-    # [send_content]
+    # mccole:/handle_error
+    # mccole:send_content
     def send_content(self, content, status):
         self.send_response(int(status))
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(content)))
         self.end_headers()
         self.wfile.write(content)
-    # [/send_content]
-
-# [main]
+    # mccole:/send_content
+# mccole:main
 if __name__ == "__main__":
     os.chdir(sys.argv[1])
     serverAddress = ("", 8000)
     server = HTTPServer(serverAddress, RequestHandler)
     print(f"serving in {os.getcwd()}...")
     server.serve_forever()
-# [/main]
+# mccole:/main

@@ -1,0 +1,3 @@
+# Code of Conduct
+
+{{< inc-noh1 CODE_OF_CONDUCT.md >}}

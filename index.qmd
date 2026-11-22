@@ -1,0 +1,19 @@
+# Overview {.unnumbered}
+
+The Sudonomicon is an introduction to Unix systems programming and networking
+for the cautious and weary. It is written for data scientists who have been
+using Python for years but have little formal computer-science training, and
+want to understand the ports, processes, permissions, and files-that-are-not-files
+beneath the shell.
+
+All of the material is available under an [open license](license/index.qmd),
+and contributions through our [repository](@repo) are welcome.
+All contributors are required to respect our [Code of Conduct](conduct/index.qmd).
+
+[Greg Wilson](@wilson-greg) is a programmer, author, and educator based in Toronto.
+He was the co-founder and first Executive Director of Software Carpentry
+and received ACM SIGSOFT's Influential Educator Award in 2020.
+
+::: {.center}
+*start where you are &middot; use what you have &middot; help who you can*
+:::

@@ -1,619 +1,1301 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>HTTP</title>
-<meta content="The Sudonomicon" name="description"/>
-<meta content="#f8f8f8" media="(prefers-color-scheme: light)" name="theme-color"/>
-<meta content="#1a1a1a" media="(prefers-color-scheme: dark)" name="theme-color"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/page.css" rel="stylesheet" type="text/css"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; HTTP – The Sudonomicon</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../auth/index.html" rel="next">
+<link href="../jobs/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation">
-<a href="../">The Sudonomicon</a>
-<span aria-hidden="true">·</span>
-<span class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons" role="list">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../fs/">The Filesystem</a></li>
-<li><a href="../proc/">Processes</a></li>
-<li><a href="../jobs/">Running Jobs</a></li>
-<li><a class="active" href="../http/">HTTP</a></li>
-<li><a href="../auth/">Authentication</a></li>
-<li><a href="../var/">Shell Variables</a></li>
-<li><a href="../packenv/">Packages and Virtual Environments</a></li>
-<li><a href="../network/">Networking</a></li>
-<li><a href="../dock/">Virtualization</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
-</span>
-<span aria-hidden="true">·</span>
-<span class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices" role="list">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</span>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../http/index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">The Sudonomicon</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/sudonomicon" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Filesystem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../proc/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Processes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../jobs/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Running Jobs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../http/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../auth/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../var/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shell Variables</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../packenv/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Packages and Virtual Environments</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../network/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dock/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
 </nav>
-<main id="main-content">
-<h1>HTTP</h1>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#start-with-something-simple" id="toc-start-with-something-simple" class="nav-link active" data-scroll-target="#start-with-something-simple"><span class="header-section-number">5.1</span> Start with Something Simple</a></li>
+  <li><a href="#what-just-happened" id="toc-what-just-happened" class="nav-link" data-scroll-target="#what-just-happened"><span class="header-section-number">5.2</span> What Just Happened</a></li>
+  <li><a href="#request-structure" id="toc-request-structure" class="nav-link" data-scroll-target="#request-structure"><span class="header-section-number">5.3</span> Request Structure</a></li>
+  <li><a href="#response-structure" id="toc-response-structure" class="nav-link" data-scroll-target="#response-structure"><span class="header-section-number">5.4</span> Response Structure</a></li>
+  <li><a href="#exercise-http-requests" id="toc-exercise-http-requests" class="nav-link" data-scroll-target="#exercise-http-requests"><span class="header-section-number">5.5</span> Exercise: HTTP Requests</a></li>
+  <li><a href="#when-things-go-wrong" id="toc-when-things-go-wrong" class="nav-link" data-scroll-target="#when-things-go-wrong"><span class="header-section-number">5.6</span> When Things Go Wrong</a></li>
+  <li><a href="#exercise-status-codes" id="toc-exercise-status-codes" class="nav-link" data-scroll-target="#exercise-status-codes"><span class="header-section-number">5.7</span> Exercise: Status Codes</a></li>
+  <li><a href="#getting-json" id="toc-getting-json" class="nav-link" data-scroll-target="#getting-json"><span class="header-section-number">5.8</span> Getting JSON</a></li>
+  <li><a href="#local-web-server" id="toc-local-web-server" class="nav-link" data-scroll-target="#local-web-server"><span class="header-section-number">5.9</span> Local Web Server</a></li>
+  <li><a href="#talk-to-local-server" id="toc-talk-to-local-server" class="nav-link" data-scroll-target="#talk-to-local-server"><span class="header-section-number">5.10</span> Talk to Local Server</a></li>
+  <li><a href="#our-own-file-server" id="toc-our-own-file-server" class="nav-link" data-scroll-target="#our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</a></li>
+  <li><a href="#support-code" id="toc-support-code" class="nav-link" data-scroll-target="#support-code"><span class="header-section-number">5.12</span> Support Code</a></li>
+  <li><a href="#running-our-file-server" id="toc-running-our-file-server" class="nav-link" data-scroll-target="#running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</a></li>
+  <li><a href="#built-in-safety" id="toc-built-in-safety" class="nav-link" data-scroll-target="#built-in-safety"><span class="header-section-number">5.14</span> Built-in Safety</a></li>
+  <li><a href="#introducing-netcat" id="toc-introducing-netcat" class="nav-link" data-scroll-target="#introducing-netcat"><span class="header-section-number">5.15</span> Introducing <code>netcat</code></a></li>
+  <li><a href="#exercise-fetching-from-home" id="toc-exercise-fetching-from-home" class="nav-link" data-scroll-target="#exercise-fetching-from-home"><span class="header-section-number">5.16</span> Exercise: Fetching From Home</a></li>
+  <li><a href="#a-safer-file-server" id="toc-a-safer-file-server" class="nav-link" data-scroll-target="#a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</a></li>
+  <li><a href="#exercise-cleaning-up-code" id="toc-exercise-cleaning-up-code" class="nav-link" data-scroll-target="#exercise-cleaning-up-code"><span class="header-section-number">5.18</span> Exercise: Cleaning Up Code</a></li>
+  <li><a href="#serving-data" id="toc-serving-data" class="nav-link" data-scroll-target="#serving-data"><span class="header-section-number">5.19</span> Serving Data</a></li>
+  <li><a href="#slicing-data" id="toc-slicing-data" class="nav-link" data-scroll-target="#slicing-data"><span class="header-section-number">5.20</span> Slicing Data</a></li>
+  <li><a href="#exercise-serving-data" id="toc-exercise-serving-data" class="nav-link" data-scroll-target="#exercise-serving-data"><span class="header-section-number">5.21</span> Exercise: Serving Data</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/http/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/http/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
 <ul>
 <li>FIXME</li>
 </ul>
-<h2>Start with Something Simple</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<section id="start-with-something-simple" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="start-with-something-simple"><span class="header-section-number">5.1</span> Start with Something Simple</h2>
+<p><code class="sourceCode python"><span class="im">import</span> requests
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 200
+url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
+response <span class="op">=</span> requests.get(url)
+<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
+<span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 200
 body:
 Start where you are, use what you have, help who you can.
-</code></pre></div>
+
+</code></p>
 <ul>
-<li>Use the <a href="https://requests.readthedocs.io/"><code>requests</code></a> module to send an <a href="../glossary/#http">HTTP</a> <a href="../glossary/#http_request">request</a></li>
-<li>The URL identifies the file we want<ul>
-<li>Though as we'll see, the server can interpret it differently</li>
-</ul>
-</li>
-<li>Response includes:<ul>
-<li><a href="../glossary/#http_status_code">HTTP status code</a> such as 200 (OK) or 404 (Not Found)</li>
+<li>Use the <a href="https://requests.readthedocs.io/"><code>requests</code></a> module to send an <a href="../glossary/index.html#http">HTTP</a> <a href="../glossary/index.html#http_request">request</a></li>
+<li>The URL identifies the file we want
+<ul>
+<li>Though as we’ll see, the server can interpret it differently</li>
+</ul></li>
+<li>Response includes:
+<ul>
+<li><a href="../glossary/index.html#http_status_code">HTTP status code</a> such as 200 (OK) or 404 (Not Found)</li>
 <li>The text of the response</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2>What Just Happened</h2>
+</section>
+<section id="what-just-happened" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="what-just-happened"><span class="header-section-number">5.2</span> What Just Happened</h2>
 <ul>
 <li>Figure shows what happened</li>
 </ul>
-<figure id="f:http_lifecycle">
-<img alt="HTTP request/response lifecycle" src="http_lifecycle.svg"/>
-<figcaption>Figure 1: Figure 1: Lifecycle of an HTTP request and response</figcaption>
+<div id="fig-http_lifecycle" class="quarto-float quarto-figure quarto-figure-center anchored" alt="HTTP request/response lifecycle">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-http_lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="http_lifecycle.svg" class="img-fluid figure-img" alt="HTTP request/response lifecycle">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-http_lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: Lifecycle of an HTTP request and response
+</figcaption>
 </figure>
+</div>
 <ul>
 <li>Open a connection to the server</li>
 <li>Send an HTTP request for the file we want</li>
-<li>Server creates a <a href="../glossary/#http_response">response</a> that includes the contents of the file</li>
+<li>Server creates a <a href="../glossary/index.html#http_response">response</a> that includes the contents of the file</li>
 <li>Sends it back</li>
 <li><code>requests</code> parses the response and creates a Python object for us</li>
 </ul>
-<h2>Request Structure</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">requests_toolbelt.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">dump</span>
+</section>
+<section id="request-structure" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="request-structure"><span class="header-section-number">5.3</span> Request Structure</h2>
+<p><code class="sourceCode python"><span class="im">import</span> requests
+<span class="im">from</span> requests_toolbelt.utils <span class="im">import</span> dump
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">dump</span><span class="o">.</span><span class="n">dump_all</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">"utf-8"</span><span class="p">))</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nf">GET</span> <span class="nn">/sudonomicon/static/motto.txt</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-<span class="na">Host</span><span class="o">:</span> <span class="l">gvwilson.github.io</span>
-<span class="na">User-Agent</span><span class="o">:</span> <span class="l">python-requests/2.31.0</span>
-<span class="na">Accept-Encoding</span><span class="o">:</span> <span class="l">gzip, deflate</span>
-<span class="na">Accept</span><span class="o">:</span> <span class="l">*/*</span>
-<span class="na">Connection</span><span class="o">:</span> <span class="l">keep-alive</span>
-</code></pre></div>
+url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span>
+response <span class="op">=</span> requests.get(url)
+data <span class="op">=</span> dump.dump_all(response)
+<span class="bu">print</span>(<span class="bu">str</span>(data, <span class="st">"utf-8"</span>))</code> <code>GET /sudonomicon/site/motto.txt HTTP/1.1
+Host: gvwilson.github.io
+User-Agent: python-requests/2.31.0
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: keep-alive
+
+</code></p>
 <ul>
-<li>First line is <a href="../glossary/#http_method">method</a>, URL, and protocol version</li>
-<li>Every HTTP request can have <a href="../glossary/#http_header">headers</a> with extra information<ul>
+<li>First line is <a href="../glossary/index.html#http_method">method</a>, URL, and protocol version</li>
+<li>Every HTTP request can have <a href="../glossary/index.html#http_header">headers</a> with extra information
+<ul>
 <li>And optionally data being uploaded</li>
-</ul>
-</li>
-<li>Yes, it's all just text<ul>
-<li>Except for uploaded data, which is just bytes</li>
-</ul>
-</li>
-</ul>
-<h2>Response Structure</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-
-<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">Connection</span><span class="o">:</span><span class="w"> </span><span class="n">keep</span><span class="o">-</span><span class="n">alive</span>
-<span class="n">Content</span><span class="o">-</span><span class="n">Length</span><span class="o">:</span><span class="w"> </span><span class="mi">5142</span>
-<span class="n">Server</span><span class="o">:</span><span class="w"> </span><span class="n">GitHub</span><span class="o">.</span><span class="na">com</span>
-<span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">:</span><span class="w"> </span><span class="n">text</span><span class="o">/</span><span class="n">html</span><span class="o">;</span><span class="w"> </span><span class="n">charset</span><span class="o">=</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span>
-<span class="n">permissions</span><span class="o">-</span><span class="n">policy</span><span class="o">:</span><span class="w"> </span><span class="n">interest</span><span class="o">-</span><span class="n">cohort</span><span class="o">=()</span>
-<span class="n">ETag</span><span class="o">:</span><span class="w"> </span><span class="n">W</span><span class="o">/</span><span class="s2">"65c56fc7-239b"</span>
-<span class="n">Content</span><span class="o">-</span><span class="n">Security</span><span class="o">-</span><span class="n">Policy</span><span class="o">:</span><span class="w"> </span><span class="k">default</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="s1">'none'</span><span class="o">;</span><span class="w"> </span><span class="n">style</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="s1">'unsafe-inline'</span><span class="o">;</span><span class="w"> </span><span class="n">img</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="n">data</span><span class="o">:;</span><span class="w"> </span><span class="n">connect</span><span class="o">-</span><span class="n">src</span><span class="w"> </span><span class="s1">'self'</span>
-<span class="n">Content</span><span class="o">-</span><span class="n">Encoding</span><span class="o">:</span><span class="w"> </span><span class="n">gzip</span>
-<span class="n">X</span><span class="o">-</span><span class="n">GitHub</span><span class="o">-</span><span class="n">Request</span><span class="o">-</span><span class="n">Id</span><span class="o">:</span><span class="w"> </span><span class="n">A08C</span><span class="o">:</span><span class="mi">5</span><span class="n">A357</span><span class="o">:</span><span class="mi">7</span><span class="n">CF794</span><span class="o">:</span><span class="mi">9</span><span class="n">CEA06</span><span class="o">:</span><span class="mi">65</span><span class="n">D13923</span>
-<span class="n">Accept</span><span class="o">-</span><span class="n">Ranges</span><span class="o">:</span><span class="w"> </span><span class="n">bytes</span>
-<span class="n">Date</span><span class="o">:</span><span class="w"> </span><span class="n">Sat</span><span class="o">,</span><span class="w"> </span><span class="mi">17</span><span class="w"> </span><span class="n">Feb</span><span class="w"> </span><span class="mi">2024</span><span class="w"> </span><span class="mi">22</span><span class="o">:</span><span class="mi">54</span><span class="o">:</span><span class="mi">27</span><span class="w"> </span><span class="n">GMT</span>
-<span class="n">Via</span><span class="o">:</span><span class="w"> </span><span class="mf">1.1</span><span class="w"> </span><span class="n">varnish</span>
-<span class="n">Age</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="n">X</span><span class="o">-</span><span class="n">Served</span><span class="o">-</span><span class="n">By</span><span class="o">:</span><span class="w"> </span><span class="n">cache</span><span class="o">-</span><span class="n">yyz4563</span><span class="o">-</span><span class="n">YYZ</span>
-<span class="n">X</span><span class="o">-</span><span class="n">Cache</span><span class="o">:</span><span class="w"> </span><span class="n">MISS</span>
-<span class="n">X</span><span class="o">-</span><span class="n">Cache</span><span class="o">-</span><span class="n">Hits</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="n">X</span><span class="o">-</span><span class="n">Timer</span><span class="o">:</span><span class="w"> </span><span class="n">S1708210467</span><span class="o">.</span><span class="mi">301651</span><span class="o">,</span><span class="n">VS0</span><span class="o">,</span><span class="n">VE20</span>
-<span class="n">Vary</span><span class="o">:</span><span class="w"> </span><span class="n">Accept</span><span class="o">-</span><span class="n">Encoding</span>
-<span class="n">X</span><span class="o">-</span><span class="n">Fastly</span><span class="o">-</span><span class="n">Request</span><span class="o">-</span><span class="n">ID</span><span class="o">:</span><span class="w"> </span><span class="n">cb16df2dfa73aaf6de87924c743dd1e50a0ce570</span>
-</code></pre></div>
+</ul></li>
+<li>Yes, it’s all just text
 <ul>
-<li>Every HTTP response also has with extra information<ul>
+<li>Except for uploaded data, which is just bytes</li>
+</ul></li>
+</ul>
+</section>
+<section id="response-structure" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="response-structure"><span class="header-section-number">5.4</span> Response Structure</h2>
+<p><code class="sourceCode python"><span class="im">import</span> requests
+
+url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span>
+response <span class="op">=</span> requests.get(url)
+<span class="cf">for</span> key, value <span class="kw">in</span> response.headers.items():
+    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</code> <code>Connection: keep-alive
+Content-Length: 5142
+Server: GitHub.com
+Content-Type: text/html; charset=utf-8
+permissions-policy: interest-cohort=()
+ETag: W/"65c56fc7-239b"
+Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; img-src data:; connect-src 'self'
+Content-Encoding: gzip
+X-GitHub-Request-Id: A08C:5A357:7CF794:9CEA06:65D13923
+Accept-Ranges: bytes
+Date: Sat, 17 Feb 2024 22:54:27 GMT
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-yyz4563-YYZ
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1708210467.301651,VS0,VE20
+Vary: Accept-Encoding
+X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
+</code></p>
+<ul>
+<li>Every HTTP response also has with extra information
+<ul>
 <li>Does <em>not</em> include status code: that appears in the first line</li>
-</ul>
-</li>
-<li>Most important for now are:<ul>
+</ul></li>
+<li>Most important for now are:
+<ul>
 <li><code>Content-Length</code>: number of bytes in response data (i.e., how much to read)</li>
-<li><code>Content-Type</code>: <a href="../glossary/#mime_type">MIME type</a> of data (e.g., <code>text/plain</code>)</li>
-</ul>
-</li>
+<li><code>Content-Type</code>: <a href="../glossary/index.html#mime_type">MIME type</a> of data (e.g., <code>text/plain</code>)</li>
+</ul></li>
 <li>From now on we will only show interesting headers</li>
 </ul>
-<section class="exercise">
-<h2>Exercise: HTTP Requests</h2>
-<ol>
-<li>
-<p>Add header called <code>Studying</code> with the value <code>safety</code>
-    to the <code>requests</code> script shown above.
-    Does it make a difference to the response?
-    Should it?</p>
-</li>
-<li>
-<p>What is the difference between the <code>Content-Type</code> and the <code>Content-Encoding</code> headers?</p>
-</li>
+</section>
+<section id="exercise-http-requests" class="level2 exercise" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="exercise-http-requests"><span class="header-section-number">5.5</span> Exercise: HTTP Requests</h2>
+<ol type="1">
+<li><p>Add header called <code>Studying</code> with the value <code>safety</code> to the <code>requests</code> script shown above. Does it make a difference to the response? Should it?</p></li>
+<li><p>What is the difference between the <code>Content-Type</code> and the <code>Content-Encoding</code> headers?</p></li>
 </ol>
 </section>
-<h2>When Things Go Wrong</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<section id="when-things-go-wrong" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="when-things-go-wrong"><span class="header-section-number">5.6</span> When Things Go Wrong</h2>
+<p><code class="sourceCode python"><span class="im">import</span> requests
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 404
+url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"</span>
+response <span class="op">=</span> requests.get(url)
+<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
+<span class="bu">print</span>(<span class="ss">f"body length: </span><span class="sc">{</span><span class="bu">len</span>(response.text)<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 404
 body length: 9115
-</code></pre></div>
+</code></p>
 <ul>
 <li>The 404 status code tells us something went wrong</li>
 <li>The 9 kilobyte response is an HTML page with an embedded image (the GitHub logo)</li>
-<li>The page contains human-readable error messages<ul>
+<li>The page contains human-readable error messages
+<ul>
 <li>But we have to know page format to pull them out</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<section class="exercise">
-<h2>Exercise: Status Codes</h2>
+</section>
+<section id="exercise-status-codes" class="level2 exercise" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="exercise-status-codes"><span class="header-section-number">5.7</span> Exercise: Status Codes</h2>
 <p>Look at <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">this list of HTTP status codes</a>.</p>
-<ol>
-<li>
-<p>What is the difference between status code 403 and status code 404?</p>
-</li>
-<li>
-<p>What is status code 418 used for?</p>
-</li>
-<li>
-<p>Under what circumstances would you expect to get a response whose status code is 505?</p>
-</li>
+<ol type="1">
+<li><p>What is the difference between status code 403 and status code 404?</p></li>
+<li><p>What is status code 418 used for?</p></li>
+<li><p>Under what circumstances would you expect to get a response whose status code is 505?</p></li>
 </ol>
 </section>
-<h2>Getting JSON</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<section id="getting-json" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="getting-json"><span class="header-section-number">5.8</span> Getting JSON</h2>
+<p><code class="sourceCode python"><span class="im">import</span> requests
 
-<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://gvwilson.github.io/sudonomicon/static/motto.json"</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body as text: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="si">}</span><span class="s2"> bytes"</span><span class="p">)</span>
-<span class="n">as_json</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body as JSON:</span><span class="se">\n</span><span class="si">{</span><span class="n">as_json</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 200
+url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.json"</span>
+response <span class="op">=</span> requests.get(url)
+<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
+<span class="bu">print</span>(<span class="ss">f"body as text: </span><span class="sc">{</span><span class="bu">len</span>(response.text)<span class="sc">}</span><span class="ss"> bytes"</span>)
+as_json <span class="op">=</span> response.json()
+<span class="bu">print</span>(<span class="ss">f"body as JSON:</span><span class="ch">\n</span><span class="sc">{</span>as_json<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 200
 body as text: 107 bytes
 body as JSON:
 {'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}
-</code></pre></div>
+</code></p>
 <ul>
-<li>Parsing data out of HTML is called <a href="../glossary/#web_scraping">web scraping</a><ul>
+<li>Parsing data out of HTML is called <a href="../glossary/index.html#web_scraping">web scraping</a>
+<ul>
 <li>Painful and error prone</li>
-</ul>
-</li>
-<li>Better to have the server return data as data<ul>
-<li>Preferred format these days is <a href="../glossary/#json">JSON</a></li>
+</ul></li>
+<li>Better to have the server return data as data
+<ul>
+<li>Preferred format these days is <a href="../glossary/index.html#json">JSON</a></li>
 <li>So common that <code>requests</code> has built-in support</li>
-</ul>
-</li>
-<li>Unfortunately, there is no standard for representing tabular data as JSON<ul>
+</ul></li>
+<li>Unfortunately, there is no standard for representing tabular data as JSON
+<ul>
 <li>A list with one list with N column names + N lists of values?</li>
 <li>A list with N dictionaries, all with the same keys?</li>
 <li>A dictionary with column names and lists of values, all the same length?</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<figure id="f:http_json_tables">
-<img alt="Three ways to represent tables as JSON" src="http_json_tables.svg"/>
-<figcaption>Figure 2: Figure 2: Representing tables as JSON</figcaption>
+<div id="fig-http_json_tables" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three ways to represent tables as JSON">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-http_json_tables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="http_json_tables.svg" class="img-fluid figure-img" alt="Three ways to represent tables as JSON">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-http_json_tables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: Representing tables as JSON
+</figcaption>
 </figure>
-<h2>Local Web Server</h2>
+</div>
+</section>
+<section id="local-web-server" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="local-web-server"><span class="header-section-number">5.9</span> Local Web Server</h2>
 <ul>
 <li>Pushing files to GitHub so that we can use them is annoying</li>
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
-<li>Use Python's <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module to run a <a href="../glossary/#local_server">local server</a></li>
+<li>Use Python’s <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module to run a <a href="../glossary/index.html#local_server">local server</a></li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python -m http.server -d site
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server <span class="at">-d</span> site</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Host name is <a href="../glossary/#localhost"><code>localhost</code></a></li>
-<li>Uses <a href="../glossary/#port">port</a> 8000 by default<ul>
+<li>Host name is <a href="../glossary/index.html#localhost">`localhost`</a></li>
+<li>Uses port 8000 by default
+<ul>
 <li>So URLs look like <code>http://localhost:8000/path/to/file</code></li>
-</ul>
-</li>
+</ul></li>
 <li><code>-d site</code> tells the server to use <code>site</code> as its root directory</li>
-<li>Use this local server for the next few examples<ul>
+<li>Use this local server for the next few examples
+<ul>
 <li>Build our own server later on to show how it works</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2>Talk to Local Server</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</section>
+<section id="talk-to-local-server" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="talk-to-local-server"><span class="header-section-number">5.10</span> Talk to Local Server</h2>
+<p><code class="sourceCode python"><span class="im">import</span> requests
 
-<span class="n">URL</span> <span class="o">=</span> <span class="s2">"http://localhost:8000/motto.txt"</span>
+URL <span class="op">=</span> <span class="st">"http://localhost:8000/motto.txt"</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
+response <span class="op">=</span> requests.get(URL)
+<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
+<span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</code> <code>::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
 status code: 200
 body:
 Start where you are, use what you have, help who you can.
-</code></pre></div>
+
+</code></p>
 <ul>
-<li><a href="../glossary/#concurrency">Concurrent</a> systems are hard to debug<ul>
+<li><a href="../glossary/index.html#concurrency">Concurrent</a> systems are hard to debug
+<ul>
 <li>Multiple streams of activity</li>
 <li>Order may change from run to run</li>
 <li>Usually easiest to run each process in its own terminal window</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2>Our Own File Server</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">class</span> <span class="n">RequestHandler</span>(<span class="n">BaseHTTPRequestHandler</span>):
-    <span class="n">def</span> <span class="n">do_GET</span>(<span class="nb">self</span>):
-        <span class="n">try:</span>
-            <span class="n">url_path</span> = <span class="nb">self</span>.<span class="nb">path</span>.<span class="n">lstrip</span>(<span class="s">"/"</span>)
-            <span class="n">full_path</span> = <span class="n">Path</span>.<span class="n">cwd</span>().<span class="n">joinpath</span>(<span class="n">url_path</span>)
-            <span class="nb">print</span>(<span class="nb">f</span><span class="s">"'{self.path}' =&gt; '{full_path}'"</span>)
-            <span class="k">if</span> <span class="nb">not</span> <span class="n">full_path</span>.<span class="n">exists</span>():
-                <span class="n">raise</span> <span class="n">ServerException</span>(<span class="nb">f</span><span class="s">"{self.path} not found"</span>)
-            <span class="n">elif</span> <span class="nb">not</span> <span class="n">full_path</span>.<span class="n">is_file</span>():
-                <span class="n">raise</span> <span class="n">ServerException</span>(<span class="nb">f</span><span class="s">"{self.path} not file"</span>)
-            <span class="n">else:</span>
-                <span class="nb">self</span>.<span class="n">handle_file</span>(<span class="nb">self</span>.<span class="nb">path</span>, <span class="n">full_path</span>)
-        <span class="n">except</span> <span class="nb">Exception</span> <span class="n">as</span> <span class="n">msg:</span>
-            <span class="nb">self</span>.<span class="n">handle_error</span>(<span class="n">msg</span>)
-</code></pre></div>
+</section>
+<section id="our-own-file-server" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            url_path <span class="op">=</span> <span class="va">self</span>.path.lstrip(<span class="st">"/"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            full_path <span class="op">=</span> Path.cwd().joinpath(url_path)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">' =&gt; '</span><span class="sc">{</span>full_path<span class="sc">}</span><span class="ss">'"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> full_path.exists():</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> ServerException(<span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss"> not found"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="kw">not</span> full_path.is_file():</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> ServerException(<span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss"> not file"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.handle_file(<span class="va">self</span>.path, full_path)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> msg:</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.handle_error(msg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Our <code>RequestHandler</code> handles a single <code>GET</code> request</li>
 <li>Combine working directory with requested file path to get local path to file</li>
 <li>Return that if it exists and is a file or raise an error</li>
 </ul>
-<h2>Support Code</h2>
+</section>
+<section id="support-code" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="support-code"><span class="header-section-number">5.12</span> Support Code</h2>
 <ul>
 <li>Serve files</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="w">    </span>def<span class="w"> </span>send_content(self,<span class="w"> </span>content,<span class="w"> </span>status):
-<span class="w">        </span>self.send_response(int(status))
-<span class="w">        </span>self.send_header("Content-Type",<span class="w"> </span>"text/html;<span class="w"> </span>charset=utf-8")
-<span class="w">        </span>self.send_header("Content-Length",<span class="w"> </span>str(len(content)))
-<span class="w">        </span>self.end_headers()
-<span class="w">        </span>self.wfile.write(content)
-<span class="w">    </span>```
-
--<span class="w">   </span>Handle<span class="w"> </span>errors
-
-```{data-file="file_server_unsafe.py:error_page"}
-ERROR_PAGE<span class="w"> </span>=<span class="w"> </span>"""\
-<span class="nt">&lt;html&gt;</span>
-<span class="w">  </span><span class="nt">&lt;head&gt;&lt;title&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>{path}<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
-<span class="w">  </span><span class="nt">&lt;body&gt;</span>
-<span class="w">    </span><span class="nt">&lt;h1&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>{path}:<span class="w"> </span>{msg}<span class="nt">&lt;/h1&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-"""
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>    def handle_error(self, msg):
-        content = ERROR_PAGE.format(path=self.path, msg=msg)
-        content = bytes(content, "utf-8")
-        self.send_content(content, HTTPStatus.NOT_FOUND)
-    ```
-
-<span class="k">-</span>   Define our own exceptions so we're sure we're only catching what we expect
-
-```{data-file="file_server_unsafe.py:exception"}
-class ServerException(Exception):
-    pass
-</code></pre></div>
-<h2>Running Our File Server</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>if __name__ == "__main__":
-    os.chdir(sys.argv[1])
-    serverAddress = ("", 8000)
-    server = HTTPServer(serverAddress, RequestHandler)
-    print(f"serving in {os.getcwd()}...")
-    server.serve_forever()
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Handle errors</li>
+</ul>
+<p><code class="sourceCode python">ERROR_PAGE <span class="op">=</span> <span class="st">"""</span><span class="op">\</span>
+<span class="st">&lt;html&gt;</span>
+<span class="st">  &lt;head&gt;&lt;title&gt;Error accessing </span><span class="sc">{path}</span><span class="st">&lt;/title&gt;&lt;/head&gt;</span>
+<span class="st">  &lt;body&gt;</span>
+<span class="st">    &lt;h1&gt;Error accessing </span><span class="sc">{path}</span><span class="st">: </span><span class="sc">{msg}</span><span class="st">&lt;/h1&gt;</span>
+<span class="st">  &lt;/body&gt;</span>
+<span class="st">&lt;/html&gt;</span>
+<span class="st">"""</span></code> <code class="sourceCode python"></code></p>
+<ul>
+<li>Define our own exceptions so we’re sure we’re only catching what we expect</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ServerException(<span class="pp">Exception</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="running-our-file-server" class="level2" data-number="5.13">
+<h2 data-number="5.13" class="anchored" data-anchor-id="running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    os.chdir(sys.argv[<span class="dv">1</span>])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> HTTPServer(serverAddress, RequestHandler)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"serving in </span><span class="sc">{</span>os<span class="sc">.</span>getcwd()<span class="sc">}</span><span class="ss">..."</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>And then get <code>motto.txt</code> as before</li>
 </ul>
-<h2>Built-in Safety</h2>
+</section>
+<section id="built-in-safety" class="level2" data-number="5.14">
+<h2 data-number="5.14" class="anchored" data-anchor-id="built-in-safety"><span class="header-section-number">5.14</span> Built-in Safety</h2>
 <ul>
 <li>Modify <code>requests</code> script to take URL as command-line parameter</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-
-<span class="n">URL</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"status code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"body:</span><span class="se">\n</span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>URL <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(URL)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Add a sub-directory to <code>site</code> called <code>sandbox</code> with a file <code>example.txt</code><ul>
-<li>Called a <a href="../glossary/#sandbox">sandbox</a> because it's a safe place to play</li>
-</ul>
-</li>
+<li>Add a sub-directory to <code>site</code> called <code>sandbox</code> with a file <code>example.txt</code>
+<ul>
+<li>Called a <a href="../glossary/index.html#sandbox">sandbox</a> because it’s a safe place to play</li>
+</ul></li>
 <li>Serve that sub-directory</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/file_server_unsafe.py site/sandbox
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/file_server_unsafe.py site/sandbox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Can get files from that directory</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/get_url.py http://localhost:8000/example.txt
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
+<p><code class="sourceCode bash"><span class="ex">python</span> src/get_url.py http://localhost:8000/example.txt</code> <code>'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
 127.0.0.1 - - [21/Feb/2024 06:04:32] "GET /example.txt HTTP/1.1" 200 -
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status code: 200
+</code> <code>status code: 200
 body:
 example file
-</code></pre></div>
+</code></p>
 <ul>
-<li>But not from parent directory (which isn't part of sandbox)</li>
+<li>But not from parent directory (which isn’t part of sandbox)</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>python src/requests_local_url.py http://localhost:8000/motto.txt
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
+<p><code class="sourceCode bash"><span class="ex">python</span> src/requests_local_url.py http://localhost:8000/motto.txt</code> <code>'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
 127.0.0.1 - - [21/Feb/2024 06:04:38] "GET /motto.txt HTTP/1.1" 404 -
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>status<span class="w"> </span>code:<span class="w"> </span>404
+</code> <code>status code: 404
 body:
-<span class="nt">&lt;html&gt;</span>
-<span class="w">  </span><span class="nt">&lt;head&gt;&lt;title&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>/motto.txt<span class="nt">&lt;/title&gt;&lt;/head&gt;</span>
-<span class="w">  </span><span class="nt">&lt;body&gt;</span>
-<span class="w">    </span><span class="nt">&lt;h1&gt;</span>Error<span class="w"> </span>accessing<span class="w"> </span>/motto.txt:<span class="w"> </span>/motto.txt<span class="w"> </span>not<span class="w"> </span>found<span class="nt">&lt;/h1&gt;</span>
-<span class="w">  </span><span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
-</code></pre></div>
+&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;Error accessing /motto.txt&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Error accessing /motto.txt: /motto.txt not found&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></p>
 <ul>
 <li><code>requests</code> strips the leading <code>..</code> off the path before sending it</li>
 <li>And if we try that URL in the browser, same thing happens</li>
-<li>So we're safe, right?</li>
+<li>So we’re safe, right?</li>
 </ul>
-<h2>Introducing <code>netcat</code></h2>
+</section>
+<section id="introducing-netcat" class="level2" data-number="5.15">
+<h2 data-number="5.15" class="anchored" data-anchor-id="introducing-netcat"><span class="header-section-number">5.15</span> Introducing <code>netcat</code></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Netcat"><code>netcat</code></a> (often just <code>nc</code>) is a computer networking tool</li>
 <li>Open a connection, send exactly what the user types, and show exactly what is sent in response</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>nc localhost 8000
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nf">GET</span> <span class="nn">/example.txt</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
-<span class="na">Server</span><span class="o">:</span> <span class="l">BaseHTTP/0.6 Python/3.12.1</span>
-<span class="na">Date</span><span class="o">:</span> <span class="l">Thu, 22 Feb 2024 18:37:37 GMT</span>
-<span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=utf-8</span>
-<span class="na">Content-Length</span><span class="o">:</span> <span class="l">13</span>
+<p><code class="sourceCode bash"><span class="ex">nc</span> localhost 8000</code> <code>GET /example.txt HTTP/1.1
+
+</code> <code>HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.12.1
+Date: Thu, 22 Feb 2024 18:37:37 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 13
 
 example file
-</code></pre></div>
+</code></p>
 <ul>
-<li>Let's see what happens if we <em>do</em> send a URL with <code>..</code> in it</li>
+<li>Let’s see what happens if we <em>do</em> send a URL with <code>..</code> in it</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="nf">GET</span> <span class="nn">../motto.txt</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
-<span class="na">Server</span><span class="o">:</span> <span class="l">BaseHTTP/0.6 Python/3.12.1</span>
-<span class="na">Date</span><span class="o">:</span> <span class="l">Thu, 22 Feb 2024 18:38:50 GMT</span>
-<span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=utf-8</span>
-<span class="na">Content-Length</span><span class="o">:</span> <span class="l">58</span>
+<p><code>GET ../motto.txt HTTP/1.1
+
+</code> <code>HTTP/1.0 200 OK
+Server: BaseHTTP/0.6 Python/3.12.1
+Date: Thu, 22 Feb 2024 18:38:50 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 58
 
 Start where you are, use what you have, help who you can.
-</code></pre></div>
+</code></p>
 <ul>
-<li>We shouldn't be able to see files outside the sandbox</li>
-<li>But if someone doesn't strip out the <code>..</code> characters, users can escape</li>
+<li>We shouldn’t be able to see files outside the sandbox</li>
+<li>But if someone doesn’t strip out the <code>..</code> characters, users can escape</li>
 </ul>
-<section class="exercise">
-<h2>Exercise: Fetching From Home</h2>
-<p>The shortcut <code>~<em>username</em></code> (tilde)
-means "the specified user's home directory" in the shell,
-while <code>~</code> on its own means "the current user's home directory".
-Create a file called <code>test.txt</code> in your home directory
-and then try to get <code>~/test.txt</code> using your browser,
-<code>requests</code>,
-and <code>netcat</code>.
-What happens with each and why?</p>
 </section>
-<h2>A Safer File Server</h2>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">handle_file</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span><span class="w"> </span><span class="n">given_path</span><span class="p">,</span><span class="w"> </span><span class="n">full_path</span><span class="p">)</span><span class="o">:</span>
-<span class="w">        </span><span class="nl">try</span><span class="p">:</span>
-<span class="w">            </span><span class="n">resolved_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="p">(</span><span class="n">full_path</span><span class="p">.</span><span class="n">resolve</span><span class="p">())</span>
-<span class="w">            </span><span class="n">sandbox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">str</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">cwd</span><span class="p">().</span><span class="n">resolve</span><span class="p">())</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">resolved_path</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">sandbox</span><span class="p">)</span><span class="o">:</span>
-<span class="w">                </span><span class="n">raise</span><span class="w"> </span><span class="n">ServerException</span><span class="p">(</span><span class="n">f</span><span class="s">"Cannot access {given_path}"</span><span class="p">)</span>
-<span class="w">            </span><span class="n">with</span><span class="w"> </span><span class="n">open</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span><span class="w"> </span><span class="s">"rb"</span><span class="p">)</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">reader</span><span class="o">:</span>
-<span class="w">                </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
-<span class="w">            </span><span class="nb">self</span><span class="p">.</span><span class="n">send_content</span><span class="p">(</span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">HTTPStatus</span><span class="p">.</span><span class="n">OK</span><span class="p">)</span>
-<span class="w">        </span><span class="n">except</span><span class="w"> </span><span class="n">FileNotFoundError</span><span class="o">:</span>
-<span class="w">            </span><span class="n">raise</span><span class="w"> </span><span class="n">ServerException</span><span class="p">(</span><span class="n">f</span><span class="s">"Cannot find {given_path}"</span><span class="p">)</span>
-<span class="w">        </span><span class="n">except</span><span class="w"> </span><span class="n">IOError</span><span class="o">:</span>
-<span class="w">            </span><span class="n">raise</span><span class="w"> </span><span class="n">ServerException</span><span class="p">(</span><span class="n">f</span><span class="s">"Cannot read {given_path}"</span><span class="p">)</span>
-<span class="w">    </span><span class="err">```</span>
-
-<span class="o">-</span><span class="w">   </span><span class="p">[</span><span class="n">Resolve</span><span class="p">](</span><span class="n">g</span><span class="o">:</span><span class="n">resolve_path</span><span class="p">)</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">constructed</span><span class="w"> </span><span class="n">path</span>
-<span class="o">-</span><span class="w">   </span><span class="n">Then</span><span class="w"> </span><span class="n">check</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">it</span><span class="err">'</span><span class="n">s</span><span class="w"> </span><span class="n">below</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">working</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">e</span><span class="p">.,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">sandbox</span><span class="p">)</span>
-<span class="o">-</span><span class="w">   </span><span class="n">And</span><span class="w"> </span><span class="n">fail</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">isn</span><span class="err">'</span><span class="n">t</span>
-<span class="w">    </span><span class="o">-</span><span class="w">   </span><span class="n">Using</span><span class="w"> </span><span class="n">our</span><span class="w"> </span><span class="n">own</span><span class="w"> </span><span class="err">`</span><span class="n">ServerException</span><span class="err">`</span><span class="w"> </span><span class="n">guarantees</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">errors</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">handled</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">way</span>
-
-<span class="o">&lt;</span><span class="n">section</span><span class="w"> </span><span class="k">class</span><span class="o">=</span><span class="s">"exercise"</span><span class="w"> </span><span class="n">markdown</span><span class="o">=</span><span class="s">"1"</span><span class="o">&gt;</span>
-
-<span class="cp">## Exercise: Cleaning Up Code</span>
-
-<span class="p">[</span><span class="n">Refactor</span><span class="p">](</span><span class="n">g</span><span class="o">:</span><span class="n">refactor</span><span class="p">)</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="err">`</span><span class="n">do_GET</span><span class="err">`</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="err">`</span><span class="n">handle_file</span><span class="err">`</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="err">`</span><span class="n">RequestHandler</span><span class="err">`</span>
-<span class="n">so</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">checks</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">one</span><span class="w"> </span><span class="n">place</span><span class="p">.</span>
-<span class="n">Does</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">make</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">easier</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">understand</span><span class="w"> </span><span class="n">overall</span><span class="o">?</span>
-<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">think</span><span class="w"> </span><span class="n">making</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">easier</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">understand</span><span class="w"> </span><span class="n">also</span><span class="w"> </span><span class="n">makes</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">safer</span><span class="o">?</span>
-
-<span class="o">&lt;/</span><span class="n">section</span><span class="o">&gt;</span>
-
-<span class="cp">## Serving Data</span>
-
-<span class="o">-</span><span class="w">   </span><span class="n">Rarely</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">JSON</span><span class="w"> </span><span class="n">lying</span><span class="w"> </span><span class="n">around</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="p">[</span><span class="k">static</span><span class="w"> </span><span class="n">files</span><span class="p">](</span><span class="n">g</span><span class="o">:</span><span class="n">static_file</span><span class="p">)</span>
-<span class="o">-</span><span class="w">   </span><span class="n">More</span><span class="w"> </span><span class="n">common</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">either</span><span class="w"> </span><span class="n">CSV</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">database</span>
-
-<span class="err">```</span><span class="p">{</span><span class="n">data</span><span class="o">-</span><span class="n">file</span><span class="o">=</span><span class="s">"birds_head.sh"</span><span class="p">}</span>
-<span class="n">head</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="n">site</span><span class="o">/</span><span class="n">birds</span><span class="p">.</span><span class="n">csv</span>
-</code></pre></div>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">loc_id</span><span class="p">,</span><span class="n">latitude</span><span class="p">,</span><span class="n">longitude</span><span class="p">,</span><span class="n">region</span><span class="p">,</span><span class="n">year</span><span class="p">,</span><span class="n">month</span><span class="p">,</span><span class="n">day</span><span class="p">,</span><span class="n">species_id</span><span class="p">,</span><span class="n">num</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">redcro</span><span class="p">,</span><span class="mf">3.0</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">rebnut</span><span class="p">,</span><span class="mf">1.0</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">comred</span><span class="p">,</span><span class="mf">13.0</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">dowwoo</span><span class="p">,</span><span class="mf">1.0</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">bkcchi</span><span class="p">,</span><span class="mf">3.0</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">1</span><span class="p">,</span><span class="n">haiwoo</span><span class="p">,</span><span class="mf">1.0</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">8</span><span class="p">,</span><span class="n">nobird</span><span class="p">,</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">15</span><span class="p">,</span><span class="n">rebnut</span><span class="p">,</span><span class="mf">2.0</span>
-<span class="n">L13476859</span><span class="p">,</span><span class="mf">60.8606726</span><span class="p">,</span><span class="o">-</span><span class="mf">135.2015181</span><span class="p">,</span><span class="n">CA</span><span class="o">-</span><span class="n">YT</span><span class="p">,</span><span class="mh">2021</span><span class="p">,</span><span class="mh">2</span><span class="p">,</span><span class="mh">15</span><span class="p">,</span><span class="n">bkcchi</span><span class="p">,</span><span class="mf">3.0</span>
-</code></pre></div>
+<section id="exercise-fetching-from-home" class="level2 exercise" data-number="5.16">
+<h2 data-number="5.16" class="anchored" data-anchor-id="exercise-fetching-from-home"><span class="header-section-number">5.16</span> Exercise: Fetching From Home</h2>
+<p>The shortcut <code>~<em>username</em></code> (tilde) means “the specified user’s home directory” in the shell, while <code>~</code> on its own means “the current user’s home directory”. Create a file called <code>test.txt</code> in your home directory and then try to get <code>~/test.txt</code> using your browser, <code>requests</code>, and <code>netcat</code>. What happens with each and why?</p>
+</section>
+<section id="a-safer-file-server" class="level2" data-number="5.17">
+<h2 data-number="5.17" class="anchored" data-anchor-id="a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><a href="../glossary/index.html#resolve_path">Resolve</a> the constructed path</li>
+<li>Then check that it’s below the current working directory (i.e., the sandbox)</li>
+<li>And fail if it isn’t
+<ul>
+<li>Using our own <code>ServerException</code> guarantees that all errors are handled the same way</li>
+</ul></li>
+</ul>
+</section>
+<section id="exercise-cleaning-up-code" class="level2 exercise" data-number="5.18">
+<h2 data-number="5.18" class="anchored" data-anchor-id="exercise-cleaning-up-code"><span class="header-section-number">5.18</span> Exercise: Cleaning Up Code</h2>
+<p><a href="../glossary/index.html#refactor">Refactor</a> the <code>do_GET</code> and <code>handle_file</code> methods in <code>RequestHandler</code> so that all checks are in one place. Does this make the code easier to understand overall? Do you think making code easier to understand also makes it safer?</p>
+</section>
+<section id="serving-data" class="level2" data-number="5.19">
+<h2 data-number="5.19" class="anchored" data-anchor-id="serving-data"><span class="header-section-number">5.19</span> Serving Data</h2>
+<ul>
+<li>Rarely have JSON lying around as <a href="../glossary/index.html#static_file">static files</a></li>
+<li>More common to have either CSV or a database</li>
+</ul>
+<p><code class="sourceCode bash"><span class="fu">head</span> <span class="at">-n</span> 10 site/birds.csv</code> <code>loc_id,latitude,longitude,region,year,month,day,species_id,num
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,redcro,3.0
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,rebnut,1.0
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,comred,13.0
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,dowwoo,1.0
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,bkcchi,3.0
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,haiwoo,1.0
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,8,nobird,
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,rebnut,2.0
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
+</code></p>
 <ul>
 <li>Modify server to generate it dynamically</li>
 <li>Main program</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>def main():
-    sandbox, filename = sys.argv[1], sys.argv[2]
-    os.chdir(sandbox)
-    df = pl.read_csv(filename)
-    serverAddress = ("", 8000)
-    server = BirdServer(df, serverAddress, RequestHandler)
-    server.serve_forever()
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    sandbox, filename <span class="op">=</span> sys.argv[<span class="dv">1</span>], sys.argv[<span class="dv">2</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    os.chdir(sandbox)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pl.read_csv(filename)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> BirdServer(df, serverAddress, RequestHandler)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Create our own server class because we want to pass the dataframe in the constructor</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nx">BirdServer</span><span class="p">(</span><span class="nx">HTTPServer</span><span class="p">):</span>
-<span class="w">    </span><span class="nx">def</span><span class="w"> </span><span class="nx">__init__</span><span class="p">(</span><span class="kp">self</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">,</span><span class="w"> </span><span class="nx">server_address</span><span class="p">,</span><span class="w"> </span><span class="nx">request_handler</span><span class="p">):</span>
-<span class="w">        </span><span class="nx">super</span><span class="p">().</span><span class="nx">__init__</span><span class="p">(</span><span class="nx">server_address</span><span class="p">,</span><span class="w"> </span><span class="nx">request_handler</span><span class="p">)</span>
-<span class="w">        </span><span class="kp">self</span><span class="p">.</span><span class="nx">_data</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">data</span>
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BirdServer(HTTPServer):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data, server_address, request_handler):</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(server_address, request_handler)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._data <span class="op">=</span> data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>do_GET</code> converts the dataframe to JSON (will modify later to do more than this)</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">class</span> <span class="n">RequestHandler</span>(<span class="n">BaseHTTPRequestHandler</span>):
-    <span class="n">def</span> <span class="n">do_GET</span>(<span class="nb">self</span>):
-        <span class="nb">result</span> = <span class="nb">self</span>.<span class="n">server</span>.<span class="n">_data</span>.<span class="n">write_json</span>(<span class="n">row_oriented</span>=<span class="nb">True</span>)
-        <span class="nb">self</span>.<span class="n">send_content</span>(<span class="nb">result</span>, <span class="n">HTTPStatus</span>.<span class="n">OK</span>)
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="va">self</span>.server._data.write_json(row_oriented<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_content(result, HTTPStatus.OK)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li><code>send_content</code> <a href="../glossary/#character_encoding">encodes</a> the JSON string as <a href="../glossary/#utf_8">UTF-8</a>
-    and sets the MIME type to <code>application/json</code></li>
+<li><code>send_content</code> <a href="../glossary/index.html#character_encoding">encodes</a> the JSON string as <a href="../glossary/index.html#utf_8">UTF-8</a> and sets the MIME type to <code>application/json</code></li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>    def send_content(self, content, status):
-        content = bytes(content, "utf-8")
-        self.send_response(int(status))
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Length", str(len(content)))
-        self.end_headers()
-        self.wfile.write(content)
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> send_content(<span class="va">self</span>, content, status):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> <span class="bu">bytes</span>(content, <span class="st">"utf-8"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_response(<span class="bu">int</span>(status))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Type"</span>, <span class="st">"application/json; charset=utf-8"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Length"</span>, <span class="bu">str</span>(<span class="bu">len</span>(content)))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.end_headers()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wfile.write(content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Can view in browser at <code>http://localhost:8000</code> or use <code>requests</code> to fetch as before</li>
 </ul>
-<h2>Slicing Data</h2>
+</section>
+<section id="slicing-data" class="level2" data-number="5.20">
+<h2 data-number="5.20" class="anchored" data-anchor-id="slicing-data"><span class="header-section-number">5.20</span> Slicing Data</h2>
 <ul>
-<li>URL can contain <a href="../glossary/#query_parameter">query parameters</a></li>
+<li>URL can contain <a href="../glossary/index.html#query_parameter">query parameters</a></li>
 <li>Want <code>http://localhost:8000/?year=2021&amp;species=rebnut</code> to select red-breasted nuthatches in 2021</li>
 <li>Put slicing in a method of its own</li>
 </ul>
-<div class="codehilite"><pre class="" tabindex="0"><span></span><code>    def do_GET(self):
-        result = self.filter_data()
-        as_json = result.to_json(orient="records")
-        self.send_content(as_json, HTTPStatus.OK)
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters<ul>
+<li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters
+<ul>
 <li>(Key, list) dictionary</li>
-</ul>
-</li>
+</ul></li>
 <li>Then filter data as requested</li>
 </ul>
-<p><code>{data-file="bird_server_slice.py:filter"}
-    def filter_data(self):
-        params = parse_qs(urlparse(self.path).query)
-        result = self.server._data
-        if "species" in params:
-            species = params["species"][0]
-            result = result[result["species_id"] == species]
-        if "year" in params:
-            year = int(params["year"][0])
-            result = result[result["year"] == year]
-        return result</code></p>
-<section class="exercise">
-<h2>Exercise: Serving Data</h2>
-<ol>
-<li>
-<p>Write a function that takes a URL as input
-    and returns a dictionary whose keys are the query parameters' names
-    and whose values are lists of their values.
-    Do you now see why you should use the library function to do this?</p>
-</li>
-<li>
-<p>Modify the server so that clients can specify which columns they want returned
-    as a comma-separated list of names.
-    If the client asks for a column that doesn't exist, ignore it.</p>
-</li>
-<li>
-<p>Modify your solution to the previous exercise so that
-    if the client asks for a column that doesn't exist
-    the server returns a status code 400 (Bad Request)
-    and a JSON blog with two keys:
-    <code>status_code</code> (set to 400)
-    and <code>error_message</code> (set to something informative).
-    Explain why the server should return JSON rather than HTML in the case of an error.</p>
-</li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="exercise-serving-data" class="level2 exercise" data-number="5.21">
+<h2 data-number="5.21" class="anchored" data-anchor-id="exercise-serving-data"><span class="header-section-number">5.21</span> Exercise: Serving Data</h2>
+<ol type="1">
+<li><p>Write a function that takes a URL as input and returns a dictionary whose keys are the query parameters’ names and whose values are lists of their values. Do you now see why you should use the library function to do this?</p></li>
+<li><p>Modify the server so that clients can specify which columns they want returned as a comma-separated list of names. If the client asks for a column that doesn’t exist, ignore it.</p></li>
+<li><p>Modify your solution to the previous exercise so that if the client asks for a column that doesn’t exist the server returns a status code 400 (Bad Request) and a JSON blog with two keys: <code>status_code</code> (set to 400) and <code>error_message</code> (set to something informative). Explain why the server should return JSON rather than HTML in the case of an error.</p></li>
 </ol>
 </section>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../jobs/">Running Jobs</a>
-</div>
-<div class="col-6 center">
-<a href="../">The Sudonomicon</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
-</div>
-<div class="col-3 right">
-<a href="../auth/">Authentication</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-</body>
-</html>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../jobs/index.html" class="pagination-link" aria-label="Running Jobs">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Running Jobs</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../auth/index.html" class="pagination-link" aria-label="Authentication">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/http/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/http/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

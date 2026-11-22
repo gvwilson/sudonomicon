@@ -1,0 +1,3 @@
+# Contributing
+
+{{< inc-noh1 CONTRIBUTING.md >}}
