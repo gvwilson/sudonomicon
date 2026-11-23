@@ -1,339 +1,63 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>HTTP</title>
+  <link rel="stylesheet" href="../mccole/mccole-book.css">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.9">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>5&nbsp; HTTP – The Sudonomicon</title>
-<style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../auth/index.html" rel="next">
-<link href="../jobs/index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-
-
-<link rel="stylesheet" href="../mccole/book.css">
 </head>
-
-<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" aria-label="Toolbar">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../http/index.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></a></li></ol></nav>
-        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
+<body>
+<header class="topbar">
+  <nav class="topnav">
+    <a class="topnav-item" href="../index.html">Home</a>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Chapters</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../intro/index.html">Introduction</a></li><li><a href="../fs/index.html">The Filesystem</a></li><li><a href="../proc/index.html">Processes</a></li><li><a href="../jobs/index.html">Running Jobs</a></li><li><a href="../http/index.html">HTTP</a></li><li><a href="../auth/index.html">Authentication</a></li><li><a href="../var/index.html">Shell Variables</a></li><li><a href="../packenv/index.html">Packages and Virtual Environments</a></li><li><a href="../network/index.html">Networking</a></li><li><a href="../dock/index.html">Virtualization</a></li><li><a href="../finale/index.html">Conclusion</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Appendices</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../license/index.html">License</a></li><li><a href="../conduct/index.html">Code of Conduct</a></li><li><a href="../contributing/index.html">Contributing</a></li><li><a href="../bibliography/index.html">Bibliography</a></li><li><a href="../glossary/index.html">Glossary</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Contents</span>
+      <div class="topnav-menu"><ul>
+<li><a href="#start-with-something-simple" id="toc-start-with-something-simple"><span class="header-section-number">5.1</span> Start with Something Simple</a></li>
+<li><a href="#what-just-happened" id="toc-what-just-happened"><span class="header-section-number">5.2</span> What Just Happened</a></li>
+<li><a href="#request-structure" id="toc-request-structure"><span class="header-section-number">5.3</span> Request Structure</a></li>
+<li><a href="#response-structure" id="toc-response-structure"><span class="header-section-number">5.4</span> Response Structure</a></li>
+<li><a href="#exercise-http-requests" id="toc-exercise-http-requests"><span class="header-section-number">5.5</span> Exercise: HTTP Requests</a></li>
+<li><a href="#when-things-go-wrong" id="toc-when-things-go-wrong"><span class="header-section-number">5.6</span> When Things Go Wrong</a></li>
+<li><a href="#exercise-status-codes" id="toc-exercise-status-codes"><span class="header-section-number">5.7</span> Exercise: Status Codes</a></li>
+<li><a href="#getting-json" id="toc-getting-json"><span class="header-section-number">5.8</span> Getting JSON</a></li>
+<li><a href="#local-web-server" id="toc-local-web-server"><span class="header-section-number">5.9</span> Local Web Server</a></li>
+<li><a href="#talk-to-local-server" id="toc-talk-to-local-server"><span class="header-section-number">5.10</span> Talk to Local Server</a></li>
+<li><a href="#our-own-file-server" id="toc-our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</a></li>
+<li><a href="#support-code" id="toc-support-code"><span class="header-section-number">5.12</span> Support Code</a></li>
+<li><a href="#running-our-file-server" id="toc-running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</a></li>
+<li><a href="#built-in-safety" id="toc-built-in-safety"><span class="header-section-number">5.14</span> Built-in Safety</a></li>
+<li><a href="#introducing-netcat" id="toc-introducing-netcat"><span class="header-section-number">5.15</span> Introducing <code>netcat</code></a></li>
+<li><a href="#exercise-fetching-from-home" id="toc-exercise-fetching-from-home"><span class="header-section-number">5.16</span> Exercise: Fetching From Home</a></li>
+<li><a href="#a-safer-file-server" id="toc-a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</a></li>
+<li><a href="#exercise-cleaning-up-code" id="toc-exercise-cleaning-up-code"><span class="header-section-number">5.18</span> Exercise: Cleaning Up Code</a></li>
+<li><a href="#serving-data" id="toc-serving-data"><span class="header-section-number">5.19</span> Serving Data</a></li>
+<li><a href="#slicing-data" id="toc-slicing-data"><span class="header-section-number">5.20</span> Slicing Data</a></li>
+<li><a href="#exercise-serving-data" id="toc-exercise-serving-data"><span class="header-section-number">5.21</span> Exercise: Serving Data</a></li>
+</ul></div>
     </div>
   </nav>
 </header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">The Sudonomicon</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/gvwilson/sudonomicon" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../fs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Filesystem</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../proc/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Processes</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../jobs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Running Jobs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../http/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../auth/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../var/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shell Variables</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../packenv/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Packages and Virtual Environments</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../network/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../dock/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#start-with-something-simple" id="toc-start-with-something-simple" class="nav-link active" data-scroll-target="#start-with-something-simple"><span class="header-section-number">5.1</span> Start with Something Simple</a></li>
-  <li><a href="#what-just-happened" id="toc-what-just-happened" class="nav-link" data-scroll-target="#what-just-happened"><span class="header-section-number">5.2</span> What Just Happened</a></li>
-  <li><a href="#request-structure" id="toc-request-structure" class="nav-link" data-scroll-target="#request-structure"><span class="header-section-number">5.3</span> Request Structure</a></li>
-  <li><a href="#response-structure" id="toc-response-structure" class="nav-link" data-scroll-target="#response-structure"><span class="header-section-number">5.4</span> Response Structure</a></li>
-  <li><a href="#exercise-http-requests" id="toc-exercise-http-requests" class="nav-link" data-scroll-target="#exercise-http-requests"><span class="header-section-number">5.5</span> Exercise: HTTP Requests</a></li>
-  <li><a href="#when-things-go-wrong" id="toc-when-things-go-wrong" class="nav-link" data-scroll-target="#when-things-go-wrong"><span class="header-section-number">5.6</span> When Things Go Wrong</a></li>
-  <li><a href="#exercise-status-codes" id="toc-exercise-status-codes" class="nav-link" data-scroll-target="#exercise-status-codes"><span class="header-section-number">5.7</span> Exercise: Status Codes</a></li>
-  <li><a href="#getting-json" id="toc-getting-json" class="nav-link" data-scroll-target="#getting-json"><span class="header-section-number">5.8</span> Getting JSON</a></li>
-  <li><a href="#local-web-server" id="toc-local-web-server" class="nav-link" data-scroll-target="#local-web-server"><span class="header-section-number">5.9</span> Local Web Server</a></li>
-  <li><a href="#talk-to-local-server" id="toc-talk-to-local-server" class="nav-link" data-scroll-target="#talk-to-local-server"><span class="header-section-number">5.10</span> Talk to Local Server</a></li>
-  <li><a href="#our-own-file-server" id="toc-our-own-file-server" class="nav-link" data-scroll-target="#our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</a></li>
-  <li><a href="#support-code" id="toc-support-code" class="nav-link" data-scroll-target="#support-code"><span class="header-section-number">5.12</span> Support Code</a></li>
-  <li><a href="#running-our-file-server" id="toc-running-our-file-server" class="nav-link" data-scroll-target="#running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</a></li>
-  <li><a href="#built-in-safety" id="toc-built-in-safety" class="nav-link" data-scroll-target="#built-in-safety"><span class="header-section-number">5.14</span> Built-in Safety</a></li>
-  <li><a href="#introducing-netcat" id="toc-introducing-netcat" class="nav-link" data-scroll-target="#introducing-netcat"><span class="header-section-number">5.15</span> Introducing <code>netcat</code></a></li>
-  <li><a href="#exercise-fetching-from-home" id="toc-exercise-fetching-from-home" class="nav-link" data-scroll-target="#exercise-fetching-from-home"><span class="header-section-number">5.16</span> Exercise: Fetching From Home</a></li>
-  <li><a href="#a-safer-file-server" id="toc-a-safer-file-server" class="nav-link" data-scroll-target="#a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</a></li>
-  <li><a href="#exercise-cleaning-up-code" id="toc-exercise-cleaning-up-code" class="nav-link" data-scroll-target="#exercise-cleaning-up-code"><span class="header-section-number">5.18</span> Exercise: Cleaning Up Code</a></li>
-  <li><a href="#serving-data" id="toc-serving-data" class="nav-link" data-scroll-target="#serving-data"><span class="header-section-number">5.19</span> Serving Data</a></li>
-  <li><a href="#slicing-data" id="toc-slicing-data" class="nav-link" data-scroll-target="#slicing-data"><span class="header-section-number">5.20</span> Slicing Data</a></li>
-  <li><a href="#exercise-serving-data" id="toc-exercise-serving-data" class="nav-link" data-scroll-target="#exercise-serving-data"><span class="header-section-number">5.21</span> Exercise: Serving Data</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/http/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/http/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content" tabindex="-1">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<main class="content"><header id="title-block-header" class="quarto-title-block"></header>
+<h1 class="title">HTTP</h1>
 <ul>
 <li>FIXME</li>
 </ul>
-<section id="start-with-something-simple" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="start-with-something-simple"><span class="header-section-number">5.1</span> Start with Something Simple</h2>
+<h2 data-number="5.1" id="start-with-something-simple"><span class="header-section-number">5.1</span> Start with Something Simple</h2>
 <p><code class="sourceCode python"><span class="im">import</span> requests
-
 url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
 response <span class="op">=</span> requests.get(url)
 <span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
 <span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 200
 body:
-Start where you are, use what you have, help who you can.
-
-</code></p>
+Start where you are, use what you have, help who you can.</code></p>
 <ul>
 <li>Use the <a href="https://requests.readthedocs.io/"><code>requests</code></a> module to send an <a href="../glossary/index.html#http">HTTP</a> <a href="../glossary/index.html#http_request">request</a></li>
 <li>The URL identifies the file we want
@@ -346,16 +70,14 @@ Start where you are, use what you have, help who you can.
 <li>The text of the response</li>
 </ul></li>
 </ul>
-</section>
-<section id="what-just-happened" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="what-just-happened"><span class="header-section-number">5.2</span> What Just Happened</h2>
+<h2 data-number="5.2" id="what-just-happened"><span class="header-section-number">5.2</span> What Just Happened</h2>
 <ul>
 <li>Figure shows what happened</li>
 </ul>
-<div id="fig-http_lifecycle" class="quarto-float quarto-figure quarto-figure-center anchored" alt="HTTP request/response lifecycle">
-<figure class="quarto-float quarto-float-fig figure">
+<div id="fig-http_lifecycle" class="quarto-float quarto-figure quarto-figure-center" alt="HTTP request/response lifecycle">
+<figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-http_lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="http_lifecycle.svg" class="img-fluid figure-img" alt="HTTP request/response lifecycle">
+<img src="http_lifecycle.svg" alt="HTTP request/response lifecycle">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-http_lifecycle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5.1: Lifecycle of an HTTP request and response
@@ -369,12 +91,9 @@ Figure&nbsp;5.1: Lifecycle of an HTTP request and response
 <li>Sends it back</li>
 <li><code>requests</code> parses the response and creates a Python object for us</li>
 </ul>
-</section>
-<section id="request-structure" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="request-structure"><span class="header-section-number">5.3</span> Request Structure</h2>
+<h2 data-number="5.3" id="request-structure"><span class="header-section-number">5.3</span> Request Structure</h2>
 <p><code class="sourceCode python"><span class="im">import</span> requests
 <span class="im">from</span> requests_toolbelt.utils <span class="im">import</span> dump
-
 url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span>
 response <span class="op">=</span> requests.get(url)
 data <span class="op">=</span> dump.dump_all(response)
@@ -384,7 +103,6 @@ User-Agent: python-requests/2.31.0
 Accept-Encoding: gzip, deflate
 Accept: */*
 Connection: keep-alive
-
 </code></p>
 <ul>
 <li>First line is <a href="../glossary/index.html#http_method">method</a>, URL, and protocol version</li>
@@ -397,11 +115,8 @@ Connection: keep-alive
 <li>Except for uploaded data, which is just bytes</li>
 </ul></li>
 </ul>
-</section>
-<section id="response-structure" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="response-structure"><span class="header-section-number">5.4</span> Response Structure</h2>
+<h2 data-number="5.4" id="response-structure"><span class="header-section-number">5.4</span> Response Structure</h2>
 <p><code class="sourceCode python"><span class="im">import</span> requests
-
 url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span>
 response <span class="op">=</span> requests.get(url)
 <span class="cf">for</span> key, value <span class="kw">in</span> response.headers.items():
@@ -423,8 +138,7 @@ X-Cache: MISS
 X-Cache-Hits: 0
 X-Timer: S1708210467.301651,VS0,VE20
 Vary: Accept-Encoding
-X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
-</code></p>
+X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570</code></p>
 <ul>
 <li>Every HTTP response also has with extra information
 <ul>
@@ -437,24 +151,20 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570
 </ul></li>
 <li>From now on we will only show interesting headers</li>
 </ul>
-</section>
-<section id="exercise-http-requests" class="level2 exercise" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="exercise-http-requests"><span class="header-section-number">5.5</span> Exercise: HTTP Requests</h2>
+<section id="exercise-http-requests" class="exercise" data-number="5.5">
+<h2 data-number="5.5"><span class="header-section-number">5.5</span> Exercise: HTTP Requests</h2>
 <ol type="1">
 <li><p>Add header called <code>Studying</code> with the value <code>safety</code> to the <code>requests</code> script shown above. Does it make a difference to the response? Should it?</p></li>
 <li><p>What is the difference between the <code>Content-Type</code> and the <code>Content-Encoding</code> headers?</p></li>
 </ol>
 </section>
-<section id="when-things-go-wrong" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="when-things-go-wrong"><span class="header-section-number">5.6</span> When Things Go Wrong</h2>
+<h2 data-number="5.6" id="when-things-go-wrong"><span class="header-section-number">5.6</span> When Things Go Wrong</h2>
 <p><code class="sourceCode python"><span class="im">import</span> requests
-
 url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"</span>
 response <span class="op">=</span> requests.get(url)
 <span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
 <span class="bu">print</span>(<span class="ss">f"body length: </span><span class="sc">{</span><span class="bu">len</span>(response.text)<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 404
-body length: 9115
-</code></p>
+body length: 9115</code></p>
 <ul>
 <li>The 404 status code tells us something went wrong</li>
 <li>The 9 kilobyte response is an HTML page with an embedded image (the GitHub logo)</li>
@@ -463,9 +173,8 @@ body length: 9115
 <li>But we have to know page format to pull them out</li>
 </ul></li>
 </ul>
-</section>
-<section id="exercise-status-codes" class="level2 exercise" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="exercise-status-codes"><span class="header-section-number">5.7</span> Exercise: Status Codes</h2>
+<section id="exercise-status-codes" class="exercise" data-number="5.7">
+<h2 data-number="5.7"><span class="header-section-number">5.7</span> Exercise: Status Codes</h2>
 <p>Look at <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">this list of HTTP status codes</a>.</p>
 <ol type="1">
 <li><p>What is the difference between status code 403 and status code 404?</p></li>
@@ -473,10 +182,8 @@ body length: 9115
 <li><p>Under what circumstances would you expect to get a response whose status code is 505?</p></li>
 </ol>
 </section>
-<section id="getting-json" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="getting-json"><span class="header-section-number">5.8</span> Getting JSON</h2>
+<h2 data-number="5.8" id="getting-json"><span class="header-section-number">5.8</span> Getting JSON</h2>
 <p><code class="sourceCode python"><span class="im">import</span> requests
-
 url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.json"</span>
 response <span class="op">=</span> requests.get(url)
 <span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
@@ -485,8 +192,7 @@ as_json <span class="op">=</span> response.json()
 <span class="bu">print</span>(<span class="ss">f"body as JSON:</span><span class="ch">\n</span><span class="sc">{</span>as_json<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 200
 body as text: 107 bytes
 body as JSON:
-{'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}
-</code></p>
+{'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}</code></p>
 <ul>
 <li>Parsing data out of HTML is called <a href="../glossary/index.html#web_scraping">web scraping</a>
 <ul>
@@ -504,25 +210,23 @@ body as JSON:
 <li>A dictionary with column names and lists of values, all the same length?</li>
 </ul></li>
 </ul>
-<div id="fig-http_json_tables" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Three ways to represent tables as JSON">
-<figure class="quarto-float quarto-float-fig figure">
+<div id="fig-http_json_tables" class="quarto-float quarto-figure quarto-figure-center" alt="Three ways to represent tables as JSON">
+<figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-http_json_tables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="http_json_tables.svg" class="img-fluid figure-img" alt="Three ways to represent tables as JSON">
+<img src="http_json_tables.svg" alt="Three ways to represent tables as JSON">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-http_json_tables-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5.2: Representing tables as JSON
 </figcaption>
 </figure>
 </div>
-</section>
-<section id="local-web-server" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="local-web-server"><span class="header-section-number">5.9</span> Local Web Server</h2>
+<h2 data-number="5.9" id="local-web-server"><span class="header-section-number">5.9</span> Local Web Server</h2>
 <ul>
 <li>Pushing files to GitHub so that we can use them is annoying</li>
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
 <li>Use Python’s <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module to run a <a href="../glossary/index.html#local_server">local server</a></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server <span class="at">-d</span> site</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server <span class="at">-d</span> site</span></code></pre></div>
 <ul>
 <li>Host name is <a href="../glossary/index.html#localhost">`localhost`</a></li>
 <li>Uses port 8000 by default
@@ -535,21 +239,15 @@ Figure&nbsp;5.2: Representing tables as JSON
 <li>Build our own server later on to show how it works</li>
 </ul></li>
 </ul>
-</section>
-<section id="talk-to-local-server" class="level2" data-number="5.10">
-<h2 data-number="5.10" class="anchored" data-anchor-id="talk-to-local-server"><span class="header-section-number">5.10</span> Talk to Local Server</h2>
+<h2 data-number="5.10" id="talk-to-local-server"><span class="header-section-number">5.10</span> Talk to Local Server</h2>
 <p><code class="sourceCode python"><span class="im">import</span> requests
-
 URL <span class="op">=</span> <span class="st">"http://localhost:8000/motto.txt"</span>
-
 response <span class="op">=</span> requests.get(URL)
 <span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
 <span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</code> <code>::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
 status code: 200
 body:
-Start where you are, use what you have, help who you can.
-
-</code></p>
+Start where you are, use what you have, help who you can.</code></p>
 <ul>
 <li><a href="../glossary/index.html#concurrency">Concurrent</a> systems are hard to debug
 <ul>
@@ -558,10 +256,8 @@ Start where you are, use what you have, help who you can.
 <li>Usually easiest to run each process in its own terminal window</li>
 </ul></li>
 </ul>
-</section>
-<section id="our-own-file-server" class="level2" data-number="5.11">
-<h2 data-number="5.11" class="anchored" data-anchor-id="our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
+<h2 data-number="5.11" id="our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            url_path <span class="op">=</span> <span class="va">self</span>.path.lstrip(<span class="st">"/"</span>)</span>
@@ -574,19 +270,17 @@ Start where you are, use what you have, help who you can.
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.handle_file(<span class="va">self</span>.path, full_path)</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> msg:</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.handle_error(msg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.handle_error(msg)</span></code></pre></div>
 <ul>
 <li>Our <code>RequestHandler</code> handles a single <code>GET</code> request</li>
 <li>Combine working directory with requested file path to get local path to file</li>
 <li>Return that if it exists and is a file or raise an error</li>
 </ul>
-</section>
-<section id="support-code" class="level2" data-number="5.12">
-<h2 data-number="5.12" class="anchored" data-anchor-id="support-code"><span class="header-section-number">5.12</span> Support Code</h2>
+<h2 data-number="5.12" id="support-code"><span class="header-section-number">5.12</span> Support Code</h2>
 <ul>
 <li>Serve files</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Handle errors</li>
 </ul>
@@ -601,34 +295,28 @@ Start where you are, use what you have, help who you can.
 <ul>
 <li>Define our own exceptions so we’re sure we’re only catching what we expect</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ServerException(<span class="pp">Exception</span>):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="running-our-file-server" class="level2" data-number="5.13">
-<h2 data-number="5.13" class="anchored" data-anchor-id="running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ServerException(<span class="pp">Exception</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
+<h2 data-number="5.13" id="running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    os.chdir(sys.argv[<span class="dv">1</span>])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> HTTPServer(serverAddress, RequestHandler)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"serving in </span><span class="sc">{</span>os<span class="sc">.</span>getcwd()<span class="sc">}</span><span class="ss">..."</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div>
 <ul>
 <li>And then get <code>motto.txt</code> as before</li>
 </ul>
-</section>
-<section id="built-in-safety" class="level2" data-number="5.14">
-<h2 data-number="5.14" class="anchored" data-anchor-id="built-in-safety"><span class="header-section-number">5.14</span> Built-in Safety</h2>
+<h2 data-number="5.14" id="built-in-safety"><span class="header-section-number">5.14</span> Built-in Safety</h2>
 <ul>
 <li>Modify <code>requests</code> script to take URL as command-line parameter</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>URL <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(URL)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>URL <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(URL)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 <ul>
 <li>Add a sub-directory to <code>site</code> called <code>sandbox</code> with a file <code>example.txt</code>
 <ul>
@@ -636,77 +324,61 @@ Start where you are, use what you have, help who you can.
 </ul></li>
 <li>Serve that sub-directory</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/file_server_unsafe.py site/sandbox</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/file_server_unsafe.py site/sandbox</span></code></pre></div>
 <ul>
 <li>Can get files from that directory</li>
 </ul>
 <p><code class="sourceCode bash"><span class="ex">python</span> src/get_url.py http://localhost:8000/example.txt</code> <code>'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
-127.0.0.1 - - [21/Feb/2024 06:04:32] "GET /example.txt HTTP/1.1" 200 -
-</code> <code>status code: 200
+127.0.0.1 - - [21/Feb/2024 06:04:32] "GET /example.txt HTTP/1.1" 200 -</code> <code>status code: 200
 body:
-example file
-</code></p>
+example file</code></p>
 <ul>
 <li>But not from parent directory (which isn’t part of sandbox)</li>
 </ul>
 <p><code class="sourceCode bash"><span class="ex">python</span> src/requests_local_url.py http://localhost:8000/motto.txt</code> <code>'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
-127.0.0.1 - - [21/Feb/2024 06:04:38] "GET /motto.txt HTTP/1.1" 404 -
-</code> <code>status code: 404
+127.0.0.1 - - [21/Feb/2024 06:04:38] "GET /motto.txt HTTP/1.1" 404 -</code> <code>status code: 404
 body:
 &lt;html&gt;
   &lt;head&gt;&lt;title&gt;Error accessing /motto.txt&lt;/title&gt;&lt;/head&gt;
   &lt;body&gt;
     &lt;h1&gt;Error accessing /motto.txt: /motto.txt not found&lt;/h1&gt;
   &lt;/body&gt;
-&lt;/html&gt;
-</code></p>
+&lt;/html&gt;</code></p>
 <ul>
 <li><code>requests</code> strips the leading <code>..</code> off the path before sending it</li>
 <li>And if we try that URL in the browser, same thing happens</li>
 <li>So we’re safe, right?</li>
 </ul>
-</section>
-<section id="introducing-netcat" class="level2" data-number="5.15">
-<h2 data-number="5.15" class="anchored" data-anchor-id="introducing-netcat"><span class="header-section-number">5.15</span> Introducing <code>netcat</code></h2>
+<h2 data-number="5.15" id="introducing-netcat"><span class="header-section-number">5.15</span> Introducing <code>netcat</code></h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Netcat"><code>netcat</code></a> (often just <code>nc</code>) is a computer networking tool</li>
 <li>Open a connection, send exactly what the user types, and show exactly what is sent in response</li>
 </ul>
-<p><code class="sourceCode bash"><span class="ex">nc</span> localhost 8000</code> <code>GET /example.txt HTTP/1.1
-
-</code> <code>HTTP/1.0 200 OK
+<p><code class="sourceCode bash"><span class="ex">nc</span> localhost 8000</code> <code>GET /example.txt HTTP/1.1</code> <code>HTTP/1.0 200 OK
 Server: BaseHTTP/0.6 Python/3.12.1
 Date: Thu, 22 Feb 2024 18:37:37 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 13
-
-example file
-</code></p>
+example file</code></p>
 <ul>
 <li>Let’s see what happens if we <em>do</em> send a URL with <code>..</code> in it</li>
 </ul>
-<p><code>GET ../motto.txt HTTP/1.1
-
-</code> <code>HTTP/1.0 200 OK
+<p><code>GET ../motto.txt HTTP/1.1</code> <code>HTTP/1.0 200 OK
 Server: BaseHTTP/0.6 Python/3.12.1
 Date: Thu, 22 Feb 2024 18:38:50 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 58
-
-Start where you are, use what you have, help who you can.
-</code></p>
+Start where you are, use what you have, help who you can.</code></p>
 <ul>
 <li>We shouldn’t be able to see files outside the sandbox</li>
 <li>But if someone doesn’t strip out the <code>..</code> characters, users can escape</li>
 </ul>
-</section>
-<section id="exercise-fetching-from-home" class="level2 exercise" data-number="5.16">
-<h2 data-number="5.16" class="anchored" data-anchor-id="exercise-fetching-from-home"><span class="header-section-number">5.16</span> Exercise: Fetching From Home</h2>
+<section id="exercise-fetching-from-home" class="exercise" data-number="5.16">
+<h2 data-number="5.16"><span class="header-section-number">5.16</span> Exercise: Fetching From Home</h2>
 <p>The shortcut <code>~<em>username</em></code> (tilde) means “the specified user’s home directory” in the shell, while <code>~</code> on its own means “the current user’s home directory”. Create a file called <code>test.txt</code> in your home directory and then try to get <code>~/test.txt</code> using your browser, <code>requests</code>, and <code>netcat</code>. What happens with each and why?</p>
 </section>
-<section id="a-safer-file-server" class="level2" data-number="5.17">
-<h2 data-number="5.17" class="anchored" data-anchor-id="a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<h2 data-number="5.17" id="a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li><a href="../glossary/index.html#resolve_path">Resolve</a> the constructed path</li>
 <li>Then check that it’s below the current working directory (i.e., the sandbox)</li>
@@ -715,13 +387,11 @@ Start where you are, use what you have, help who you can.
 <li>Using our own <code>ServerException</code> guarantees that all errors are handled the same way</li>
 </ul></li>
 </ul>
-</section>
-<section id="exercise-cleaning-up-code" class="level2 exercise" data-number="5.18">
-<h2 data-number="5.18" class="anchored" data-anchor-id="exercise-cleaning-up-code"><span class="header-section-number">5.18</span> Exercise: Cleaning Up Code</h2>
+<section id="exercise-cleaning-up-code" class="exercise" data-number="5.18">
+<h2 data-number="5.18"><span class="header-section-number">5.18</span> Exercise: Cleaning Up Code</h2>
 <p><a href="../glossary/index.html#refactor">Refactor</a> the <code>do_GET</code> and <code>handle_file</code> methods in <code>RequestHandler</code> so that all checks are in one place. Does this make the code easier to understand overall? Do you think making code easier to understand also makes it safer?</p>
 </section>
-<section id="serving-data" class="level2" data-number="5.19">
-<h2 data-number="5.19" class="anchored" data-anchor-id="serving-data"><span class="header-section-number">5.19</span> Serving Data</h2>
+<h2 data-number="5.19" id="serving-data"><span class="header-section-number">5.19</span> Serving Data</h2>
 <ul>
 <li>Rarely have JSON lying around as <a href="../glossary/index.html#static_file">static files</a></li>
 <li>More common to have either CSV or a database</li>
@@ -735,55 +405,52 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,bkcchi,3.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,haiwoo,1.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,8,nobird,
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,rebnut,2.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
-</code></p>
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></p>
 <ul>
 <li>Modify server to generate it dynamically</li>
 <li>Main program</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    sandbox, filename <span class="op">=</span> sys.argv[<span class="dv">1</span>], sys.argv[<span class="dv">2</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    os.chdir(sandbox)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pl.read_csv(filename)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> BirdServer(df, serverAddress, RequestHandler)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div>
 <ul>
 <li>Create our own server class because we want to pass the dataframe in the constructor</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BirdServer(HTTPServer):</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BirdServer(HTTPServer):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data, server_address, request_handler):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(server_address, request_handler)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._data <span class="op">=</span> data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._data <span class="op">=</span> data</span></code></pre></div>
 <ul>
 <li><code>do_GET</code> converts the dataframe to JSON (will modify later to do more than this)</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="va">self</span>.server._data.write_json(row_oriented<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_content(result, HTTPStatus.OK)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_content(result, HTTPStatus.OK)</span></code></pre></div>
 <ul>
 <li><code>send_content</code> <a href="../glossary/index.html#character_encoding">encodes</a> the JSON string as <a href="../glossary/index.html#utf_8">UTF-8</a> and sets the MIME type to <code>application/json</code></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> send_content(<span class="va">self</span>, content, status):</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> send_content(<span class="va">self</span>, content, status):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> <span class="bu">bytes</span>(content, <span class="st">"utf-8"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_response(<span class="bu">int</span>(status))</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Type"</span>, <span class="st">"application/json; charset=utf-8"</span>)</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Length"</span>, <span class="bu">str</span>(<span class="bu">len</span>(content)))</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.end_headers()</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wfile.write(content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wfile.write(content)</span></code></pre></div>
 <ul>
 <li>Can view in browser at <code>http://localhost:8000</code> or use <code>requests</code> to fetch as before</li>
 </ul>
-</section>
-<section id="slicing-data" class="level2" data-number="5.20">
-<h2 data-number="5.20" class="anchored" data-anchor-id="slicing-data"><span class="header-section-number">5.20</span> Slicing Data</h2>
+<h2 data-number="5.20" id="slicing-data"><span class="header-section-number">5.20</span> Slicing Data</h2>
 <ul>
 <li>URL can contain <a href="../glossary/index.html#query_parameter">query parameters</a></li>
 <li>Want <code>http://localhost:8000/?year=2021&amp;species=rebnut</code> to select red-breasted nuthatches in 2021</li>
 <li>Put slicing in a method of its own</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters
 <ul>
@@ -791,10 +458,9 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 </ul></li>
 <li>Then filter data as requested</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="exercise-serving-data" class="level2 exercise" data-number="5.21">
-<h2 data-number="5.21" class="anchored" data-anchor-id="exercise-serving-data"><span class="header-section-number">5.21</span> Exercise: Serving Data</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<section id="exercise-serving-data" class="exercise" data-number="5.21">
+<h2 data-number="5.21"><span class="header-section-number">5.21</span> Exercise: Serving Data</h2>
 <ol type="1">
 <li><p>Write a function that takes a URL as input and returns a dictionary whose keys are the query parameters’ names and whose values are lists of their values. Do you now see why you should use the library function to do this?</p></li>
 <li><p>Modify the server so that clients can specify which columns they want returned as a comma-separated list of names. If the client asks for a column that doesn’t exist, ignore it.</p></li>
@@ -802,500 +468,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0
 </ol>
 </section>
 
+</main>
 
 
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-      window.quartoDecorateExternalLinks = function (root) {
-     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-          if (!link.classList.contains('no-external-icon')) {
-          }
-        }
-      }
-      };
-      window.quartoDecorateExternalLinks(window.document);
-    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
-    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
-    const hideOnEscAndFocusOut = {
-      name: 'hideOnEscAndFocusOut',
-      defaultValue: true,
-      fn(instance) {
-        const dismiss = () => {
-          // A show scheduled by the trigger delay would otherwise reopen it
-          instance.clearDelayTimeouts();
-          instance.hide();
-        };
-        const onKeyDown = (event) => {
-          if (event.key !== 'Escape') {
-            return;
-          }
-          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
-          // except an open reveal.js slide menu, which Esc should close too.
-          // The menu handles keys only when its keyboard option is on.
-          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
-            window.Reveal.getConfig().menu?.keyboard !== false;
-          if (!menuHandlesEsc) {
-            event.stopPropagation();
-          }
-          if (instance.popper.contains(window.document.activeElement)) {
-            // Disabled while refocusing so the focus trigger does not reopen it
-            instance.disable();
-            instance.reference.focus();
-            instance.enable();
-          }
-          dismiss();
-        };
-        const onFocusOut = (event) => {
-          const target = event.relatedTarget;
-          if (target && !instance.reference.contains(target) &&
-              !instance.popper.contains(target)) {
-            dismiss();
-          }
-        };
-        // On the trigger too: a click trigger (code-annotations: select) has no
-        // blur handling. Attached for the instance's lifetime so leaving the
-        // trigger also cancels a show still pending on the trigger delay.
-        instance.reference.addEventListener('focusout', onFocusOut);
-        return {
-          onShow() {
-            window.document.addEventListener('keydown', onKeyDown, true);
-            instance.popper.addEventListener('focusout', onFocusOut);
-          },
-          onHide() {
-            window.document.removeEventListener('keydown', onKeyDown, true);
-            instance.popper.removeEventListener('focusout', onFocusOut);
-          },
-          onDestroy() {
-            instance.reference.removeEventListener('focusout', onFocusOut);
-          },
-        };
-      },
-    };
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-        plugins: [hideOnEscAndFocusOut],
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          // Each band is positioned against its own containing block, which is
-          // not the offsetParent of the lines, so place it from client rects.
-          const placeBand = (band, firstEl, lastEl, codeBlock) => {
-            const container = band.offsetParent;
-            if (container === null) {
-              return;
-            }
-            const containerRect = container.getBoundingClientRect();
-            // Reveal.js scales slides with a transform, so convert client
-            // pixels back to the CSS pixels of the container.
-            const scale = containerRect.height / container.offsetHeight || 1;
-            const firstRect = firstEl.getBoundingClientRect();
-            const lastRect = lastEl.getBoundingClientRect();
-            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
-            const height = (lastRect.bottom - firstRect.top) / scale;
-            band.style.top = top - 2 + "px";
-            band.style.height = height + 4 + "px";
-            if (codeBlock) {
-              // Without the copy button wrapper, the containing block is wider
-              // than the code block, so span the code block explicitly.
-              const blockRect = codeBlock.getBoundingClientRect();
-              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
-              band.style.width = blockRect.width / scale + "px";
-            }
-          };
-          if (lineIds.length > 0) {
-            const el = window.document.getElementById(lineIds[0]);
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const parent = el.parentElement.parentElement;
-            // cook up a div (if necessary) and position it
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            placeBand(gutterDiv, el, lastEl);
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-  <script type="application/javascript">
-  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
-  </script>
-<nav class="page-navigation" aria-label="Page">
-  <div class="nav-page nav-page-previous">
-      <a href="../jobs/index.html" class="pagination-link" aria-label="Running Jobs">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Running Jobs</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../auth/index.html" class="pagination-link" aria-label="Authentication">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
-</div> <!-- /content -->
-
-
-
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/http/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/http/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

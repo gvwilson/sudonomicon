@@ -1,407 +1,108 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Virtualization</title>
+  <link rel="stylesheet" href="../mccole/mccole-book.css">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.9">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>10&nbsp; Virtualization – The Sudonomicon</title>
-<style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
-
-
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../finale/index.html" rel="next">
-<link href="../network/index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-
-
-<link rel="stylesheet" href="../mccole/book.css">
 </head>
-
-<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" aria-label="Toolbar">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../dock/index.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></a></li></ol></nav>
-        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
+<body>
+<header class="topbar">
+  <nav class="topnav">
+    <a class="topnav-item" href="../index.html">Home</a>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Chapters</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../intro/index.html">Introduction</a></li><li><a href="../fs/index.html">The Filesystem</a></li><li><a href="../proc/index.html">Processes</a></li><li><a href="../jobs/index.html">Running Jobs</a></li><li><a href="../http/index.html">HTTP</a></li><li><a href="../auth/index.html">Authentication</a></li><li><a href="../var/index.html">Shell Variables</a></li><li><a href="../packenv/index.html">Packages and Virtual Environments</a></li><li><a href="../network/index.html">Networking</a></li><li><a href="../dock/index.html">Virtualization</a></li><li><a href="../finale/index.html">Conclusion</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Appendices</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../license/index.html">License</a></li><li><a href="../conduct/index.html">Code of Conduct</a></li><li><a href="../contributing/index.html">Contributing</a></li><li><a href="../bibliography/index.html">Bibliography</a></li><li><a href="../glossary/index.html">Glossary</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Contents</span>
+      <div class="topnav-menu"><ul>
+<li><a href="#virtual-environments" id="toc-virtual-environments"><span class="header-section-number">10.1</span> Virtual Environments</a></li>
+<li><a href="#package-installation" id="toc-package-installation"><span class="header-section-number">10.2</span> Package Installation</a></li>
+<li><a href="#exercise-substitution" id="toc-exercise-substitution"><span class="header-section-number">10.3</span> Exercise: Substitution</a></li>
+<li><a href="#limits-of-virtual-environments" id="toc-limits-of-virtual-environments"><span class="header-section-number">10.4</span> Limits of Virtual Environments</a></li>
+<li><a href="#docker" id="toc-docker"><span class="header-section-number">10.5</span> Docker</a></li>
+<li><a href="#common-error-message" id="toc-common-error-message"><span class="header-section-number">10.6</span> Common Error Message</a></li>
+<li><a href="#running-a-container" id="toc-running-a-container"><span class="header-section-number">10.7</span> Running a Container</a></li>
+<li><a href="#re-running-a-container" id="toc-re-running-a-container"><span class="header-section-number">10.8</span> Re-running a Container</a></li>
+<li><a href="#this-doesnt-work" id="toc-this-doesnt-work"><span class="header-section-number">10.9</span> This Doesn’t Work</a></li>
+<li><a href="#pulling-images" id="toc-pulling-images"><span class="header-section-number">10.10</span> Pulling Images</a></li>
+<li><a href="#what-have-we-got" id="toc-what-have-we-got"><span class="header-section-number">10.11</span> What Have We Got?</a></li>
+<li><a href="#labels-can-change" id="toc-labels-can-change"><span class="header-section-number">10.12</span> Labels Can Change</a></li>
+<li><a href="#wait-whats-a-layer" id="toc-wait-whats-a-layer"><span class="header-section-number">10.13</span> Wait, What’s a Layer?</a></li>
+<li><a href="#inside-the-container" id="toc-inside-the-container"><span class="header-section-number">10.14</span> Inside the Container</a></li>
+<li><a href="#persistence" id="toc-persistence"><span class="header-section-number">10.15</span> Persistence</a></li>
+<li><a href="#what-is-running" id="toc-what-is-running"><span class="header-section-number">10.16</span> What Is Running</a></li>
+<li><a href="#ids-only" id="toc-ids-only"><span class="header-section-number">10.17</span> IDs Only</a></li>
+<li><a href="#filtering" id="toc-filtering"><span class="header-section-number">10.18</span> Filtering</a></li>
+<li><a href="#installing-software" id="toc-installing-software"><span class="header-section-number">10.19</span> Installing Software</a></li>
+<li><a href="#actually-installing-software" id="toc-actually-installing-software"><span class="header-section-number">10.20</span> Actually Installing Software</a></li>
+<li><a href="#inspecting-containers" id="toc-inspecting-containers"><span class="header-section-number">10.21</span> Inspecting Containers</a></li>
+<li><a href="#layers" id="toc-layers"><span class="header-section-number">10.22</span> Layers</a></li>
+<li><a href="#choosing-a-command" id="toc-choosing-a-command"><span class="header-section-number">10.23</span> Choosing a Command</a></li>
+<li><a href="#copying-files-into-images" id="toc-copying-files-into-images"><span class="header-section-number">10.24</span> Copying Files Into Images</a></li>
+<li><a href="#order-matters" id="toc-order-matters"><span class="header-section-number">10.25</span> Order Matters</a></li>
+<li><a href="#exericse-playing-with-docker" id="toc-exericse-playing-with-docker"><span class="header-section-number">10.26</span> Exericse: Playing with Docker</a></li>
+<li><a href="#sharing-files" id="toc-sharing-files"><span class="header-section-number">10.27</span> Sharing Files</a></li>
+<li><a href="#environment-variables" id="toc-environment-variables"><span class="header-section-number">10.28</span> Environment Variables</a></li>
+<li><a href="#environment-files" id="toc-environment-files"><span class="header-section-number">10.29</span> Environment Files</a></li>
+<li><a href="#long-running-containers" id="toc-long-running-containers"><span class="header-section-number">10.30</span> Long-Running Containers</a></li>
+<li><a href="#long-lived-service" id="toc-long-lived-service"><span class="header-section-number">10.31</span> Long-Lived Service</a></li>
+<li><a href="#a-better-way" id="toc-a-better-way"><span class="header-section-number">10.32</span> A Better Way</a></li>
+</ul></div>
     </div>
   </nav>
 </header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">The Sudonomicon</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/gvwilson/sudonomicon" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../fs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Filesystem</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../proc/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Processes</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../jobs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Running Jobs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../http/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../auth/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../var/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shell Variables</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../packenv/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Packages and Virtual Environments</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../network/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../dock/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#virtual-environments" id="toc-virtual-environments" class="nav-link active" data-scroll-target="#virtual-environments"><span class="header-section-number">10.1</span> Virtual Environments</a></li>
-  <li><a href="#package-installation" id="toc-package-installation" class="nav-link" data-scroll-target="#package-installation"><span class="header-section-number">10.2</span> Package Installation</a></li>
-  <li><a href="#exercise-substitution" id="toc-exercise-substitution" class="nav-link" data-scroll-target="#exercise-substitution"><span class="header-section-number">10.3</span> Exercise: Substitution</a></li>
-  <li><a href="#limits-of-virtual-environments" id="toc-limits-of-virtual-environments" class="nav-link" data-scroll-target="#limits-of-virtual-environments"><span class="header-section-number">10.4</span> Limits of Virtual Environments</a></li>
-  <li><a href="#docker" id="toc-docker" class="nav-link" data-scroll-target="#docker"><span class="header-section-number">10.5</span> Docker</a></li>
-  <li><a href="#common-error-message" id="toc-common-error-message" class="nav-link" data-scroll-target="#common-error-message"><span class="header-section-number">10.6</span> Common Error Message</a></li>
-  <li><a href="#running-a-container" id="toc-running-a-container" class="nav-link" data-scroll-target="#running-a-container"><span class="header-section-number">10.7</span> Running a Container</a></li>
-  <li><a href="#re-running-a-container" id="toc-re-running-a-container" class="nav-link" data-scroll-target="#re-running-a-container"><span class="header-section-number">10.8</span> Re-running a Container</a></li>
-  <li><a href="#this-doesnt-work" id="toc-this-doesnt-work" class="nav-link" data-scroll-target="#this-doesnt-work"><span class="header-section-number">10.9</span> This Doesn’t Work</a></li>
-  <li><a href="#pulling-images" id="toc-pulling-images" class="nav-link" data-scroll-target="#pulling-images"><span class="header-section-number">10.10</span> Pulling Images</a></li>
-  <li><a href="#what-have-we-got" id="toc-what-have-we-got" class="nav-link" data-scroll-target="#what-have-we-got"><span class="header-section-number">10.11</span> What Have We Got?</a></li>
-  <li><a href="#labels-can-change" id="toc-labels-can-change" class="nav-link" data-scroll-target="#labels-can-change"><span class="header-section-number">10.12</span> Labels Can Change</a></li>
-  <li><a href="#wait-whats-a-layer" id="toc-wait-whats-a-layer" class="nav-link" data-scroll-target="#wait-whats-a-layer"><span class="header-section-number">10.13</span> Wait, What’s a Layer?</a></li>
-  <li><a href="#inside-the-container" id="toc-inside-the-container" class="nav-link" data-scroll-target="#inside-the-container"><span class="header-section-number">10.14</span> Inside the Container</a></li>
-  <li><a href="#persistence" id="toc-persistence" class="nav-link" data-scroll-target="#persistence"><span class="header-section-number">10.15</span> Persistence</a></li>
-  <li><a href="#what-is-running" id="toc-what-is-running" class="nav-link" data-scroll-target="#what-is-running"><span class="header-section-number">10.16</span> What Is Running</a></li>
-  <li><a href="#ids-only" id="toc-ids-only" class="nav-link" data-scroll-target="#ids-only"><span class="header-section-number">10.17</span> IDs Only</a></li>
-  <li><a href="#filtering" id="toc-filtering" class="nav-link" data-scroll-target="#filtering"><span class="header-section-number">10.18</span> Filtering</a></li>
-  <li><a href="#installing-software" id="toc-installing-software" class="nav-link" data-scroll-target="#installing-software"><span class="header-section-number">10.19</span> Installing Software</a></li>
-  <li><a href="#actually-installing-software" id="toc-actually-installing-software" class="nav-link" data-scroll-target="#actually-installing-software"><span class="header-section-number">10.20</span> Actually Installing Software</a></li>
-  <li><a href="#inspecting-containers" id="toc-inspecting-containers" class="nav-link" data-scroll-target="#inspecting-containers"><span class="header-section-number">10.21</span> Inspecting Containers</a></li>
-  <li><a href="#layers" id="toc-layers" class="nav-link" data-scroll-target="#layers"><span class="header-section-number">10.22</span> Layers</a></li>
-  <li><a href="#choosing-a-command" id="toc-choosing-a-command" class="nav-link" data-scroll-target="#choosing-a-command"><span class="header-section-number">10.23</span> Choosing a Command</a></li>
-  <li><a href="#copying-files-into-images" id="toc-copying-files-into-images" class="nav-link" data-scroll-target="#copying-files-into-images"><span class="header-section-number">10.24</span> Copying Files Into Images</a></li>
-  <li><a href="#order-matters" id="toc-order-matters" class="nav-link" data-scroll-target="#order-matters"><span class="header-section-number">10.25</span> Order Matters</a></li>
-  <li><a href="#exericse-playing-with-docker" id="toc-exericse-playing-with-docker" class="nav-link" data-scroll-target="#exericse-playing-with-docker"><span class="header-section-number">10.26</span> Exericse: Playing with Docker</a></li>
-  <li><a href="#sharing-files" id="toc-sharing-files" class="nav-link" data-scroll-target="#sharing-files"><span class="header-section-number">10.27</span> Sharing Files</a></li>
-  <li><a href="#environment-variables" id="toc-environment-variables" class="nav-link" data-scroll-target="#environment-variables"><span class="header-section-number">10.28</span> Environment Variables</a></li>
-  <li><a href="#environment-files" id="toc-environment-files" class="nav-link" data-scroll-target="#environment-files"><span class="header-section-number">10.29</span> Environment Files</a></li>
-  <li><a href="#long-running-containers" id="toc-long-running-containers" class="nav-link" data-scroll-target="#long-running-containers"><span class="header-section-number">10.30</span> Long-Running Containers</a></li>
-  <li><a href="#long-lived-service" id="toc-long-lived-service" class="nav-link" data-scroll-target="#long-lived-service"><span class="header-section-number">10.31</span> Long-Lived Service</a></li>
-  <li><a href="#a-better-way" id="toc-a-better-way" class="nav-link" data-scroll-target="#a-better-way"><span class="header-section-number">10.32</span> A Better Way</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/dock/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/dock/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content" tabindex="-1">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
+<main class="content"><header id="title-block-header" class="quarto-title-block"></header>
+<h1 class="title">Virtualization</h1>
 <ul>
 <li>FIXME</li>
 <li>See <span class="citation" data-cites="Stoneman2020">(<a href="../bibliography/index.html#ref-Stoneman2020" role="doc-biblioref">Stoneman 2020</a>)</span></li>
 </ul>
-<section id="virtual-environments" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="virtual-environments"><span class="header-section-number">10.1</span> Virtual Environments</h2>
+<h2 data-number="10.1" id="virtual-environments"><span class="header-section-number">10.1</span> Virtual Environments</h2>
 <ul>
 <li>If two directories <code>A</code> and <code>B</code> contain a program <code>xyz</code> and <code>A</code> comes before <code>B</code> in the user’s <code>PATH</code>, the command <code>xyz</code> will run <code>A/xyz</code> instead of <code>B/xyz</code></li>
 <li>This is how <a href="../glossary/index.html#virtual_env">virtual environments</a> work</li>
 </ul>
 <p><code class="sourceCode bash"><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> : <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">grep</span> conda
-<span class="bu">echo</span> <span class="st">"python is"</span> <span class="va">$(</span><span class="fu">which</span> python<span class="va">)</span>
-</code> <code>/Users/tut/conda/envs/sys/bin
+<span class="bu">echo</span> <span class="st">"python is"</span> <span class="va">$(</span><span class="fu">which</span> python<span class="va">)</span></code> <code>/Users/tut/conda/envs/sys/bin
 /Users/tut/conda/condabin
-python is /Users/tut/conda/envs/sys/bin/python
-</code></p>
+python is /Users/tut/conda/envs/sys/bin/python</code></p>
 <ul>
 <li>Virtual environment is initially a minimal Python installation</li>
 <li>Installing new packages puts them in the environment’s directory</li>
 </ul>
-</section>
-<section id="package-installation" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="package-installation"><span class="header-section-number">10.2</span> Package Installation</h2>
+<h2 data-number="10.2" id="package-installation"><span class="header-section-number">10.2</span> Package Installation</h2>
 <ol type="1">
 <li>Create a new virtual environment called <code>example</code>: <code>conda create -n example python=3.12</code></li>
 <li>Activate that virtual environment: <code>conda activate example</code></li>
 <li>Install the <code>faker</code> package: <code>pip install faker</code></li>
 </ol>
 <p><code class="sourceCode bash"><span class="fu">find</span> <span class="va">$HOME</span>/conda/envs/example <span class="at">-name</span> faker</code> <code>/Users/tut/conda/envs/example/bin/faker
-/Users/tut/conda/envs/example/lib/python3.12/site-packages/faker
-</code></p>
+/Users/tut/conda/envs/example/lib/python3.12/site-packages/faker</code></p>
 <ul>
 <li>The script in <code>bin</code> loads the module and runs it</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/Users/gregwilson/conda/envs/example/bin/python3.12</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/Users/gregwilson/conda/envs/example/bin/python3.12</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> faker.cli <span class="im">import</span> execute_from_command_line</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    sys.argv[<span class="dv">0</span>] <span class="op">=</span> re.sub(<span class="vs">r'</span><span class="kw">(</span><span class="vs">-script</span><span class="ch">\.</span><span class="vs">pyw</span><span class="cf">|</span><span class="ch">\.</span><span class="vs">exe</span><span class="kw">)</span><span class="op">?</span><span class="dv">$</span><span class="vs">'</span>, <span class="st">''</span>, sys.argv[<span class="dv">0</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    sys.exit(execute_from_command_line())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    sys.exit(execute_from_command_line())</span></code></pre></div>
 <ul>
 <li>The directory under <code>site-packages</code> has 642 Python files (as of version 24.3.0)</li>
 <li>The <code>python</code> in the virtual environment’ <code>bin</code> directory knows to look in that environment’s <code>site-packages</code> directory</li>
 </ul>
-</section>
-<section id="exercise-substitution" class="level2 exercise" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="exercise-substitution"><span class="header-section-number">10.3</span> Exercise: Substitution</h2>
+<section id="exercise-substitution" class="exercise" data-number="10.3">
+<h2 data-number="10.3"><span class="header-section-number">10.3</span> Exercise: Substitution</h2>
 <p>What is the <code>re.sub</code> call in the <code>faker</code> script doing and why?</p>
 </section>
-<section id="limits-of-virtual-environments" class="level2 aside" data-number="10.4">
-<h2 class="aside anchored" data-number="10.4" data-anchor-id="limits-of-virtual-environments"><span class="header-section-number">10.4</span> Limits of Virtual Environments</h2>
+<h2 class="aside" data-number="10.4" id="limits-of-virtual-environments"><span class="header-section-number">10.4</span> Limits of Virtual Environments</h2>
 <ul>
 <li><code>conda</code> (and equivalents like <code>python -m venv</code>) work for Python</li>
 <li>But what if you need an isolated environment for several languages at once?
@@ -410,49 +111,36 @@ python is /Users/tut/conda/envs/sys/bin/python
 </ul></li>
 <li>And what if you want other people to be able to reproduce that environment?</li>
 </ul>
-</section>
-<section id="docker" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="docker"><span class="header-section-number">10.5</span> Docker</h2>
+<h2 data-number="10.5" id="docker"><span class="header-section-number">10.5</span> Docker</h2>
 <ul>
 <li><a href="https://www.docker.com/">Docker</a> solves these problems (and others)</li>
 <li>Define an <a href="../glossary/index.html#docker_image">image</a> with its own copy of the operating system, filesystem, etc.</li>
 <li>Run it in a <a href="../glossary/index.html#docker_container">container</a> that is isolated from the rest of your computer</li>
 </ul>
-<p><code class="sourceCode bash"><span class="ex">docker</span> image ls</code> <code>REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
-</code> <code class="sourceCode bash"><span class="ex">docker</span> container ls</code> <code>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-</code></p>
+<p><code class="sourceCode bash"><span class="ex">docker</span> image ls</code> <code>REPOSITORY   TAG       IMAGE ID   CREATED   SIZE</code> <code class="sourceCode bash"><span class="ex">docker</span> container ls</code> <code>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES</code></p>
 <ul>
 <li>Because we haven’t created or run anything yet</li>
 </ul>
-</section>
-<section id="common-error-message" class="level2 aside" data-number="10.6">
-<h2 class="aside anchored" data-number="10.6" data-anchor-id="common-error-message"><span class="header-section-number">10.6</span> Common Error Message</h2>
+<h2 class="aside" data-number="10.6" id="common-error-message"><span class="header-section-number">10.6</span> Common Error Message</h2>
 <ul>
 <li>Docker requires a <a href="../glossary/index.html#daemon">daemon</a> process to be running in the background to start images</li>
 </ul>
 <p><code class="sourceCode bash"><span class="ex">docker</span> image ls</code> <code>Cannot connect to the Docker daemon at unix:///Users/tut/.docker/run/docker.sock.
-Is the docker daemon running?
-</code></p>
-</section>
-<section id="running-a-container" class="level2" data-number="10.7">
-<h2 data-number="10.7" class="anchored" data-anchor-id="running-a-container"><span class="header-section-number">10.7</span> Running a Container</h2>
+Is the docker daemon running?</code></p>
+<h2 data-number="10.7" id="running-a-container"><span class="header-section-number">10.7</span> Running a Container</h2>
 <pre><code>$ docker container run ubuntu:latest
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 bccd10f490ab: Pull complete 
 Digest: sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e
 Status: Downloaded newer image for ubuntu:latest
-
 $ docker container ls
-
 $ docker container ls -a
 CONTAINER ID   IMAGE           COMMAND       CREATED          STATUS                     PORTS     NAMES
 741bb295734f   ubuntu:latest   "/bin/bash"   10 seconds ago   Exited (0) 9 seconds ago             xenodochial_mclaren
-
 $ docker image ls
 REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
-ubuntu       latest    ca2b0f26964c   3 weeks ago   77.9MB
-</code></pre>
+ubuntu       latest    ca2b0f26964c   3 weeks ago   77.9MB</code></pre>
 <ul>
 <li>Ask Docker to run a container with <code>ubuntu:latest</code>
 <ul>
@@ -462,27 +150,21 @@ ubuntu       latest    ca2b0f26964c   3 weeks ago   77.9MB
 <li>Then runs it</li>
 <li>But its default command is <code>/bin/bash</code> with no inputs, so it exits immediately.</li>
 </ul>
-</section>
-<section id="re-running-a-container" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="re-running-a-container"><span class="header-section-number">10.8</span> Re-running a Container</h2>
+<h2 data-number="10.8" id="re-running-a-container"><span class="header-section-number">10.8</span> Re-running a Container</h2>
 <pre><code>$ docker container run ubuntu:latest pwd
 /
-
 $ docker container run ubuntu:latest ls
 bin
 boot
 dev
 …more entries…
 usr
-var
-</code></pre>
+var</code></pre>
 <ul>
 <li>Docker doesn’t need to download the image again (it’s cached)</li>
 <li>Runs the given command instead of the default <code>/bin/bash</code></li>
 </ul>
-</section>
-<section id="this-doesnt-work" class="level2 aside" data-number="10.9">
-<h2 class="aside anchored" data-number="10.9" data-anchor-id="this-doesnt-work"><span class="header-section-number">10.9</span> This Doesn’t Work</h2>
+<h2 class="aside" data-number="10.9" id="this-doesnt-work"><span class="header-section-number">10.9</span> This Doesn’t Work</h2>
 <pre><code>$ docker container run ubuntu:latest "echo hello"
 docker: Error response from daemon: \
 failed to create task for container: \
@@ -490,14 +172,11 @@ failed to create shim task: \
 OCI runtime create failed: \
 runc create failed: \
 unable to start container process: \
-exec: "echo hello": executable file not found in $PATH: unknown.
-</code></pre>
+exec: "echo hello": executable file not found in $PATH: unknown.</code></pre>
 <ul>
 <li>There is no executable in the image’s search path called <code>echo hello</code> (all one word)</li>
 </ul>
-</section>
-<section id="pulling-images" class="level2 aside" data-number="10.10">
-<h2 class="aside anchored" data-number="10.10" data-anchor-id="pulling-images"><span class="header-section-number">10.10</span> Pulling Images</h2>
+<h2 class="aside" data-number="10.10" id="pulling-images"><span class="header-section-number">10.10</span> Pulling Images</h2>
 <ul>
 <li>We don’t have to run immediately</li>
 </ul>
@@ -505,11 +184,8 @@ exec: "echo hello": executable file not found in $PATH: unknown.
 latest: Pulling from library/ubuntu
 Digest: sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e
 Status: Image is up to date for ubuntu:latest
-docker.io/library/ubuntu:latest
-</code></pre>
-</section>
-<section id="what-have-we-got" class="level2" data-number="10.11">
-<h2 data-number="10.11" class="anchored" data-anchor-id="what-have-we-got"><span class="header-section-number">10.11</span> What Have We Got?</h2>
+docker.io/library/ubuntu:latest</code></pre>
+<h2 data-number="10.11" id="what-have-we-got"><span class="header-section-number">10.11</span> What Have We Got?</h2>
 <pre><code>$ docker container run ubuntu cat /etc/os-release
 PRETTY_NAME="Ubuntu 22.04.4 LTS"
 NAME="Ubuntu"
@@ -522,14 +198,11 @@ HOME_URL="https://www.ubuntu.com/"
 SUPPORT_URL="https://help.ubuntu.com/"
 BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
 PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
-UBUNTU_CODENAME=jammy
-</code></pre>
+UBUNTU_CODENAME=jammy</code></pre>
 <ul>
 <li>Don’t need <code>:latest</code> every time (defaults)</li>
 </ul>
-</section>
-<section id="labels-can-change" class="level2 aside" data-number="10.12">
-<h2 class="aside anchored" data-number="10.12" data-anchor-id="labels-can-change"><span class="header-section-number">10.12</span> Labels Can Change</h2>
+<h2 class="aside" data-number="10.12" id="labels-can-change"><span class="header-section-number">10.12</span> Labels Can Change</h2>
 <ul>
 <li>Image creators can re-use labels
 <ul>
@@ -539,9 +212,7 @@ UBUNTU_CODENAME=jammy
 <li>But each layer in an image can also be identified by a hash of its contents</li>
 <li>So we can reproduce an image exactly when we want to</li>
 </ul>
-</section>
-<section id="wait-whats-a-layer" class="level2 aside" data-number="10.13">
-<h2 class="aside anchored" data-number="10.13" data-anchor-id="wait-whats-a-layer"><span class="header-section-number">10.13</span> Wait, What’s a Layer?</h2>
+<h2 class="aside" data-number="10.13" id="wait-whats-a-layer"><span class="header-section-number">10.13</span> Wait, What’s a Layer?</h2>
 <ul>
 <li>Every image consists of one or more <a href="../glossary/index.html#docker_layer">layers</a></li>
 <li>Upper layers mask things in lower layers</li>
@@ -551,19 +222,17 @@ UBUNTU_CODENAME=jammy
 <li>When a container writes to memory or disk, the operating system stops, makes a copy of that part of memory or disk for that container’s private use, and then continues</li>
 </ul></li>
 </ul>
-<div id="fig-virt_docker_layers" class="quarto-float quarto-figure quarto-figure-center anchored" alt="How layers and copy-on-write work in Docker">
-<figure class="quarto-float quarto-float-fig figure">
+<div id="fig-virt_docker_layers" class="quarto-float quarto-figure quarto-figure-center" alt="How layers and copy-on-write work in Docker">
+<figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-virt_docker_layers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="docker_layers.svg" class="img-fluid figure-img" alt="How layers and copy-on-write work in Docker">
+<img src="docker_layers.svg" alt="How layers and copy-on-write work in Docker">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-virt_docker_layers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10.1: Docker Layers and Copy-on-Write
 </figcaption>
 </figure>
 </div>
-</section>
-<section id="inside-the-container" class="level2" data-number="10.14">
-<h2 data-number="10.14" class="anchored" data-anchor-id="inside-the-container"><span class="header-section-number">10.14</span> Inside the Container</h2>
+<h2 data-number="10.14" id="inside-the-container"><span class="header-section-number">10.14</span> Inside the Container</h2>
 <pre><code>$ docker container run -i -t ubuntu
 root@4238b3b51abd:/# pwd
 /
@@ -573,8 +242,7 @@ root@4238b3b51abd:/# ls
 bin  boot  dev  etc  home  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
 root@4238b3b51abd:/# exit
 exit
-$
-</code></pre>
+$</code></pre>
 <ul>
 <li><code>-i</code>: interactive</li>
 <li><code>-t</code>: terminal (kind of)
@@ -583,9 +251,7 @@ $
 </ul></li>
 <li>The hexadecimal number after <code>root@</code> is the container’s unique ID</li>
 </ul>
-</section>
-<section id="persistence" class="level2" data-number="10.15">
-<h2 data-number="10.15" class="anchored" data-anchor-id="persistence"><span class="header-section-number">10.15</span> Persistence</h2>
+<h2 data-number="10.15" id="persistence"><span class="header-section-number">10.15</span> Persistence</h2>
 <pre><code>$ docker container run -i -t ubuntu
 root@a8ea570a84d3:/# ls /tmp
 root@a8ea570a84d3:/# touch /tmp/proof-we-were-here.txt
@@ -593,19 +259,15 @@ root@a8ea570a84d3:/# ls /tmp
 proof-we-were-here.txt
 root@a8ea570a84d3:/# exit
 exit
-
 $ docker container run -i -t ubuntu
 root@f792c15ebb5b:/# ls /tmp
 root@f792c15ebb5b:/# exit
-exit
-</code></pre>
+exit</code></pre>
 <ul>
 <li>Container starts fresh each time it runs</li>
 <li>Notice that the container’s ID changes each time it runs</li>
 </ul>
-</section>
-<section id="what-is-running" class="level2" data-number="10.16">
-<h2 data-number="10.16" class="anchored" data-anchor-id="what-is-running"><span class="header-section-number">10.16</span> What Is Running</h2>
+<h2 data-number="10.16" id="what-is-running"><span class="header-section-number">10.16</span> What Is Running</h2>
 <pre><code>$ docker container ls --format "table {{.ID}}\t{{.Status}}" |
 CONTAINER ID   STATUS                                       |
                                                             |
@@ -620,8 +282,7 @@ a5427ccdeb26   Up 38 seconds                                |
                                                             | exit
                                                             |
 $ docker container ls --format "table {{.ID}}\t{{.Status}}" |
-CONTAINER ID   STATUS                                       |
-</code></pre>
+CONTAINER ID   STATUS                                       |</code></pre>
 <ul>
 <li><code>docker container ls</code> on its own shows a wide table</li>
 <li>The command uses <a href="https://go.dev/">Go</a> format strings for output
@@ -629,53 +290,39 @@ CONTAINER ID   STATUS                                       |
 <li>Yes, really…</li>
 </ul></li>
 </ul>
-</section>
-<section id="ids-only" class="level2" data-number="10.17">
-<h2 data-number="10.17" class="anchored" data-anchor-id="ids-only"><span class="header-section-number">10.17</span> IDs Only</h2>
+<h2 data-number="10.17" id="ids-only"><span class="header-section-number">10.17</span> IDs Only</h2>
 <pre><code>$ docker container ls -a -q
 22b7c4109157
 8640cfb5e07a
 4c1ffdcb1c88
 37f30320bc8b
-fa9f02841fe9
-</code></pre>
+fa9f02841fe9</code></pre>
 <ul>
 <li><code>-a</code>: all</li>
 <li><code>-q</code>: quiet</li>
 <li>So <code>docker container rm  -f $(docker container ls -a -q)</code> gets rid of everything</li>
 </ul>
-</section>
-<section id="filtering" class="level2" data-number="10.18">
-<h2 data-number="10.18" class="anchored" data-anchor-id="filtering"><span class="header-section-number">10.18</span> Filtering</h2>
+<h2 data-number="10.18" id="filtering"><span class="header-section-number">10.18</span> Filtering</h2>
 <pre><code>$ docker image ls --filter reference="ubuntu"
 REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
-ubuntu       latest    2b7cc08dcdbb   6 weeks ago   69.2MB
-</code></pre>
+ubuntu       latest    2b7cc08dcdbb   6 weeks ago   69.2MB</code></pre>
 <ul>
 <li>There are a <em>lot</em> of Docker commands…</li>
 </ul>
-</section>
-<section id="installing-software" class="level2" data-number="10.19">
-<h2 data-number="10.19" class="anchored" data-anchor-id="installing-software"><span class="header-section-number">10.19</span> Installing Software</h2>
+<h2 data-number="10.19" id="installing-software"><span class="header-section-number">10.19</span> Installing Software</h2>
 <ul>
 <li>Use <a href="https://en.wikipedia.org/wiki/APT_(software)">apt</a> (Advanced Package Tool)</li>
 </ul>
 <pre><code>$ docker container run -it ubuntu
-
 # apt update
 …lots of output…
-
 # apt install -y python3
 …lots of output…
-
 # which python
-
 # which python3
 /usr/bin/python3
-
 # python3 --version
-Python 3.10.12
-</code></pre>
+Python 3.10.12</code></pre>
 <ul>
 <li><code>apt update</code> to update available package lists</li>
 <li><code>apt install -y</code> to install the desired package
@@ -690,17 +337,11 @@ Python 3.10.12
 </ul>
 <pre><code># exit
 exit
-
 $ docker run -it ubuntu
-
 # which python
-
 # exit
-exit
-</code></pre>
-</section>
-<section id="actually-installing-software" class="level2" data-number="10.20">
-<h2 data-number="10.20" class="anchored" data-anchor-id="actually-installing-software"><span class="header-section-number">10.20</span> Actually Installing Software</h2>
+exit</code></pre>
+<h2 data-number="10.20" id="actually-installing-software"><span class="header-section-number">10.20</span> Actually Installing Software</h2>
 <ul>
 <li>Create a <a href="../glossary/index.html#dockerfile">Dockerfile</a>
 <ul>
@@ -709,60 +350,43 @@ exit
 </ul></li>
 </ul>
 <pre><code>FROM ubuntu:latest
-
 RUN apt update
-RUN apt install python3 -y
-</code></pre>
+RUN apt install python3 -y</code></pre>
 <ul>
 <li>Tell docker to build the image</li>
 </ul>
 <pre><code>$ docker build -t gvwilson/ubuntu-python3 ubuntu-python3
-
 #0 building with "desktop-linux" instance using docker driver
-
 #1 [internal] load build definition from Dockerfile
 #1 transferring dockerfile: 99B done
 #1 DONE 0.0s
-
 #2 [internal] load metadata for docker.io/library/ubuntu:latest
 #2 DONE 1.6s
-
 #3 [internal] load .dockerignore
 #3 transferring context: 2B done
 #3 DONE 0.0s
-
 #4 [1/3] FROM docker.io/library/ubuntu:latest@sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e
 #4 resolve docker.io/library/ubuntu:latest@sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e done
 #4 DONE 0.0s
-
 #5 [2/3] RUN apt update
 #5 CACHED
-
 #6 [3/3] RUN apt install python3 -y
 #6 CACHED
-
 #7 exporting to image
 #7 exporting layers done
 #7 writing image sha256:c06d47d8275d4ef724dad192bf72daaac6b86701a1be40e1ac03f53092201d71 done
 #7 naming to docker.io/gvwilson/ubuntu-python3 done
-#7 DONE 0.0s
-</code></pre>
+#7 DONE 0.0s</code></pre>
 <ul>
 <li>Use <code>-t gvwilson/python3</code> to <a href="../glossary/index.html#docker_tag">tag</a> the image</li>
 </ul>
 <pre><code>$ docker container run -it gvwilson/ubuntu-python3
 # which python3
-/usr/bin/python3
-</code></pre>
-</section>
-<section id="inspecting-containers" class="level2" data-number="10.21">
-<h2 data-number="10.21" class="anchored" data-anchor-id="inspecting-containers"><span class="header-section-number">10.21</span> Inspecting Containers</h2>
+/usr/bin/python3</code></pre>
+<h2 data-number="10.21" id="inspecting-containers"><span class="header-section-number">10.21</span> Inspecting Containers</h2>
 <pre><code>$ docker container inspect 56d9f83286f9
-…199 lines of JSON…
-</code></pre>
-</section>
-<section id="layers" class="level2" data-number="10.22">
-<h2 data-number="10.22" class="anchored" data-anchor-id="layers"><span class="header-section-number">10.22</span> Layers</h2>
+…199 lines of JSON…</code></pre>
+<h2 data-number="10.22" id="layers"><span class="header-section-number">10.22</span> Layers</h2>
 <pre><code>$ docker image history gvwilson/ubuntu-python3
 IMAGE          CREATED        CREATED BY                                      SIZE      COMMENT
 c06d47d8275d   24 hours ago   RUN /bin/sh -c apt install python3 -y # buil…   29.5MB    buildkit.dockerfile.v0
@@ -772,8 +396,7 @@ c06d47d8275d   24 hours ago   RUN /bin/sh -c apt install python3 -y # buil…   
 &lt;missing&gt;      3 weeks ago    /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B
 &lt;missing&gt;      3 weeks ago    /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B
 &lt;missing&gt;      3 weeks ago    /bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH     0B
-&lt;missing&gt;      3 weeks ago    /bin/sh -c #(nop)  ARG RELEASE                  0B
-</code></pre>
+&lt;missing&gt;      3 weeks ago    /bin/sh -c #(nop)  ARG RELEASE                  0B</code></pre>
 <ul>
 <li>Docker images are built in layers</li>
 <li>Layers can be shared between images to reduce disk space</li>
@@ -783,37 +406,29 @@ TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
 Images          1         1         144.8MB   0B (0%)
 Containers      1         0         14B       14B (100%)
 Local Volumes   1         0         0B        0B
-Build Cache     5         0         62B       62B
-</code></pre>
+Build Cache     5         0         62B       62B</code></pre>
 <ul>
 <li>First line (<code>Images</code>) shows actual disk space</li>
 <li>The name <code>df</code> comes from a Unix command with that name to show free disk space</li>
 </ul>
-</section>
-<section id="choosing-a-command" class="level2" data-number="10.23">
-<h2 data-number="10.23" class="anchored" data-anchor-id="choosing-a-command"><span class="header-section-number">10.23</span> Choosing a Command</h2>
+<h2 data-number="10.23" id="choosing-a-command"><span class="header-section-number">10.23</span> Choosing a Command</h2>
 <ul>
 <li>Add <code>CMD</code> with a list of arguments to specify default command to execute when image runs</li>
 </ul>
 <pre><code>FROM ubuntu:latest
-
 RUN apt update
 RUN apt install python3 -y
-
-CMD ["python3", "--version"]
-</code></pre>
+CMD ["python3", "--version"]</code></pre>
 <ul>
 <li>Build</li>
 </ul>
 <pre><code>$ docker build -t gvwilson/python3 python3-version
-…lots of output…
-</code></pre>
+…lots of output…</code></pre>
 <ul>
 <li>Run</li>
 </ul>
 <pre><code>$ docker container run gvwilson/python3-version
-Python 3.10.12
-</code></pre>
+Python 3.10.12</code></pre>
 <ul>
 <li>But that’s all we get, because all we asked for was the version</li>
 <li>So build a new image <code>gvwilson/python3-interactive</code> with this Dockerfile
@@ -822,12 +437,9 @@ Python 3.10.12
 </ul></li>
 </ul>
 <pre><code>FROM ubuntu:latest
-
 RUN apt update
 RUN apt install python3 -y
-
-CMD ["python3", "-i"]
-</code></pre>
+CMD ["python3", "-i"]</code></pre>
 <ul>
 <li>Run it like this
 <ul>
@@ -840,77 +452,56 @@ Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; print("hello")
 hello
 &gt;&gt;&gt; exit()
-$ 
-</code></pre>
-</section>
-<section id="copying-files-into-images" class="level2" data-number="10.24">
-<h2 data-number="10.24" class="anchored" data-anchor-id="copying-files-into-images"><span class="header-section-number">10.24</span> Copying Files Into Images</h2>
+$ </code></pre>
+<h2 data-number="10.24" id="copying-files-into-images"><span class="header-section-number">10.24</span> Copying Files Into Images</h2>
 <ul>
 <li>Create a new directory <code>python3-script</code> and add this file</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"proof that the script was copied"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"proof that the script was copied"</span>)</span></code></pre></div>
 <ul>
 <li>Modify the Docker file to copy it into the image</li>
 </ul>
 <pre><code>FROM ubuntu:latest
-
 RUN apt update
 RUN apt install python3 -y
-
 COPY proof.py /home
-
-CMD ["python3", "/home/proof.py"]
-</code></pre>
+CMD ["python3", "/home/proof.py"]</code></pre>
 <ul>
 <li>Build and run</li>
 </ul>
 <pre><code>$ docker build -t gvwilson/python3-script python3-script
 …output…
-
 $ docker container run gvwilson/python3-script
-proof that the script was copied
-</code></pre>
-</section>
-<section id="order-matters" class="level2 aside" data-number="10.25">
-<h2 class="aside anchored" data-number="10.25" data-anchor-id="order-matters"><span class="header-section-number">10.25</span> Order Matters</h2>
+proof that the script was copied</code></pre>
+<h2 class="aside" data-number="10.25" id="order-matters"><span class="header-section-number">10.25</span> Order Matters</h2>
 <ul>
 <li><code>docker build</code> executes Dockerfile commands in order</li>
 <li>Caches each layer</li>
 <li>So put things that change more frequently (like your scripts) <em>after</em> things that change less frequently (like Linux and Python)</li>
 </ul>
-</section>
-<section id="exericse-playing-with-docker" class="level2 exercise" data-number="10.26">
-<h2 data-number="10.26" class="anchored" data-anchor-id="exericse-playing-with-docker"><span class="header-section-number">10.26</span> Exericse: Playing with Docker</h2>
+<section id="exericse-playing-with-docker" class="exercise" data-number="10.26">
+<h2 data-number="10.26"><span class="header-section-number">10.26</span> Exericse: Playing with Docker</h2>
 <ol type="1">
 <li><p>Create a Dockerfile that installs Git and uses it to clone a repository containing a Python script as the image is being built, then runs that Python script by default.</p></li>
 <li><p>What is the difference between <code>CMD</code> and <code>ENTRYPOINT</code> in Dockerfiles? When would you use the latter instead of the former?</p></li>
 </ol>
 </section>
-<section id="sharing-files" class="level2" data-number="10.27">
-<h2 data-number="10.27" class="anchored" data-anchor-id="sharing-files"><span class="header-section-number">10.27</span> Sharing Files</h2>
+<h2 data-number="10.27" id="sharing-files"><span class="header-section-number">10.27</span> Sharing Files</h2>
 <ul>
 <li>Containers exist to provide isolation…</li>
 <li>…but sometimes we <em>want</em> interaction with external resources</li>
 </ul>
 <pre><code>$ mkdir -p /tmp/mount_example
-
 $ echo "proof that mounting works" &gt; /tmp/mount_example/test.txt
-
 $ docker container run -it --mount type=bind,source=/tmp/mount_example,target=/example ubuntu
-
 # ls /example
 test.txt
-
 # cat /example/test.txt
 proof that mounting works
-
 # cp /example/test.txt /example/copied.txt
-
 # exit
-
 $ ls /tmp/mount_example/
-copied.txt	test.txt
-</code></pre>
+copied.txt	test.txt</code></pre>
 <ul>
 <li>Mounting a storage device makes its contents available at some location in the filesystem</li>
 <li>Use <code>--mount</code> to tell Docker to make a directory of the host filesystem available inside the container
@@ -920,9 +511,7 @@ copied.txt	test.txt
 <li><code>target=/example</code>: where the directory appears in the container</li>
 </ul></li>
 </ul>
-</section>
-<section id="environment-variables" class="level2" data-number="10.28">
-<h2 data-number="10.28" class="anchored" data-anchor-id="environment-variables"><span class="header-section-number">10.28</span> Environment Variables</h2>
+<h2 data-number="10.28" id="environment-variables"><span class="header-section-number">10.28</span> Environment Variables</h2>
 <ul>
 <li>Do <em>not</em> put passwords in Dockerfiles</li>
 <li>Common instead to pass them via environment variables
@@ -932,93 +521,74 @@ copied.txt	test.txt
 <li>Build this image</li>
 </ul>
 <pre><code>FROM ubuntu:latest
-
-CMD ["echo", "variable is '${ECHO_VAR}'"]
-</code></pre>
+CMD ["echo", "variable is '${ECHO_VAR}'"]</code></pre>
 <ul>
 <li>Run it</li>
 </ul>
 <pre><code>$ ECHO_VAR=some_string docker container run gvwilson/ubuntu-env-var
-variable is '${ECHO_VAR}'
-</code></pre>
+variable is '${ECHO_VAR}'</code></pre>
 <ul>
 <li><code>CMD</code> takes the string literally</li>
 <li>So try this:</li>
 </ul>
 <p><code class="sourceCode bash"><span class="co">#!/usr/bin/env bash</span>
 <span class="bu">echo</span> <span class="st">"variable is '</span><span class="va">${ECHO_VAR}</span><span class="st">'"</span></code> <code>FROM ubuntu:latest
-
 COPY show_var.sh /home
-CMD ["/home/show_var.sh"]
-</code> <code>$ docker container run gvwilson/ubuntu-env-var-succeeds
+CMD ["/home/show_var.sh"]</code> <code>$ docker container run gvwilson/ubuntu-env-var-succeeds
 variable is ''
-
 $ ECHO_VAR='it worked' docker container run gvwilson/ubuntu-env-var-succeeds
 variable is ''
-
 $ ECHO_VAR='it worked' docker container run -e ECHO_VAR gvwilson/ubuntu-env-var-succeeds
-variable is 'it worked'
-</code></p>
+variable is 'it worked'</code></p>
 <ul>
 <li>First time: not setting the variable</li>
 <li>Second time: not telling Docker to pass that environment variable to the container</li>
 <li>Third time: got it right</li>
 </ul>
-</section>
-<section id="environment-files" class="level2" data-number="10.29">
-<h2 data-number="10.29" class="anchored" data-anchor-id="environment-files"><span class="header-section-number">10.29</span> Environment Files</h2>
+<h2 data-number="10.29" id="environment-files"><span class="header-section-number">10.29</span> Environment Files</h2>
 <ul>
 <li>Often define environment variables in a file and tell Docker to use that
 <ul>
 <li>Which means you now have to figure out how to manage a file full of secrets…</li>
 </ul></li>
 </ul>
-<p><code>ECHO_VAR=this is set in a .env file
-</code> <code>$ docker container run --env-file ./set_echo_var.env gvwilson/ubuntu-env-var-succeeds
-variable is 'this is set in a .env file'
-</code></p>
+<p><code>ECHO_VAR=this is set in a .env file</code> <code>$ docker container run --env-file ./set_echo_var.env gvwilson/ubuntu-env-var-succeeds
+variable is 'this is set in a .env file'</code></p>
 <ul>
 <li>Note the lack of quotes around the variable definition in the <code>.env</code> file</li>
 </ul>
-</section>
-<section id="long-running-containers" class="level2" data-number="10.30">
-<h2 data-number="10.30" class="anchored" data-anchor-id="long-running-containers"><span class="header-section-number">10.30</span> Long-Running Containers</h2>
+<h2 data-number="10.30" id="long-running-containers"><span class="header-section-number">10.30</span> Long-Running Containers</h2>
 <pre><code>docker container ls -a --format "table {{.ID}}\t{{.Status}}" | head -n 5
 CONTAINER ID   STATUS
 56d9f83286f9   Exited (0) 3 minutes ago
 3a48286cb202   Exited (0) 7 minutes ago
 24e164d06d47   Exited (0) 5 hours ago
-6e44181432fd   Exited (0) 5 hours ago
-</code></pre>
+6e44181432fd   Exited (0) 5 hours ago</code></pre>
 <ul>
 <li>Container only runs as long as its starting process runs</li>
 <li>But container itself sticks around until removed</li>
 </ul>
-</section>
-<section id="long-lived-service" class="level2" data-number="10.31">
-<h2 data-number="10.31" class="anchored" data-anchor-id="long-lived-service"><span class="header-section-number">10.31</span> Long-Lived Service</h2>
+<h2 data-number="10.31" id="long-lived-service"><span class="header-section-number">10.31</span> Long-Lived Service</h2>
 <ul>
 <li>Print a count and the time every second
 <ul>
 <li>The <code>expr</code> command is rather useful</li>
 </ul></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="va">COUNTER</span><span class="op">=</span>1</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="fu">true</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="va">$COUNTER</span> <span class="va">$(</span><span class="fu">date</span> <span class="st">"+%H:%M:%S"</span><span class="va">)</span></span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">COUNTER</span><span class="op">=</span><span class="va">$(</span><span class="fu">expr</span> <span class="va">$COUNTER</span> + 1<span class="va">)</span></span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sleep</span> 1</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
 <ul>
 <li>Create a Dockerfile</li>
 </ul>
 <pre><code>FROM ubuntu:latest
-
 COPY count_time.sh /home
-CMD ["/home/count_time.sh"]
-</code></pre>
+CMD ["/home/count_time.sh"]</code></pre>
 <ul>
 <li>Build and run as usual</li>
 </ul>
@@ -1027,8 +597,7 @@ CMD ["/home/count_time.sh"]
 2 18:38:11
 3 18:38:12
 4 18:38:13
-…and so on…
-</code></pre>
+…and so on…</code></pre>
 <ul>
 <li>Cannot stop it with Ctrl-C</li>
 <li>Cannot background it with Ctrl-Z</li>
@@ -1040,24 +609,16 @@ CMD ["/home/count_time.sh"]
 <pre><code>$ docker ps
 CONTAINER ID   IMAGE                 COMMAND                 CREATED         STATUS
 741d896e4bb3   gvwilson/count-time   "/home/count_time.sh"   7 seconds ago   Up 6 seconds
-
-$ docker kill 741d
-</code></pre>
-</section>
-<section id="a-better-way" class="level2" data-number="10.32">
-<h2 data-number="10.32" class="anchored" data-anchor-id="a-better-way"><span class="header-section-number">10.32</span> A Better Way</h2>
+$ docker kill 741d</code></pre>
+<h2 data-number="10.32" id="a-better-way"><span class="header-section-number">10.32</span> A Better Way</h2>
 <pre><code>$ docker container run --detach gvwilson/count-time
 54c8c682a94a3853c62e2f86c19d463428a01452ed7e5cf85b076dcc0f447474
-
 $ docker ps
 CONTAINER ID   IMAGE                 COMMAND                 CREATED          STATUS
 54c8c682a94a   gvwilson/count-time   "/home/count_time.sh"   12 seconds ago   Up 11 seconds
-
 $ docker container stop 54c8
 …wait a few seconds…
-
-$
-</code></pre>
+$</code></pre>
 <ul>
 <li>Use <code>--detach</code> to detach the container from the terminal that launched it</li>
 <li>Use <code>docker container stop</code> to shut things down gracefully</li>
@@ -1069,509 +630,14 @@ $
 3 18:42:46
 4 18:42:47
 5 18:42:48
-…more output…
-</code></pre>
-
+…more output…</code></pre>
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Stoneman2020" class="csl-entry" role="listitem">
 Stoneman, Elton. 2020. <em><span class="nocase">Docker in a Month of Lunches</span></em>. Manning. ISBN 9781617297052.
 </div>
 </div>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-      window.quartoDecorateExternalLinks = function (root) {
-     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-          if (!link.classList.contains('no-external-icon')) {
-          }
-        }
-      }
-      };
-      window.quartoDecorateExternalLinks(window.document);
-    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
-    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
-    const hideOnEscAndFocusOut = {
-      name: 'hideOnEscAndFocusOut',
-      defaultValue: true,
-      fn(instance) {
-        const dismiss = () => {
-          // A show scheduled by the trigger delay would otherwise reopen it
-          instance.clearDelayTimeouts();
-          instance.hide();
-        };
-        const onKeyDown = (event) => {
-          if (event.key !== 'Escape') {
-            return;
-          }
-          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
-          // except an open reveal.js slide menu, which Esc should close too.
-          // The menu handles keys only when its keyboard option is on.
-          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
-            window.Reveal.getConfig().menu?.keyboard !== false;
-          if (!menuHandlesEsc) {
-            event.stopPropagation();
-          }
-          if (instance.popper.contains(window.document.activeElement)) {
-            // Disabled while refocusing so the focus trigger does not reopen it
-            instance.disable();
-            instance.reference.focus();
-            instance.enable();
-          }
-          dismiss();
-        };
-        const onFocusOut = (event) => {
-          const target = event.relatedTarget;
-          if (target && !instance.reference.contains(target) &&
-              !instance.popper.contains(target)) {
-            dismiss();
-          }
-        };
-        // On the trigger too: a click trigger (code-annotations: select) has no
-        // blur handling. Attached for the instance's lifetime so leaving the
-        // trigger also cancels a show still pending on the trigger delay.
-        instance.reference.addEventListener('focusout', onFocusOut);
-        return {
-          onShow() {
-            window.document.addEventListener('keydown', onKeyDown, true);
-            instance.popper.addEventListener('focusout', onFocusOut);
-          },
-          onHide() {
-            window.document.removeEventListener('keydown', onKeyDown, true);
-            instance.popper.removeEventListener('focusout', onFocusOut);
-          },
-          onDestroy() {
-            instance.reference.removeEventListener('focusout', onFocusOut);
-          },
-        };
-      },
-    };
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-        plugins: [hideOnEscAndFocusOut],
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          // Each band is positioned against its own containing block, which is
-          // not the offsetParent of the lines, so place it from client rects.
-          const placeBand = (band, firstEl, lastEl, codeBlock) => {
-            const container = band.offsetParent;
-            if (container === null) {
-              return;
-            }
-            const containerRect = container.getBoundingClientRect();
-            // Reveal.js scales slides with a transform, so convert client
-            // pixels back to the CSS pixels of the container.
-            const scale = containerRect.height / container.offsetHeight || 1;
-            const firstRect = firstEl.getBoundingClientRect();
-            const lastRect = lastEl.getBoundingClientRect();
-            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
-            const height = (lastRect.bottom - firstRect.top) / scale;
-            band.style.top = top - 2 + "px";
-            band.style.height = height + 4 + "px";
-            if (codeBlock) {
-              // Without the copy button wrapper, the containing block is wider
-              // than the code block, so span the code block explicitly.
-              const blockRect = codeBlock.getBoundingClientRect();
-              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
-              band.style.width = blockRect.width / scale + "px";
-            }
-          };
-          if (lineIds.length > 0) {
-            const el = window.document.getElementById(lineIds[0]);
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const parent = el.parentElement.parentElement;
-            // cook up a div (if necessary) and position it
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            placeBand(gutterDiv, el, lastEl);
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-  <script type="application/javascript">
-  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
-  </script>
-<nav class="page-navigation" aria-label="Page">
-  <div class="nav-page nav-page-previous">
-      <a href="../network/index.html" class="pagination-link" aria-label="Networking">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../finale/index.html" class="pagination-link" aria-label="Conclusion">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusion</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
-</div> <!-- /content -->
+</main>
 
 
-
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/dock/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/dock/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

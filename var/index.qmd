@@ -20,7 +20,7 @@
 -   Create or change with <code><em>name</em>=<em>value</em></code>
 -   {{< g shell_var "Shell variable" >}} stays in the process that created it
     -   E.g., that particular running copy of the shell
--   Use <code>$<em>name</em></code> to get value
+-   Use <code>\$<em>name</em></code> to get value
     -   `$` prefix because people type file and directory names more often
 
 {{< inc var/shell_var_outer.sh >}}

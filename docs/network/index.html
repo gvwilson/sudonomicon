@@ -1,319 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Networking</title>
+  <link rel="stylesheet" href="../mccole/mccole-book.css">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.9">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>9&nbsp; Networking – The Sudonomicon</title>
-<style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../dock/index.html" rel="next">
-<link href="../packenv/index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-
-
-<link rel="stylesheet" href="../mccole/book.css">
 </head>
-
-<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" aria-label="Toolbar">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../network/index.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></a></li></ol></nav>
-        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
+<body>
+<header class="topbar">
+  <nav class="topnav">
+    <a class="topnav-item" href="../index.html">Home</a>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Chapters</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../intro/index.html">Introduction</a></li><li><a href="../fs/index.html">The Filesystem</a></li><li><a href="../proc/index.html">Processes</a></li><li><a href="../jobs/index.html">Running Jobs</a></li><li><a href="../http/index.html">HTTP</a></li><li><a href="../auth/index.html">Authentication</a></li><li><a href="../var/index.html">Shell Variables</a></li><li><a href="../packenv/index.html">Packages and Virtual Environments</a></li><li><a href="../network/index.html">Networking</a></li><li><a href="../dock/index.html">Virtualization</a></li><li><a href="../finale/index.html">Conclusion</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Appendices</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../license/index.html">License</a></li><li><a href="../conduct/index.html">Code of Conduct</a></li><li><a href="../contributing/index.html">Contributing</a></li><li><a href="../bibliography/index.html">Bibliography</a></li><li><a href="../glossary/index.html">Glossary</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Contents</span>
+      <div class="topnav-menu"><ul>
+<li><a href="#what-is-a-network" id="toc-what-is-a-network"><span class="header-section-number">9.1</span> What Is a Network?</a></li>
+<li><a href="#ip-addresses" id="toc-ip-addresses"><span class="header-section-number">9.2</span> IP Addresses</a></li>
+<li><a href="#ports" id="toc-ports"><span class="header-section-number">9.3</span> Ports</a></li>
+<li><a href="#tcp-vs.-udp" id="toc-tcp-vs.-udp"><span class="header-section-number">9.4</span> TCP vs.&nbsp;UDP</a></li>
+<li><a href="#sockets" id="toc-sockets"><span class="header-section-number">9.5</span> Sockets</a></li>
+<li><a href="#exercise-echo-server" id="toc-exercise-echo-server"><span class="header-section-number">9.6</span> Exercise: Echo Server</a></li>
+<li><a href="#dns-domain-name-system" id="toc-dns-domain-name-system"><span class="header-section-number">9.7</span> DNS: Domain Name System</a></li>
+<li><a href="#dns-record-types" id="toc-dns-record-types"><span class="header-section-number">9.8</span> DNS Record Types</a></li>
+<li><a href="#how-dns-resolution-works" id="toc-how-dns-resolution-works"><span class="header-section-number">9.9</span> How DNS Resolution Works</a></li>
+<li><a href="#querying-dns-from-the-command-line" id="toc-querying-dns-from-the-command-line"><span class="header-section-number">9.10</span> Querying DNS from the Command Line</a></li>
+<li><a href="#dns-in-python" id="toc-dns-in-python"><span class="header-section-number">9.11</span> DNS in Python</a></li>
+<li><a href="#exercise-dns-exploration" id="toc-exercise-dns-exploration"><span class="header-section-number">9.12</span> Exercise: DNS Exploration</a></li>
+<li><a href="#network-troubleshooting" id="toc-network-troubleshooting"><span class="header-section-number">9.13</span> Network Troubleshooting</a></li>
+<li><a href="#exercise-following-a-request" id="toc-exercise-following-a-request"><span class="header-section-number">9.14</span> Exercise: Following a Request</a></li>
+</ul></div>
     </div>
   </nav>
 </header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">The Sudonomicon</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/gvwilson/sudonomicon" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../fs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Filesystem</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../proc/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Processes</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../jobs/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Running Jobs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../http/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">HTTP</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../auth/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Authentication</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../var/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Shell Variables</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../packenv/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Packages and Virtual Environments</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../network/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../dock/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#what-is-a-network" id="toc-what-is-a-network" class="nav-link active" data-scroll-target="#what-is-a-network"><span class="header-section-number">9.1</span> What Is a Network?</a></li>
-  <li><a href="#ip-addresses" id="toc-ip-addresses" class="nav-link" data-scroll-target="#ip-addresses"><span class="header-section-number">9.2</span> IP Addresses</a></li>
-  <li><a href="#ports" id="toc-ports" class="nav-link" data-scroll-target="#ports"><span class="header-section-number">9.3</span> Ports</a></li>
-  <li><a href="#tcp-vs.-udp" id="toc-tcp-vs.-udp" class="nav-link" data-scroll-target="#tcp-vs.-udp"><span class="header-section-number">9.4</span> TCP vs.&nbsp;UDP</a></li>
-  <li><a href="#sockets" id="toc-sockets" class="nav-link" data-scroll-target="#sockets"><span class="header-section-number">9.5</span> Sockets</a></li>
-  <li><a href="#exercise-echo-server" id="toc-exercise-echo-server" class="nav-link" data-scroll-target="#exercise-echo-server"><span class="header-section-number">9.6</span> Exercise: Echo Server</a></li>
-  <li><a href="#dns-domain-name-system" id="toc-dns-domain-name-system" class="nav-link" data-scroll-target="#dns-domain-name-system"><span class="header-section-number">9.7</span> DNS: Domain Name System</a></li>
-  <li><a href="#dns-record-types" id="toc-dns-record-types" class="nav-link" data-scroll-target="#dns-record-types"><span class="header-section-number">9.8</span> DNS Record Types</a></li>
-  <li><a href="#how-dns-resolution-works" id="toc-how-dns-resolution-works" class="nav-link" data-scroll-target="#how-dns-resolution-works"><span class="header-section-number">9.9</span> How DNS Resolution Works</a></li>
-  <li><a href="#querying-dns-from-the-command-line" id="toc-querying-dns-from-the-command-line" class="nav-link" data-scroll-target="#querying-dns-from-the-command-line"><span class="header-section-number">9.10</span> Querying DNS from the Command Line</a></li>
-  <li><a href="#dns-in-python" id="toc-dns-in-python" class="nav-link" data-scroll-target="#dns-in-python"><span class="header-section-number">9.11</span> DNS in Python</a></li>
-  <li><a href="#exercise-dns-exploration" id="toc-exercise-dns-exploration" class="nav-link" data-scroll-target="#exercise-dns-exploration"><span class="header-section-number">9.12</span> Exercise: DNS Exploration</a></li>
-  <li><a href="#network-troubleshooting" id="toc-network-troubleshooting" class="nav-link" data-scroll-target="#network-troubleshooting"><span class="header-section-number">9.13</span> Network Troubleshooting</a></li>
-  <li><a href="#exercise-following-a-request" id="toc-exercise-following-a-request" class="nav-link" data-scroll-target="#exercise-following-a-request"><span class="header-section-number">9.14</span> Exercise: Following a Request</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/network/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/network/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content" tabindex="-1">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Networking</span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="what-is-a-network" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="what-is-a-network"><span class="header-section-number">9.1</span> What Is a Network?</h2>
+<main class="content"><header id="title-block-header" class="quarto-title-block"></header>
+<h1 class="title">Networking</h1>
+<h2 data-number="9.1" id="what-is-a-network"><span class="header-section-number">9.1</span> What Is a Network?</h2>
 <ul>
 <li>A network is a set of computers that can send data to each other</li>
 <li>The internet is a network of networks
@@ -327,9 +54,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Protocols at higher layers make different hardware look the same to programs</li>
 </ul></li>
 </ul>
-</section>
-<section id="ip-addresses" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="ip-addresses"><span class="header-section-number">9.2</span> IP Addresses</h2>
+<h2 data-number="9.2" id="ip-addresses"><span class="header-section-number">9.2</span> IP Addresses</h2>
 <ul>
 <li>Every device on a network has an <a href="../glossary/index.html#ip_address">IP address</a></li>
 <li>IPv4: four bytes written as four decimal numbers separated by dots
@@ -361,9 +86,7 @@ $ ipconfig getifaddr en0  # macOS
 
 $ ipconfig              # Windows
    IPv4 Address . . . . . : 192.168.1.42</code></pre>
-</section>
-<section id="ports" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="ports"><span class="header-section-number">9.3</span> Ports</h2>
+<h2 data-number="9.3" id="ports"><span class="header-section-number">9.3</span> Ports</h2>
 <ul>
 <li>An IP address identifies a machine; a <a href="../glossary/index.html#port">port</a> identifies a service on that machine
 <ul>
@@ -372,7 +95,7 @@ $ ipconfig              # Windows
 <li>A 16-bit number: 0 to 65535</li>
 <li>Well-known ports (0–1023): reserved for standard services, require root to bind</li>
 </ul>
-<table class="caption-top table">
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th>Port</th>
@@ -419,9 +142,7 @@ $ ipconfig              # Windows
 tcp4   0   0   127.0.0.1.5432    *.*     LISTEN
 tcp4   0   0   *.8000            *.*     LISTEN
 tcp6   0   0   *.22              *.*     LISTEN</code></pre>
-</section>
-<section id="tcp-vs.-udp" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="tcp-vs.-udp"><span class="header-section-number">9.4</span> TCP vs.&nbsp;UDP</h2>
+<h2 data-number="9.4" id="tcp-vs.-udp"><span class="header-section-number">9.4</span> TCP vs.&nbsp;UDP</h2>
 <ul>
 <li>Two main transport protocols sit on top of IP</li>
 <li>TCP (Transmission Control Protocol):
@@ -449,9 +170,7 @@ Think of UDP as sending a postcard:
   - You write an address and drop it in a box
   - No confirmation it arrived
   - Very fast and simple</code></pre>
-</section>
-<section id="sockets" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="sockets"><span class="header-section-number">9.5</span> Sockets</h2>
+<h2 data-number="9.5" id="sockets"><span class="header-section-number">9.5</span> Sockets</h2>
 <ul>
 <li>A <a href="../glossary/index.html#socket">socket</a> is one endpoint of a network connection
 <ul>
@@ -460,7 +179,7 @@ Think of UDP as sending a postcard:
 </ul></li>
 <li>Python’s <code>socket</code> module provides direct access</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>HOST <span class="op">=</span> <span class="st">"127.0.0.1"</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>PORT <span class="op">=</span> <span class="dv">9000</span></span>
@@ -474,8 +193,8 @@ Think of UDP as sending a postcard:
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> conn:</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"connected from </span><span class="sc">{</span>addr<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> conn.recv(<span class="dv">1024</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        conn.sendall(data)   <span class="co"># echo it back</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        conn.sendall(data)   <span class="co"># echo it back</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>HOST <span class="op">=</span> <span class="st">"127.0.0.1"</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>PORT <span class="op">=</span> <span class="dv">9000</span></span>
@@ -484,23 +203,21 @@ Think of UDP as sending a postcard:
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    client.<span class="ex">connect</span>((HOST, PORT))</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    client.sendall(<span class="st">b"hello from client"</span>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> client.recv(<span class="dv">1024</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"received: </span><span class="sc">{</span>data<span class="sc">!r}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"received: </span><span class="sc">{</span>data<span class="sc">!r}</span><span class="ss">"</span>)</span></code></pre></div>
 <ul>
 <li><code>AF_INET</code>: use IPv4; use <code>AF_INET6</code> for IPv6 or <code>AF_INET</code> with the right address for both</li>
 <li><code>SOCK_STREAM</code>: TCP; <code>SOCK_DGRAM</code> for UDP</li>
 <li><code>SO_REUSEADDR</code>: allow re-binding a port immediately after the previous server exits</li>
 <li>Most applications use higher-level libraries (<code>http.server</code>, <code>requests</code>, <code>flask</code>) rather than raw sockets</li>
 </ul>
-</section>
-<section id="exercise-echo-server" class="level2 exercise" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="exercise-echo-server"><span class="header-section-number">9.6</span> Exercise: Echo Server</h2>
+<section id="exercise-echo-server" class="exercise" data-number="9.6">
+<h2 data-number="9.6"><span class="header-section-number">9.6</span> Exercise: Echo Server</h2>
 <ol type="1">
 <li><p>Run the TCP server in one terminal and the client in another. What do you see on each side?</p></li>
 <li><p>Modify the server to handle multiple clients in sequence (add a <code>while True</code> loop around <code>server.accept()</code>). What happens if two clients connect at the same time?</p></li>
 </ol>
 </section>
-<section id="dns-domain-name-system" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="dns-domain-name-system"><span class="header-section-number">9.7</span> DNS: Domain Name System</h2>
+<h2 data-number="9.7" id="dns-domain-name-system"><span class="header-section-number">9.7</span> DNS: Domain Name System</h2>
 <ul>
 <li>Humans remember names (<code>github.com</code>); computers communicate via IP addresses</li>
 <li><a href="../glossary/index.html#dns">DNS</a> is the distributed system that translates between them</li>
@@ -510,13 +227,11 @@ Think of UDP as sending a postcard:
 <li>Responsibility for each level is delegated to different servers</li>
 </ul></li>
 </ul>
-</section>
-<section id="dns-record-types" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="dns-record-types"><span class="header-section-number">9.8</span> DNS Record Types</h2>
+<h2 data-number="9.8" id="dns-record-types"><span class="header-section-number">9.8</span> DNS Record Types</h2>
 <ul>
 <li>DNS stores several kinds of records</li>
 </ul>
-<table class="caption-top table">
+<table class="caption-top">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 51%">
@@ -562,9 +277,7 @@ Think of UDP as sending a postcard:
 </tr>
 </tbody>
 </table>
-</section>
-<section id="how-dns-resolution-works" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="how-dns-resolution-works"><span class="header-section-number">9.9</span> How DNS Resolution Works</h2>
+<h2 data-number="9.9" id="how-dns-resolution-works"><span class="header-section-number">9.9</span> How DNS Resolution Works</h2>
 <ul>
 <li>When you look up <code>api.github.com</code>:
 <ol type="1">
@@ -581,9 +294,7 @@ Think of UDP as sending a postcard:
 <pre><code># Add to /etc/hosts for local development:
 127.0.0.1   myapp.local
 127.0.0.1   api.myapp.local</code></pre>
-</section>
-<section id="querying-dns-from-the-command-line" class="level2" data-number="9.10">
-<h2 data-number="9.10" class="anchored" data-anchor-id="querying-dns-from-the-command-line"><span class="header-section-number">9.10</span> Querying DNS from the Command Line</h2>
+<h2 data-number="9.10" id="querying-dns-from-the-command-line"><span class="header-section-number">9.10</span> Querying DNS from the Command Line</h2>
 <pre><code>$ dig example.com A
 
 ;; ANSWER SECTION:
@@ -607,10 +318,8 @@ $ dig +short github.com
 <li>Reverse DNS: look up the hostname for an IP address</li>
 <li>Uses PTR records, stored under <code>in-addr.arpa</code></li>
 </ul>
-</section>
-<section id="dns-in-python" class="level2" data-number="9.11">
-<h2 data-number="9.11" class="anchored" data-anchor-id="dns-in-python"><span class="header-section-number">9.11</span> DNS in Python</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
+<h2 data-number="9.11" id="dns-in-python"><span class="header-section-number">9.11</span> DNS in Python</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Forward lookup: hostname → IP address</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ip <span class="op">=</span> socket.gethostbyname(<span class="st">"example.com"</span>)</span>
@@ -624,26 +333,24 @@ $ dig +short github.com
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Reverse lookup: IP address → hostname</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>name, _, _ <span class="op">=</span> socket.gethostbyaddr(<span class="st">"93.184.216.34"</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"93.184.216.34 → </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"93.184.216.34 → </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 <ul>
 <li>For more control (specific record types, custom resolvers), use the <code>dnspython</code> package</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dns.resolver</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dns.resolver</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>answers <span class="op">=</span> dns.resolver.resolve(<span class="st">"example.com"</span>, <span class="st">"MX"</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> rdata <span class="kw">in</span> answers:</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"priority </span><span class="sc">{</span>rdata<span class="sc">.</span>preference<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>rdata<span class="sc">.</span>exchange<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="exercise-dns-exploration" class="level2 exercise" data-number="9.12">
-<h2 data-number="9.12" class="anchored" data-anchor-id="exercise-dns-exploration"><span class="header-section-number">9.12</span> Exercise: DNS Exploration</h2>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"priority </span><span class="sc">{</span>rdata<span class="sc">.</span>preference<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>rdata<span class="sc">.</span>exchange<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<section id="exercise-dns-exploration" class="exercise" data-number="9.12">
+<h2 data-number="9.12"><span class="header-section-number">9.12</span> Exercise: DNS Exploration</h2>
 <ol type="1">
 <li><p>Use <code>dig</code> to find all the MX records for a domain you use regularly. What do the priority numbers mean?</p></li>
 <li><p>Add an entry to <code>/etc/hosts</code> that maps <code>test.local</code> to <code>127.0.0.1</code>. Confirm you can <code>ping test.local</code>. What does this tell you about the order in which lookups are tried?</p></li>
 <li><p>What is the TTL on the A record for <code>github.com</code>? How does TTL affect how quickly DNS changes propagate?</p></li>
 </ol>
 </section>
-<section id="network-troubleshooting" class="level2" data-number="9.13">
-<h2 data-number="9.13" class="anchored" data-anchor-id="network-troubleshooting"><span class="header-section-number">9.13</span> Network Troubleshooting</h2>
+<h2 data-number="9.13" id="network-troubleshooting"><span class="header-section-number">9.13</span> Network Troubleshooting</h2>
 <ul>
 <li><code>ping host</code>: send ICMP echo requests to check if a host is reachable
 <ul>
@@ -670,9 +377,8 @@ $ dig +short github.com
 <li><code>netstat -an</code> / <code>ss -tulnp</code>: list open ports and active connections</li>
 <li><code>lsof -i :8000</code>: show which process is using port 8000 (macOS/Linux)</li>
 </ul>
-</section>
-<section id="exercise-following-a-request" class="level2 exercise" data-number="9.14">
-<h2 data-number="9.14" class="anchored" data-anchor-id="exercise-following-a-request"><span class="header-section-number">9.14</span> Exercise: Following a Request</h2>
+<section id="exercise-following-a-request" class="exercise" data-number="9.14">
+<h2 data-number="9.14"><span class="header-section-number">9.14</span> Exercise: Following a Request</h2>
 <p>Use the tools above to trace what happens when you access a familiar website:</p>
 <ol type="1">
 <li>Use <code>dig</code> to find its IP address.</li>
@@ -683,500 +389,7 @@ $ dig +short github.com
 <p>Do any of the hops in <code>traceroute</code> show <code>* * *</code>? What does that mean?</p>
 </section>
 
+</main>
 
 
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-      window.quartoDecorateExternalLinks = function (root) {
-     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-          if (!link.classList.contains('no-external-icon')) {
-          }
-        }
-      }
-      };
-      window.quartoDecorateExternalLinks(window.document);
-    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
-    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
-    const hideOnEscAndFocusOut = {
-      name: 'hideOnEscAndFocusOut',
-      defaultValue: true,
-      fn(instance) {
-        const dismiss = () => {
-          // A show scheduled by the trigger delay would otherwise reopen it
-          instance.clearDelayTimeouts();
-          instance.hide();
-        };
-        const onKeyDown = (event) => {
-          if (event.key !== 'Escape') {
-            return;
-          }
-          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
-          // except an open reveal.js slide menu, which Esc should close too.
-          // The menu handles keys only when its keyboard option is on.
-          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
-            window.Reveal.getConfig().menu?.keyboard !== false;
-          if (!menuHandlesEsc) {
-            event.stopPropagation();
-          }
-          if (instance.popper.contains(window.document.activeElement)) {
-            // Disabled while refocusing so the focus trigger does not reopen it
-            instance.disable();
-            instance.reference.focus();
-            instance.enable();
-          }
-          dismiss();
-        };
-        const onFocusOut = (event) => {
-          const target = event.relatedTarget;
-          if (target && !instance.reference.contains(target) &&
-              !instance.popper.contains(target)) {
-            dismiss();
-          }
-        };
-        // On the trigger too: a click trigger (code-annotations: select) has no
-        // blur handling. Attached for the instance's lifetime so leaving the
-        // trigger also cancels a show still pending on the trigger delay.
-        instance.reference.addEventListener('focusout', onFocusOut);
-        return {
-          onShow() {
-            window.document.addEventListener('keydown', onKeyDown, true);
-            instance.popper.addEventListener('focusout', onFocusOut);
-          },
-          onHide() {
-            window.document.removeEventListener('keydown', onKeyDown, true);
-            instance.popper.removeEventListener('focusout', onFocusOut);
-          },
-          onDestroy() {
-            instance.reference.removeEventListener('focusout', onFocusOut);
-          },
-        };
-      },
-    };
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-        plugins: [hideOnEscAndFocusOut],
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          // Each band is positioned against its own containing block, which is
-          // not the offsetParent of the lines, so place it from client rects.
-          const placeBand = (band, firstEl, lastEl, codeBlock) => {
-            const container = band.offsetParent;
-            if (container === null) {
-              return;
-            }
-            const containerRect = container.getBoundingClientRect();
-            // Reveal.js scales slides with a transform, so convert client
-            // pixels back to the CSS pixels of the container.
-            const scale = containerRect.height / container.offsetHeight || 1;
-            const firstRect = firstEl.getBoundingClientRect();
-            const lastRect = lastEl.getBoundingClientRect();
-            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
-            const height = (lastRect.bottom - firstRect.top) / scale;
-            band.style.top = top - 2 + "px";
-            band.style.height = height + 4 + "px";
-            if (codeBlock) {
-              // Without the copy button wrapper, the containing block is wider
-              // than the code block, so span the code block explicitly.
-              const blockRect = codeBlock.getBoundingClientRect();
-              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
-              band.style.width = blockRect.width / scale + "px";
-            }
-          };
-          if (lineIds.length > 0) {
-            const el = window.document.getElementById(lineIds[0]);
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const parent = el.parentElement.parentElement;
-            // cook up a div (if necessary) and position it
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            placeBand(gutterDiv, el, lastEl);
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-  <script type="application/javascript">
-  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
-  </script>
-<nav class="page-navigation" aria-label="Page">
-  <div class="nav-page nav-page-previous">
-      <a href="../packenv/index.html" class="pagination-link" aria-label="Packages and Virtual Environments">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Packages and Virtual Environments</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../dock/index.html" class="pagination-link" aria-label="Virtualization">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Virtualization</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
-</div> <!-- /content -->
-
-
-
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/sudonomicon/edit/main/network/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/sudonomicon/blob/main/network/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/sudonomicon/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>
