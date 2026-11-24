@@ -1,4 +1,4 @@
-# Overview {.unnumbered}
+# {.unnumbered}
 
 The Sudonomicon is an introduction to Unix systems programming and networking
 for the cautious and weary. It is written for data scientists who have been
