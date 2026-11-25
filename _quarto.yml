@@ -4,7 +4,6 @@ metadata-files:
 book:
   title: "The Sudonomicon"
   repo-url: "https://github.com/gvwilson/sudonomicon"
-  repo-actions: [edit, source, issue]
   chapters:
     - index.qmd
     - intro/index.qmd
