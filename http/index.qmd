@@ -5,6 +5,7 @@
 ## Start with Something Simple
 
 {{< inc http/get_remote.py >}}
+
 {{< inc http/get_remote.out >}}
 
 -   Use the [`requests`](@requests) module to send an {{< g http "HTTP" >}} {{< g http_request "request" >}}
@@ -29,6 +30,7 @@
 ## Request Structure
 
 {{< inc http/dump_structure.py >}}
+
 {{< inc http/dump_structure.out >}}
 
 -   First line is {{< g http_method "method" >}}, URL, and protocol version
@@ -40,6 +42,7 @@
 ## Response Structure
 
 {{< inc http/response_headers.py >}}
+
 {{< inc http/response_headers.out >}}
 
 -   Every HTTP response also has with extra information
@@ -65,6 +68,7 @@
 ## When Things Go Wrong
 
 {{< inc http/get_404.py >}}
+
 {{< inc http/get_404.out >}}
 
 -   The 404 status code tells us something went wrong
@@ -89,6 +93,7 @@ Look at [this list of HTTP status codes](@http_status_codes).
 ## Getting JSON
 
 {{< inc http/get_json.py >}}
+
 {{< inc http/get_json.out >}}
 
 -   Parsing data out of HTML is called {{< g web_scraping "web scraping" >}}
@@ -121,6 +126,7 @@ Look at [this list of HTTP status codes](@http_status_codes).
 ## Talk to Local Server
 
 {{< inc http/get_local.py >}}
+
 {{< inc http/get_local.out >}}
 
 -   {{< g concurrency "Concurrent" >}} systems are hard to debug
@@ -145,6 +151,7 @@ Look at [this list of HTTP status codes](@http_status_codes).
 -   Handle errors
 
 {{< inc http/file_server_unsafe.py mark=error_page >}}
+
 {{< inc http/file_server_unsafe.py mark=handle_error >}}
 
 -   Define our own exceptions so we're sure we're only catching what we expect
@@ -172,13 +179,17 @@ Look at [this list of HTTP status codes](@http_status_codes).
 -   Can get files from that directory
 
 {{< inc http/get_url_allowed.sh >}}
+
 {{< inc http/get_url_allowed_server.out >}}
+
 {{< inc http/get_url_allowed_client.out >}}
 
 -   But not from parent directory (which isn't part of sandbox)
 
 {{< inc http/get_url_disallowed.sh >}}
+
 {{< inc http/get_url_disallowed_server.out >}}
+
 {{< inc http/get_url_disallowed_client.out >}}
 
 -   `requests` strips the leading `..` off the path before sending it
@@ -191,12 +202,15 @@ Look at [this list of HTTP status codes](@http_status_codes).
 -   Open a connection, send exactly what the user types, and show exactly what is sent in response
 
 {{< inc http/nc_localhost.sh >}}
+
 {{< inc http/nc_allowed.text >}}
+
 {{< inc http/nc_allowed.out >}}
 
 -   Let's see what happens if we *do* send a URL with `..` in it
 
 {{< inc http/nc_disallowed.text >}}
+
 {{< inc http/nc_disallowed.out >}}
 
 -   We shouldn't be able to see files outside the sandbox
@@ -243,6 +257,7 @@ Do you think making code easier to understand also makes it safer?
 -   More common to have either CSV or a database
 
 {{< inc http/birds_head.sh >}}
+
 {{< inc http/birds_head.out >}}
 
 -   Modify server to generate it dynamically

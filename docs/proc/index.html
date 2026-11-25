@@ -68,11 +68,12 @@
 <li><code>CMD</code>: the command the process is running</li>
 </ul></li>
 </ul>
-<p><code class="sourceCode bash"><span class="fu">ps</span> <span class="at">-a</span> <span class="at">-l</span></code> <code>  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-a</span> <span class="at">-l</span></span></code></pre></div>
+<pre><code>  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
     0 13215 83470     4106   0  31  0 408655632   9504   ttys001    0:00.02 login -pfl gvwilson /
   501 13216 13215     4006   0  31  0 408795632   5424   ttys001    0:00.04 -bash
   501 13569 13216     4046   0  31  0 408895008  20864   ttys001    0:00.10 python -m http.server
-    0 13577 13216     4106   0  31  0 408766128   1888   ttys001    0:00.01 ps -a -l</code></p>
+    0 13577 13216     4106   0  31  0 408766128   1888   ttys001    0:00.01 ps -a -l</code></pre>
 <ul>
 <li>Use <code>ps -a -x</code> to see (almost) all processes running on computer
 <ul>
@@ -218,23 +219,24 @@
 <li>Unsurprisingly called a <a href="../glossary/index.html#signal_handler">signal handler</a></li>
 </ul></li>
 </ul>
-<p><code class="sourceCode python"><span class="im">import</span> signal
-<span class="im">import</span> sys
-COUNT <span class="op">=</span> <span class="dv">0</span>
-<span class="kw">def</span> handler(sig, frame):
-    <span class="kw">global</span> COUNT
-    COUNT <span class="op">+=</span> <span class="dv">1</span>
-    <span class="bu">print</span>(<span class="ss">f"interrupt </span><span class="sc">{</span>COUNT<span class="sc">}</span><span class="ss">"</span>)
-    <span class="cf">if</span> COUNT <span class="op">&gt;=</span> <span class="dv">3</span>:
-        sys.exit(<span class="dv">0</span>)
-signal.signal(signal.SIGINT, handler)
-<span class="bu">print</span>(<span class="st">"use Ctrl-C three times"</span>)
-<span class="cf">while</span> <span class="va">True</span>:
-    signal.pause()</code> <code>python src/catch_interrupt.py
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> signal</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>COUNT <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> handler(sig, frame):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> COUNT</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    COUNT <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"interrupt </span><span class="sc">{</span>COUNT<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> COUNT <span class="op">&gt;=</span> <span class="dv">3</span>:</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        sys.exit(<span class="dv">0</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>signal.signal(signal.SIGINT, handler)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"use Ctrl-C three times"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    signal.pause()</span></code></pre></div>
+<pre><code>python src/catch_interrupt.py
 use Ctrl-C three times
 ^Cinterrupt 1
 ^Cinterrupt 2
-^Cinterrupt 3</code></p>
+^Cinterrupt 3</code></pre>
 <ul>
 <li><code>^C</code> shows where user typed Ctrl-C</li>
 </ul>
@@ -279,31 +281,31 @@ $ echo $?
 <li>Printing a string to <code>sys.exit()</code> prints it to stderr and exits with status 1</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Usage: exit_example.py number"</span>, <span class="bu">file</span><span class="op">=</span>sys.stderr)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    sys.exit(<span class="dv">1</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>value <span class="op">=</span> <span class="bu">int</span>(sys.argv[<span class="dv">1</span>])</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> value <span class="op">&lt;</span> <span class="dv">0</span>:</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"error: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss"> is negative"</span>, <span class="bu">file</span><span class="op">=</span>sys.stderr)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    sys.exit(<span class="dv">2</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"value is </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>sys.exit(<span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Usage: exit_example.py number"</span>, <span class="bu">file</span><span class="op">=</span>sys.stderr)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    sys.exit(<span class="dv">1</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>value <span class="op">=</span> <span class="bu">int</span>(sys.argv[<span class="dv">1</span>])</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> value <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"error: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss"> is negative"</span>, <span class="bu">file</span><span class="op">=</span>sys.stderr)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    sys.exit(<span class="dv">2</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"value is </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>sys.exit(<span class="dv">0</span>)</span></code></pre></div>
 <ul>
 <li>Use <code>subprocess</code> to run another program and capture its exit status</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> subprocess.run([<span class="st">"ls"</span>, <span class="st">"/no/such/directory"</span>])</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"exit status: </span><span class="sc">{</span>result<span class="sc">.</span>returncode<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># exit status: 1 (or 2 on some systems)</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> subprocess.run([<span class="st">"ls"</span>, <span class="st">"/tmp"</span>])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"exit status: </span><span class="sc">{</span>result<span class="sc">.</span>returncode<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># exit status: 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> subprocess.run([<span class="st">"ls"</span>, <span class="st">"/no/such/directory"</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"exit status: </span><span class="sc">{</span>result<span class="sc">.</span>returncode<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># exit status: 1 (or 2 on some systems)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> subprocess.run([<span class="st">"ls"</span>, <span class="st">"/tmp"</span>])</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"exit status: </span><span class="sc">{</span>result<span class="sc">.</span>returncode<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># exit status: 0</span></span></code></pre></div>
 <ul>
 <li>Exit status is the basis for shell conditionals and the <code>&amp;&amp;</code> and <code>||</code> operators</li>
 </ul>
@@ -337,19 +339,21 @@ ls failed, running fallback</code></pre>
 <li>Can still print to the screen (stdout and stderr)</li>
 </ul></li>
 </ul>
-<p><code class="sourceCode python"><span class="im">import</span> time
-<span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):
-    <span class="bu">print</span>(<span class="ss">f"loop </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)
-    time.sleep(<span class="dv">1</span>)
-<span class="bu">print</span>(<span class="st">"loop finished"</span>)</code> <code class="sourceCode bash"><span class="ex">python</span> src/show_timer.py <span class="kw">&amp;</span>
-<span class="fu">ls</span> site</code> <code>$ src/show_timer.sh
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"loop </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">1</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loop finished"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/show_timer.py <span class="kw">&amp;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> site</span></code></pre></div>
+<pre><code>$ src/show_timer.sh
 birds.csv		cert_authority.srl	sandbox			server.pem		species.csv
 cert_authority.key	motto.json		server.csr		server_first_cert.pem	yukon.db
 cert_authority.pem	motto.txt		server.key		server_first_key.pem
 loop 0
 $ loop 1
 loop 2
-loop finished</code></p>
+loop finished</code></pre>
 <ul>
 <li><code>&amp;</code> at end of command means “run in the background”</li>
 <li>So <code>ls</code> command executes immediately</li>
@@ -430,15 +434,16 @@ KeyboardInterrupt</code></pre>
 <li>Child gets 0 as return value (but has something else as its process ID)</li>
 </ul></li>
 </ul>
-<p><code class="sourceCode python"><span class="im">import</span> os
-<span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)
-pid <span class="op">=</span> os.fork()
-<span class="cf">if</span> pid <span class="op">==</span> <span class="dv">0</span>:
-    <span class="bu">print</span>(<span class="ss">f"child got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)
-<span class="cf">else</span>:
-    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</code> <code>starting 41618
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pid <span class="op">=</span> os.fork()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pid <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"child got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>starting 41618
 parent got 41619 is 41618
-child got 0 is 41619</code></p>
+child got 0 is 41619</code></pre>
 <div>
 <blockquote>
 <p><strong>None</strong></p>
@@ -466,17 +471,18 @@ child got 0 is 41619</code></p>
 <ul>
 <li>Can force OS to do I/O <em>right now</em> by <a href="../glossary/index.html#flush">flushing</a> its buffers</li>
 </ul>
-<p><code class="sourceCode python"><span class="im">import</span> os
-<span class="im">import</span> sys
-<span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)
-sys.stdout.flush()
-pid <span class="op">=</span> os.fork()
-<span class="cf">if</span> pid <span class="op">==</span> <span class="dv">0</span>:
-    <span class="bu">print</span>(<span class="ss">f"child got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)
-<span class="cf">else</span>:
-    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</code> <code>starting 41536
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sys.stdout.flush()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>pid <span class="op">=</span> os.fork()</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pid <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"child got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>starting 41536
 parent got 41537 is 41536
-child got 0 is 41537</code></p>
+child got 0 is 41537</code></pre>
 <h2 data-number="3.12" id="exec"><span class="header-section-number">3.12</span> Exec</h2>
 <ul>
 <li>The <code>exec</code> family of functions in <code>os</code> execute a new program <em>inside the calling process</em>
@@ -486,17 +492,18 @@ child got 0 is 41537</code></p>
 </ul></li>
 <li>Use <code>fork</code>/<code>exec</code> to create a new process and then run a program in it</li>
 </ul>
-<p><code class="sourceCode python"><span class="im">import</span> os
-<span class="im">import</span> sys
-<span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)
-sys.stdout.flush()
-pid <span class="op">=</span> os.fork()
-<span class="cf">if</span> pid <span class="op">==</span> <span class="dv">0</span>:
-    os.execl(<span class="st">"/bin/echo"</span>, <span class="st">"echo"</span>, <span class="ss">f"child echoing </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> from </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)
-<span class="cf">else</span>:
-    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</code> <code>starting 46713
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>sys.stdout.flush()</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>pid <span class="op">=</span> os.fork()</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pid <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    os.execl(<span class="st">"/bin/echo"</span>, <span class="st">"echo"</span>, <span class="ss">f"child echoing </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> from </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>starting 46713
 parent got 46714 is 46713
-child echoing 0 from 46714</code></p>
+child echoing 0 from 46714</code></pre>
 <section id="exercise-different-kinds-of-exec" class="exercise" data-number="3.13">
 <h2 data-number="3.13"><span class="header-section-number">3.13</span> Exercise: Different Kinds of <code>exec</code></h2>
 <ol type="1">

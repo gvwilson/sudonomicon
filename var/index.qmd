@@ -14,7 +14,7 @@
     -   [PowerShell](@powershell) on Windows (and Unix) has a lot of nice features too
 -   We use Bash in this tutorial but will discuss Nushell later
 
-## Shell Variables
+## Defining Shell Variables
 
 -   The shell is a program and programs have variables
 -   Create or change with <code><em>name</em>=<em>value</em></code>
@@ -24,7 +24,9 @@
     -   `$` prefix because people type file and directory names more often
 
 {{< inc var/shell_var_outer.sh >}}
+
 {{< inc var/shell_var_inner.sh >}}
+
 {{< inc var/shell_var_outer.out >}}
 
 -   Note: variables usually written in upper case to distinguish them from filenames
@@ -45,7 +47,9 @@ to use single quotes instead of double quotes?
 -   Use <code>export <em>name</em>=<em>value</em></code>
 
 {{< inc var/env_var_outer.sh >}}
+
 {{< inc var/env_var_inner.sh >}}
+
 {{< inc var/env_var_outer.out >}}
 
 ::: {.exercise}
@@ -63,7 +67,9 @@ are they visible in the parent once the child finishes executing?
     they are inherited by all programs run from the shell that has them
 
 {{< inc var/env_var_py.sh >}}
+
 {{< inc var/env_var_py.py >}}
+
 {{< inc var/env_var_py.out >}}
 
 ## Inspecting Variables
@@ -74,6 +80,7 @@ are they visible in the parent once the child finishes executing?
 -   `env` shows all environment variables
 
 {{< inc var/show_env_vars.sh >}}
+
 {{< inc var/show_env_vars.out >}}
 
 -   Many tools rely on variables to manage configuration
@@ -118,6 +125,7 @@ Compare it to what `env` shows.
 -   Reading at them all on one line is difficult, so use `tr` to split
 
 {{< inc var/show_path.sh >}}
+
 {{< inc var/show_path.out >}}
 
 -   Notice `/Users/tut/bin`
@@ -131,6 +139,7 @@ Compare it to what `env` shows.
     -   Entire old value at the back
 
 {{< inc var/change_path.sh >}}
+
 {{< inc var/change_path.out >}}
 
 ::: {.exercise}
@@ -166,4 +175,5 @@ complicated operations should be done in Python rather than in the shell.
 -   Long-winded way to count lines in some text files
 
 {{< inc var/interpolate.sh >}}
+
 {{< inc var/interpolate.out >}}

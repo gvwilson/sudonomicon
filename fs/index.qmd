@@ -26,6 +26,7 @@
     -   `-s`: show the number of blocks
 
 {{< inc fs/ls_long_tmp.sh >}}
+
 {{< inc fs/ls_long_tmp.out >}}
 
 -   It's a shame there's no option for column titles, but we can add them manually
@@ -75,6 +76,7 @@
     -   Each of which also has a unique name and a unique group ID (or {{< g gid "gid" >}})
 
 {{< inc fs/id_no_args.sh >}}
+
 {{< inc fs/id_no_args.out >}}
 
 -   Tells us:
@@ -85,6 +87,7 @@
 -   Can provide an account name to get details of a particular account
 
 {{< inc fs/id_nobody.sh >}}
+
 {{< inc fs/id_nobody.out >}}
 
 ## Capabilities

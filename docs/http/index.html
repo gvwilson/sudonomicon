@@ -54,13 +54,14 @@
 <li>FIXME</li>
 </ul>
 <h2 data-number="5.1" id="start-with-something-simple"><span class="header-section-number">5.1</span> Start with Something Simple</h2>
-<p><code class="sourceCode python"><span class="im">import</span> requests
-url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span>
-response <span class="op">=</span> requests.get(url)
-<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
-<span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 200
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/static/motto.txt"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>status code: 200
 body:
-Start where you are, use what you have, help who you can.</code></p>
+Start where you are, use what you have, help who you can.</code></pre>
 <ul>
 <li>Use the <a href="https://requests.readthedocs.io/"><code>requests</code></a> module to send an <a href="../glossary/index.html#http">HTTP</a> <a href="../glossary/index.html#http_request">request</a></li>
 <li>The URL identifies the file we want
@@ -95,18 +96,19 @@ Figure&nbsp;5.1: Lifecycle of an HTTP request and response
 <li><code>requests</code> parses the response and creates a Python object for us</li>
 </ul>
 <h2 data-number="5.3" id="request-structure"><span class="header-section-number">5.3</span> Request Structure</h2>
-<p><code class="sourceCode python"><span class="im">import</span> requests
-<span class="im">from</span> requests_toolbelt.utils <span class="im">import</span> dump
-url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span>
-response <span class="op">=</span> requests.get(url)
-data <span class="op">=</span> dump.dump_all(response)
-<span class="bu">print</span>(<span class="bu">str</span>(data, <span class="st">"utf-8"</span>))</code> <code>GET /sudonomicon/site/motto.txt HTTP/1.1
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> requests_toolbelt.utils <span class="im">import</span> dump</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> dump.dump_all(response)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">str</span>(data, <span class="st">"utf-8"</span>))</span></code></pre></div>
+<pre><code>GET /sudonomicon/site/motto.txt HTTP/1.1
 Host: gvwilson.github.io
 User-Agent: python-requests/2.31.0
 Accept-Encoding: gzip, deflate
 Accept: */*
 Connection: keep-alive
-</code></p>
+</code></pre>
 <ul>
 <li>First line is <a href="../glossary/index.html#http_method">method</a>, URL, and protocol version</li>
 <li>Every HTTP request can have <a href="../glossary/index.html#http_header">headers</a> with extra information
@@ -119,11 +121,12 @@ Connection: keep-alive
 </ul></li>
 </ul>
 <h2 data-number="5.4" id="response-structure"><span class="header-section-number">5.4</span> Response Structure</h2>
-<p><code class="sourceCode python"><span class="im">import</span> requests
-url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span>
-response <span class="op">=</span> requests.get(url)
-<span class="cf">for</span> key, value <span class="kw">in</span> response.headers.items():
-    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</code> <code>Connection: keep-alive
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.txt"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, value <span class="kw">in</span> response.headers.items():</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>value<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>Connection: keep-alive
 Content-Length: 5142
 Server: GitHub.com
 Content-Type: text/html; charset=utf-8
@@ -141,7 +144,7 @@ X-Cache: MISS
 X-Cache-Hits: 0
 X-Timer: S1708210467.301651,VS0,VE20
 Vary: Accept-Encoding
-X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570</code></p>
+X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570</code></pre>
 <ul>
 <li>Every HTTP response also has with extra information
 <ul>
@@ -162,12 +165,13 @@ X-Fastly-Request-ID: cb16df2dfa73aaf6de87924c743dd1e50a0ce570</code></p>
 </ol>
 </section>
 <h2 data-number="5.6" id="when-things-go-wrong"><span class="header-section-number">5.6</span> When Things Go Wrong</h2>
-<p><code class="sourceCode python"><span class="im">import</span> requests
-url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"</span>
-response <span class="op">=</span> requests.get(url)
-<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
-<span class="bu">print</span>(<span class="ss">f"body length: </span><span class="sc">{</span><span class="bu">len</span>(response.text)<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 404
-body length: 9115</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/nonexistent.txt"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body length: </span><span class="sc">{</span><span class="bu">len</span>(response.text)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>status code: 404
+body length: 9115</code></pre>
 <ul>
 <li>The 404 status code tells us something went wrong</li>
 <li>The 9 kilobyte response is an HTML page with an embedded image (the GitHub logo)</li>
@@ -186,16 +190,17 @@ body length: 9115</code></p>
 </ol>
 </section>
 <h2 data-number="5.8" id="getting-json"><span class="header-section-number">5.8</span> Getting JSON</h2>
-<p><code class="sourceCode python"><span class="im">import</span> requests
-url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.json"</span>
-response <span class="op">=</span> requests.get(url)
-<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
-<span class="bu">print</span>(<span class="ss">f"body as text: </span><span class="sc">{</span><span class="bu">len</span>(response.text)<span class="sc">}</span><span class="ss"> bytes"</span>)
-as_json <span class="op">=</span> response.json()
-<span class="bu">print</span>(<span class="ss">f"body as JSON:</span><span class="ch">\n</span><span class="sc">{</span>as_json<span class="sc">}</span><span class="ss">"</span>)</code> <code>status code: 200
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://gvwilson.github.io/sudonomicon/site/motto.json"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body as text: </span><span class="sc">{</span><span class="bu">len</span>(response.text)<span class="sc">}</span><span class="ss"> bytes"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>as_json <span class="op">=</span> response.json()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body as JSON:</span><span class="ch">\n</span><span class="sc">{</span>as_json<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>status code: 200
 body as text: 107 bytes
 body as JSON:
-{'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}</code></p>
+{'first': 'Start where you are', 'second': 'Use what you have', 'third': 'Help who you can'}</code></pre>
 <ul>
 <li>Parsing data out of HTML is called <a href="../glossary/index.html#web_scraping">web scraping</a>
 <ul>
@@ -229,7 +234,7 @@ Figure&nbsp;5.2: Representing tables as JSON
 <li>And we want to show how to make things <em>wrong</em> so that we can then make them <em>right</em></li>
 <li>Use Python’s <a href="https://docs.python.org/3/library/http.server.html"><code>http.server</code></a> module to run a <a href="../glossary/index.html#local_server">local server</a></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server <span class="at">-d</span> site</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server <span class="at">-d</span> site</span></code></pre></div>
 <ul>
 <li>Host name is <a href="../glossary/index.html#localhost">`localhost`</a></li>
 <li>Uses port 8000 by default
@@ -243,14 +248,15 @@ Figure&nbsp;5.2: Representing tables as JSON
 </ul></li>
 </ul>
 <h2 data-number="5.10" id="talk-to-local-server"><span class="header-section-number">5.10</span> Talk to Local Server</h2>
-<p><code class="sourceCode python"><span class="im">import</span> requests
-URL <span class="op">=</span> <span class="st">"http://localhost:8000/motto.txt"</span>
-response <span class="op">=</span> requests.get(URL)
-<span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)
-<span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</code> <code>::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>URL <span class="op">=</span> <span class="st">"http://localhost:8000/motto.txt"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(URL)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>::ffff:127.0.0.1 - - [18/Feb/2024 09:12:24] "GET /motto.txt HTTP/1.1" 200 -
 status code: 200
 body:
-Start where you are, use what you have, help who you can.</code></p>
+Start where you are, use what you have, help who you can.</code></pre>
 <ul>
 <li><a href="../glossary/index.html#concurrency">Concurrent</a> systems are hard to debug
 <ul>
@@ -260,20 +266,7 @@ Start where you are, use what you have, help who you can.</code></p>
 </ul></li>
 </ul>
 <h2 data-number="5.11" id="our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>            url_path <span class="op">=</span> <span class="va">self</span>.path.lstrip(<span class="st">"/"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            full_path <span class="op">=</span> Path.cwd().joinpath(url_path)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">' =&gt; '</span><span class="sc">{</span>full_path<span class="sc">}</span><span class="ss">'"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> full_path.exists():</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> ServerException(<span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss"> not found"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="kw">not</span> full_path.is_file():</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> ServerException(<span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss"> not file"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.handle_file(<span class="va">self</span>.path, full_path)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> msg:</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.handle_error(msg)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Our <code>RequestHandler</code> handles a single <code>GET</code> request</li>
 <li>Combine working directory with requested file path to get local path to file</li>
@@ -283,30 +276,18 @@ Start where you are, use what you have, help who you can.</code></p>
 <ul>
 <li>Serve files</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Handle errors</li>
 </ul>
-<p><code class="sourceCode python">ERROR_PAGE <span class="op">=</span> <span class="st">"""</span><span class="op">\</span>
-<span class="st">&lt;html&gt;</span>
-<span class="st">  &lt;head&gt;&lt;title&gt;Error accessing </span><span class="sc">{path}</span><span class="st">&lt;/title&gt;&lt;/head&gt;</span>
-<span class="st">  &lt;body&gt;</span>
-<span class="st">    &lt;h1&gt;Error accessing </span><span class="sc">{path}</span><span class="st">: </span><span class="sc">{msg}</span><span class="st">&lt;/h1&gt;</span>
-<span class="st">  &lt;/body&gt;</span>
-<span class="st">&lt;/html&gt;</span>
-<span class="st">"""</span></code> <code class="sourceCode python"></code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Define our own exceptions so we’re sure we’re only catching what we expect</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ServerException(<span class="pp">Exception</span>):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="5.13" id="running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    os.chdir(sys.argv[<span class="dv">1</span>])</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> HTTPServer(serverAddress, RequestHandler)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"serving in </span><span class="sc">{</span>os<span class="sc">.</span>getcwd()<span class="sc">}</span><span class="ss">..."</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>And then get <code>motto.txt</code> as before</li>
 </ul>
@@ -314,12 +295,12 @@ Start where you are, use what you have, help who you can.</code></p>
 <ul>
 <li>Modify <code>requests</code> script to take URL as command-line parameter</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>URL <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(URL)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>URL <span class="op">=</span> sys.argv[<span class="dv">1</span>]</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(URL)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"body:</span><span class="ch">\n</span><span class="sc">{</span>response<span class="sc">.</span>text<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 <ul>
 <li>Add a sub-directory to <code>site</code> called <code>sandbox</code> with a file <code>example.txt</code>
 <ul>
@@ -327,26 +308,30 @@ Start where you are, use what you have, help who you can.</code></p>
 </ul></li>
 <li>Serve that sub-directory</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/file_server_unsafe.py site/sandbox</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/file_server_unsafe.py site/sandbox</span></code></pre></div>
 <ul>
 <li>Can get files from that directory</li>
 </ul>
-<p><code class="sourceCode bash"><span class="ex">python</span> src/get_url.py http://localhost:8000/example.txt</code> <code>'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
-127.0.0.1 - - [21/Feb/2024 06:04:32] "GET /example.txt HTTP/1.1" 200 -</code> <code>status code: 200
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/get_url.py http://localhost:8000/example.txt</span></code></pre></div>
+<pre><code>'/example.txt' =&gt; '/tut/safety/site/sandbox/example.txt'
+127.0.0.1 - - [21/Feb/2024 06:04:32] "GET /example.txt HTTP/1.1" 200 -</code></pre>
+<pre><code>status code: 200
 body:
-example file</code></p>
+example file</code></pre>
 <ul>
 <li>But not from parent directory (which isn’t part of sandbox)</li>
 </ul>
-<p><code class="sourceCode bash"><span class="ex">python</span> src/requests_local_url.py http://localhost:8000/motto.txt</code> <code>'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
-127.0.0.1 - - [21/Feb/2024 06:04:38] "GET /motto.txt HTTP/1.1" 404 -</code> <code>status code: 404
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/requests_local_url.py http://localhost:8000/motto.txt</span></code></pre></div>
+<pre><code>'/motto.txt' =&gt; '/tut/safety/site/sandbox/motto.txt'
+127.0.0.1 - - [21/Feb/2024 06:04:38] "GET /motto.txt HTTP/1.1" 404 -</code></pre>
+<pre><code>status code: 404
 body:
 &lt;html&gt;
   &lt;head&gt;&lt;title&gt;Error accessing /motto.txt&lt;/title&gt;&lt;/head&gt;
   &lt;body&gt;
     &lt;h1&gt;Error accessing /motto.txt: /motto.txt not found&lt;/h1&gt;
   &lt;/body&gt;
-&lt;/html&gt;</code></p>
+&lt;/html&gt;</code></pre>
 <ul>
 <li><code>requests</code> strips the leading <code>..</code> off the path before sending it</li>
 <li>And if we try that URL in the browser, same thing happens</li>
@@ -357,21 +342,24 @@ body:
 <li><a href="https://en.wikipedia.org/wiki/Netcat"><code>netcat</code></a> (often just <code>nc</code>) is a computer networking tool</li>
 <li>Open a connection, send exactly what the user types, and show exactly what is sent in response</li>
 </ul>
-<p><code class="sourceCode bash"><span class="ex">nc</span> localhost 8000</code> <code>GET /example.txt HTTP/1.1</code> <code>HTTP/1.0 200 OK
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nc</span> localhost 8000</span></code></pre></div>
+<pre><code>GET /example.txt HTTP/1.1</code></pre>
+<pre><code>HTTP/1.0 200 OK
 Server: BaseHTTP/0.6 Python/3.12.1
 Date: Thu, 22 Feb 2024 18:37:37 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 13
-example file</code></p>
+example file</code></pre>
 <ul>
 <li>Let’s see what happens if we <em>do</em> send a URL with <code>..</code> in it</li>
 </ul>
-<p><code>GET ../motto.txt HTTP/1.1</code> <code>HTTP/1.0 200 OK
+<pre><code>GET ../motto.txt HTTP/1.1</code></pre>
+<pre><code>HTTP/1.0 200 OK
 Server: BaseHTTP/0.6 Python/3.12.1
 Date: Thu, 22 Feb 2024 18:38:50 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 58
-Start where you are, use what you have, help who you can.</code></p>
+Start where you are, use what you have, help who you can.</code></pre>
 <ul>
 <li>We shouldn’t be able to see files outside the sandbox</li>
 <li>But if someone doesn’t strip out the <code>..</code> characters, users can escape</li>
@@ -381,7 +369,7 @@ Start where you are, use what you have, help who you can.</code></p>
 <p>The shortcut <code>~<em>username</em></code> (tilde) means “the specified user’s home directory” in the shell, while <code>~</code> on its own means “the current user’s home directory”. Create a file called <code>test.txt</code> in your home directory and then try to get <code>~/test.txt</code> using your browser, <code>requests</code>, and <code>netcat</code>. What happens with each and why?</p>
 </section>
 <h2 data-number="5.17" id="a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li><a href="../glossary/index.html#resolve_path">Resolve</a> the constructed path</li>
 <li>Then check that it’s below the current working directory (i.e., the sandbox)</li>
@@ -399,7 +387,8 @@ Start where you are, use what you have, help who you can.</code></p>
 <li>Rarely have JSON lying around as <a href="../glossary/index.html#static_file">static files</a></li>
 <li>More common to have either CSV or a database</li>
 </ul>
-<p><code class="sourceCode bash"><span class="fu">head</span> <span class="at">-n</span> 10 site/birds.csv</code> <code>loc_id,latitude,longitude,region,year,month,day,species_id,num
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-n</span> 10 site/birds.csv</span></code></pre></div>
+<pre><code>loc_id,latitude,longitude,region,year,month,day,species_id,num
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,redcro,3.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,rebnut,1.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,comred,13.0
@@ -408,42 +397,24 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,bkcchi,3.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,1,haiwoo,1.0
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,8,nobird,
 L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,rebnut,2.0
-L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></p>
+L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></pre>
 <ul>
 <li>Modify server to generate it dynamically</li>
 <li>Main program</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    sandbox, filename <span class="op">=</span> sys.argv[<span class="dv">1</span>], sys.argv[<span class="dv">2</span>]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    os.chdir(sandbox)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pl.read_csv(filename)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> BirdServer(df, serverAddress, RequestHandler)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Create our own server class because we want to pass the dataframe in the constructor</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BirdServer(HTTPServer):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data, server_address, request_handler):</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(server_address, request_handler)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._data <span class="op">=</span> data</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li><code>do_GET</code> converts the dataframe to JSON (will modify later to do more than this)</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="va">self</span>.server._data.write_json(row_oriented<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_content(result, HTTPStatus.OK)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li><code>send_content</code> <a href="../glossary/index.html#character_encoding">encodes</a> the JSON string as <a href="../glossary/index.html#utf_8">UTF-8</a> and sets the MIME type to <code>application/json</code></li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> send_content(<span class="va">self</span>, content, status):</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> <span class="bu">bytes</span>(content, <span class="st">"utf-8"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_response(<span class="bu">int</span>(status))</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Type"</span>, <span class="st">"application/json; charset=utf-8"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Length"</span>, <span class="bu">str</span>(<span class="bu">len</span>(content)))</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.end_headers()</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wfile.write(content)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Can view in browser at <code>http://localhost:8000</code> or use <code>requests</code> to fetch as before</li>
 </ul>
@@ -453,7 +424,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></p>
 <li>Want <code>http://localhost:8000/?year=2021&amp;species=rebnut</code> to select red-breasted nuthatches in 2021</li>
 <li>Put slicing in a method of its own</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters
 <ul>
@@ -461,7 +432,7 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></p>
 </ul></li>
 <li>Then filter data as requested</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <section id="exercise-serving-data" class="exercise" data-number="5.21">
 <h2 data-number="5.21"><span class="header-section-number">5.21</span> Exercise: Serving Data</h2>
 <ol type="1">

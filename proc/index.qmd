@@ -20,6 +20,7 @@
     -   `CMD`: the command the process is running
 
 {{< inc proc/ps_a_l.sh >}}
+
 {{< inc proc/ps_a_l.out >}}
 
 -   Use `ps -a -x` to see (almost) all processes running on computer
@@ -75,6 +76,7 @@
     -   Unsurprisingly called a {{< g signal_handler "signal handler" >}}
 
 {{< inc proc/catch_interrupt.py >}}
+
 {{< inc proc/catch_interrupt.out >}}
 
 -   `^C` shows where user typed Ctrl-C
@@ -182,7 +184,9 @@ ls failed, running fallback
     -   Can still print to the screen (stdout and stderr)
 
 {{< inc proc/show_timer.py >}}
+
 {{< inc proc/show_timer.sh >}}
+
 {{< inc proc/show_timer.out >}}
 
 -   `&` at end of command means "run in the background"
@@ -235,6 +239,7 @@ Why bother with backgrounding and foregrounding programs instead of opening anot
     -   Child gets 0 as return value (but has something else as its process ID)
 
 {{< inc proc/fork.py >}}
+
 {{< inc proc/fork.out >}}
 
 ::: {.callout}
@@ -260,6 +265,7 @@ Why bother with backgrounding and foregrounding programs instead of opening anot
 -   Can force OS to do I/O *right now* by {{< g flush "flushing" >}} its buffers
 
 {{< inc proc/flush.py >}}
+
 {{< inc proc/flush.out >}}
 
 ## Exec
@@ -271,6 +277,7 @@ Why bother with backgrounding and foregrounding programs instead of opening anot
 -   Use `fork`/`exec` to create a new process and then run a program in it
 
 {{< inc proc/fork_exec.py >}}
+
 {{< inc proc/fork_exec.out >}}
 
 ::: {.exercise}

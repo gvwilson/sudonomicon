@@ -11,6 +11,7 @@
 -   This is how {{< g virtual_env "virtual environments" >}} work
 
 {{< inc dock/show_virtual_env.sh >}}
+
 {{< inc dock/show_virtual_env.out >}}
 
 -   Virtual environment is initially a minimal Python installation
@@ -23,6 +24,7 @@
 3.  Install the `faker` package: `pip install faker`
 
 {{< inc dock/find_faker.sh >}}
+
 {{< inc dock/find_faker.out >}}
 
 -   The script in `bin` loads the module and runs it
@@ -55,8 +57,11 @@ What is the `re.sub` call in the `faker` script doing and why?
 -   Run it in a {{< g docker_container "container" >}} that is isolated from the rest of your computer
 
 {{< inc dock/docker_image_ls.sh >}}
+
 {{< inc dock/docker_image_ls.out >}}
+
 {{< inc dock/docker_container_ls.sh >}}
+
 {{< inc dock/docker_container_ls.out >}}
 
 -   Because we haven't created or run anything yet
@@ -67,6 +72,7 @@ What is the `re.sub` call in the `faker` script doing and why?
     to be running in the background to start images
 
 {{< inc dock/docker_image_ls.sh >}}
+
 {{< inc dock/docker_image_ls_err.out >}}
 
 ## Running a Container
@@ -303,7 +309,9 @@ What is the `re.sub` call in the `faker` script doing and why?
 -   So try this:
 
 {{< inc dock/ubuntu-env-var-succeeds/show_var.sh >}}
+
 {{< inc dock/ubuntu-env-var-succeeds/Dockerfile >}}
+
 {{< inc dock/ubuntu_env_var_succeeds.text >}}
 
 -   First time: not setting the variable
@@ -316,6 +324,7 @@ What is the `re.sub` call in the `faker` script doing and why?
     -   Which means you now have to figure out how to manage a file full of secrets…
 
 {{< inc dock/set_echo_var.env >}}
+
 {{< inc dock/run_with_env_file.text >}}
 
 -   Note the lack of quotes around the variable definition in the `.env` file

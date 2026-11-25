@@ -23,7 +23,7 @@
       <summary class="topnav-item">Contents</summary>
       <div class="topnav-menu"><ul>
 <li><a href="#operating-system-vs.-shell" id="toc-operating-system-vs.-shell"><span class="header-section-number">7.1</span> Operating System vs.&nbsp;Shell</a></li>
-<li><a href="#shell-variables" id="toc-shell-variables"><span class="header-section-number">7.2</span> Shell Variables</a></li>
+<li><a href="#defining-shell-variables" id="toc-defining-shell-variables"><span class="header-section-number">7.2</span> Defining Shell Variables</a></li>
 <li><a href="#exercise-single-quotes" id="toc-exercise-single-quotes"><span class="header-section-number">7.3</span> Exercise: Single Quotes</a></li>
 <li><a href="#environment-variables" id="toc-environment-variables"><span class="header-section-number">7.4</span> Environment Variables</a></li>
 <li><a href="#exercise-setting-in-children" id="toc-exercise-setting-in-children"><span class="header-section-number">7.5</span> Exercise: Setting in Children</a></li>
@@ -62,7 +62,7 @@
 </ul></li>
 <li>We use Bash in this tutorial but will discuss Nushell later</li>
 </ul>
-<h2 data-number="7.2" id="shell-variables"><span class="header-section-number">7.2</span> Shell Variables</h2>
+<h2 data-number="7.2" id="defining-shell-variables"><span class="header-section-number">7.2</span> Defining Shell Variables</h2>
 <ul>
 <li>The shell is a program and programs have variables</li>
 <li>Create or change with <code><em>name</em>=<em>value</em></code></li>
@@ -75,12 +75,14 @@
 <li><code>$</code> prefix because people type file and directory names more often</li>
 </ul></li>
 </ul>
-<p><code class="sourceCode bash"><span class="co"># shell_var_outer.sh</span>
-<span class="va">WINDOW</span><span class="op">=</span><span class="st">"neighbor"</span>
-<span class="bu">echo</span> <span class="st">"outer: window is </span><span class="va">${WINDOW}</span><span class="st">"</span>
-<span class="fu">bash</span> src/shell_var_inner.sh</code> <code class="sourceCode bash"><span class="co"># shell_var_inner.sh</span>
-<span class="bu">echo</span> <span class="st">"inner: window is </span><span class="va">${window}</span><span class="st">"</span></code> <code>outer: window is neighbor
-inner: window is </code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shell_var_outer.sh</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">WINDOW</span><span class="op">=</span><span class="st">"neighbor"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"outer: window is </span><span class="va">${WINDOW}</span><span class="st">"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> src/shell_var_inner.sh</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shell_var_inner.sh</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"inner: window is </span><span class="va">${window}</span><span class="st">"</span></span></code></pre></div>
+<pre><code>outer: window is neighbor
+inner: window is </code></pre>
 <ul>
 <li>Note: variables usually written in upper case to distinguish them from filenames
 <ul>
@@ -96,13 +98,15 @@ inner: window is </code></p>
 <li><a href="../glossary/index.html#env_var">Environment variable</a> is inherited by new processes</li>
 <li>Use <code>export <em>name</em>=<em>value</em></code></li>
 </ul>
-<p><code class="sourceCode bash"><span class="co"># env_var_outer.sh</span>
-<span class="va">WINDOW</span><span class="op">=</span><span class="st">"neighbor"</span>
-<span class="bu">export</span> <span class="va">THRESHOLD</span><span class="op">=</span>0.5
-<span class="bu">echo</span> <span class="st">"outer: window is </span><span class="va">${WINDOW}</span><span class="st"> and threshold is </span><span class="va">${THRESHOLD}</span><span class="st">"</span>
-<span class="fu">bash</span> src/env_var_inner.sh</code> <code class="sourceCode bash"><span class="co"># env_var_inner.sh</span>
-<span class="bu">echo</span> <span class="st">"inner: window is </span><span class="va">${window}</span><span class="st"> and threshold is </span><span class="va">${threshold}</span><span class="st">"</span></code> <code>outer: window is neighbor and threshold is 0.5
-inner: window is  and threshold is </code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># env_var_outer.sh</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">WINDOW</span><span class="op">=</span><span class="st">"neighbor"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">THRESHOLD</span><span class="op">=</span>0.5</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"outer: window is </span><span class="va">${WINDOW}</span><span class="st"> and threshold is </span><span class="va">${THRESHOLD}</span><span class="st">"</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> src/env_var_inner.sh</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># env_var_inner.sh</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"inner: window is </span><span class="va">${window}</span><span class="st"> and threshold is </span><span class="va">${threshold}</span><span class="st">"</span></span></code></pre></div>
+<pre><code>outer: window is neighbor and threshold is 0.5
+inner: window is  and threshold is </code></pre>
 <section id="exercise-setting-in-children" class="exercise" data-number="7.5">
 <h2 data-number="7.5"><span class="header-section-number">7.5</span> Exercise: Setting in Children</h2>
 <p>If a child process sets shell or environment variables, are they visible in the parent once the child finishes executing?</p>
@@ -111,16 +115,18 @@ inner: window is  and threshold is </code></p>
 <ul>
 <li>Since environment variables are inherited by child processes, they are inherited by all programs run from the shell that has them</li>
 </ul>
-<p><code class="sourceCode bash"><span class="co"># env_var_py.sh</span>
-<span class="va">WINDOW</span><span class="op">=</span><span class="st">"neighbor"</span>
-<span class="bu">export</span> <span class="va">THRESHOLD</span><span class="op">=</span>0.5
-<span class="bu">echo</span> <span class="st">"outer: window is </span><span class="va">${WINDOW}</span><span class="st"> and threshold is </span><span class="va">${THRESHOLD}</span><span class="st">"</span>
-<span class="ex">python</span> src/env_var_py.py</code> <code class="sourceCode python"><span class="co"># env_var_py.py</span>
-<span class="im">import</span> os
-window <span class="op">=</span> os.getenv(<span class="st">"WINDOW"</span>, default<span class="op">=</span><span class="st">"not set"</span>)
-threshold <span class="op">=</span> os.getenv(<span class="st">"THRESHOLD"</span>, default<span class="op">=</span><span class="st">"not set"</span>)
-<span class="bu">print</span>(<span class="ss">f"inner: window is </span><span class="sc">{</span>window<span class="sc">}</span><span class="ss"> and threshold is </span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ss">"</span>)</code> <code>outer: window is neighbor and threshold is 0.5
-inner: window is not set and threshold is 0.5</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># env_var_py.sh</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">WINDOW</span><span class="op">=</span><span class="st">"neighbor"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">THRESHOLD</span><span class="op">=</span>0.5</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"outer: window is </span><span class="va">${WINDOW}</span><span class="st"> and threshold is </span><span class="va">${THRESHOLD}</span><span class="st">"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/env_var_py.py</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># env_var_py.py</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> os.getenv(<span class="st">"WINDOW"</span>, default<span class="op">=</span><span class="st">"not set"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> os.getenv(<span class="st">"THRESHOLD"</span>, default<span class="op">=</span><span class="st">"not set"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"inner: window is </span><span class="sc">{</span>window<span class="sc">}</span><span class="ss"> and threshold is </span><span class="sc">{</span>threshold<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
+<pre><code>outer: window is neighbor and threshold is 0.5
+inner: window is not set and threshold is 0.5</code></pre>
 <h2 data-number="7.7" id="inspecting-variables"><span class="header-section-number">7.7</span> Inspecting Variables</h2>
 <ul>
 <li><code>set</code> on its own lists variables
@@ -130,7 +136,8 @@ inner: window is not set and threshold is 0.5</code></p>
 </ul></li>
 <li><code>env</code> shows all environment variables</li>
 </ul>
-<p><code class="sourceCode bash"><span class="fu">env</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span> = <span class="at">-f</span> 1 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</code> <code>BASH_SILENCE_DEPRECATION_WARNING
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">env</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span> = <span class="at">-f</span> 1 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code></pre></div>
+<pre><code>BASH_SILENCE_DEPRECATION_WARNING
 CONDA_DEFAULT_ENV
 CONDA_EXE
 CONDA_PREFIX
@@ -139,7 +146,7 @@ CONDA_PROMPT_MODIFIER
 CONDA_PYTHON_EXE
 CONDA_SHLVL
 EDITOR
-GEM_HOME</code></p>
+GEM_HOME</code></pre>
 <ul>
 <li>Many tools rely on variables to manage configuration
 <ul>
@@ -222,7 +229,8 @@ GEM_HOME</code></p>
 <li>Shell looks in these <em>in order</em> to find commands</li>
 <li>Reading at them all on one line is difficult, so use <code>tr</code> to split</li>
 </ul>
-<p><code class="sourceCode bash"><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> : <span class="st">'\n'</span></code> <code>/Users/tut/google-cloud-sdk/bin
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> : <span class="st">'\n'</span></span></code></pre></div>
+<pre><code>/Users/tut/google-cloud-sdk/bin
 /Users/tut/conda/envs/sys/bin
 /Users/tut/conda/condabin
 /Users/tut/.nvm/versions/node/v20.8.0/bin
@@ -240,7 +248,7 @@ GEM_HOME</code></p>
 /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
 /Library/Apple/usr/bin
 /Library/TeX/texbin
-/usr/local/bin</code></p>
+/usr/local/bin</code></pre>
 <ul>
 <li>Notice <code>/Users/tut/bin</code></li>
 <li>Common to have a <code>~/bin</code> directory with the user’s own utilities</li>
@@ -254,12 +262,13 @@ GEM_HOME</code></p>
 <li>Entire old value at the back</li>
 </ul></li>
 </ul>
-<p><code class="sourceCode bash"><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/tmp/bin:</span><span class="va">${PATH}</span><span class="st">"</span>
-<span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> : <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 5</code> <code>/tmp/bin
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/tmp/bin:</span><span class="va">${PATH}</span><span class="st">"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> : <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 5</span></code></pre></div>
+<pre><code>/tmp/bin
 /Users/gregwilson/google-cloud-sdk/bin
 /Users/gregwilson/conda/envs/sys/bin
 /Users/gregwilson/conda/condabin
-/Users/gregwilson/.gem/ruby/3.1.2/bin</code></p>
+/Users/gregwilson/.gem/ruby/3.1.2/bin</code></pre>
 <section id="exercise-shortening-the-path" class="exercise" data-number="7.12">
 <h2 data-number="7.12"><span class="header-section-number">7.12</span> Exercise: Shortening the Path</h2>
 <p>Removing a directory from <code>PATH</code> is harder than adding one. Write a shell script that:</p>
@@ -281,16 +290,17 @@ GEM_HOME</code></p>
 <li>I.e., run those commands in the current shell</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/.bashrc</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/.bashrc</span></code></pre></div>
 <h2 class="aside" data-number="7.14" id="command-interpolation"><span class="header-section-number">7.14</span> Command Interpolation</h2>
 <ul>
 <li>Can use <code>outer $(<em>inner</em>)</code> to run <code>inner</code> and use its output as arguments to <code>outer</code></li>
 <li>Long-winded way to count lines in some text files</li>
 </ul>
-<p><code class="sourceCode bash"><span class="fu">wc</span> <span class="at">-l</span> <span class="va">$(</span><span class="fu">ls</span> src/<span class="pp">*</span>.text<span class="va">)</span></code> <code>      12 src/ctrl_z_background.text
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> <span class="va">$(</span><span class="fu">ls</span> src/<span class="pp">*</span>.text<span class="va">)</span></span></code></pre></div>
+<pre><code>      12 src/ctrl_z_background.text
       12 src/kill_int.text
        6 src/kill_process.text
-      30 total</code></p>
+      30 total</code></pre>
 
 </main>
 <footer class="page-footer">
