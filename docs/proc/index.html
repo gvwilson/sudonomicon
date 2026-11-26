@@ -68,8 +68,8 @@
 <li><code>CMD</code>: the command the process is running</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-a</span> <span class="at">-l</span></span></code></pre></div>
-<pre><code>  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
+<div class="sourceCode" id="cb1" data-file="proc/ps_a_l.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ps</span> <span class="at">-a</span> <span class="at">-l</span></span></code></pre></div>
+<pre data-file="proc/ps_a_l.out"><code>  UID   PID  PPID        F CPU PRI NI        SZ    RSS       TTY       TIME CMD
     0 13215 83470     4106   0  31  0 408655632   9504   ttys001    0:00.02 login -pfl gvwilson /
   501 13216 13215     4006   0  31  0 408795632   5424   ttys001    0:00.04 -bash
   501 13569 13216     4046   0  31  0 408895008  20864   ttys001    0:00.10 python -m http.server
@@ -104,7 +104,7 @@
 </ul></li>
 <li><code>pstree $$</code> to see <a href="../glossary/index.html#process_tree">process tree</a></li>
 </ul>
-<pre><code>-+= 34628 gvwilson -bash
+<pre data-file="proc/pstree.out"><code>-+= 34628 gvwilson -bash
  |--= 38255 gvwilson emacs 03_proc/index.md
  |-+= 38697 gvwilson pstree 34628
  | \--- 38699 root ps -axwwo user,pid,ppid,pgid,command
@@ -219,7 +219,7 @@
 <li>Unsurprisingly called a <a href="../glossary/index.html#signal_handler">signal handler</a></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> signal</span>
+<div class="sourceCode" id="cb4" data-file="proc/catch_interrupt.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> signal</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>COUNT <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> handler(sig, frame):</span>
@@ -232,7 +232,7 @@
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"use Ctrl-C three times"</span>)</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    signal.pause()</span></code></pre></div>
-<pre><code>python src/catch_interrupt.py
+<pre data-file="proc/catch_interrupt.out"><code>python src/catch_interrupt.py
 use Ctrl-C three times
 ^Cinterrupt 1
 ^Cinterrupt 2
@@ -339,14 +339,14 @@ ls failed, running fallback</code></pre>
 <li>Can still print to the screen (stdout and stderr)</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<div class="sourceCode" id="cb10" data-file="proc/show_timer.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"loop </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">1</span>)</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"loop finished"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/show_timer.py <span class="kw">&amp;</span></span>
+<div class="sourceCode" id="cb11" data-file="proc/show_timer.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> src/show_timer.py <span class="kw">&amp;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> site</span></code></pre></div>
-<pre><code>$ src/show_timer.sh
+<pre data-file="proc/show_timer.out"><code>$ src/show_timer.sh
 birds.csv		cert_authority.srl	sandbox			server.pem		species.csv
 cert_authority.key	motto.json		server.csr		server_first_cert.pem	yukon.db
 cert_authority.pem	motto.txt		server.key		server_first_key.pem
@@ -370,7 +370,7 @@ loop finished</code></pre>
 <li>Then <code>bg %<em>num</em></code> to resume in the background</li>
 <li>Or <code>fg %<em>num</em></code> to <a href="../glossary/index.html#foreground_process">foreground</a> the process to <a href="../glossary/index.html#resume_process">resume</a> its execution</li>
 </ul>
-<pre><code>$ python src/show_timer.py
+<pre data-file="proc/ctrl_z_background.text"><code>$ python src/show_timer.py
 loop 0
 ^Z
 [1]+  Stopped                 python src/show_timer.py
@@ -400,7 +400,7 @@ loop finished
 <ul>
 <li>Use <code>kill</code> to send a signal to a process</li>
 </ul>
-<pre><code>$ python src/show_timer.py
+<pre data-file="proc/kill_process.text"><code>$ python src/show_timer.py
 loop 0
 ^Z
 [1]+  Stopped                 python src/show_timer.py
@@ -414,7 +414,7 @@ $ kill %1
 <li>Send a different signal: <code>kill -s INT %1</code></li>
 </ul></li>
 </ul>
-<pre><code>$ python src/show_timer.py
+<pre data-file="proc/kill_int.text"><code>$ python src/show_timer.py
 loop 0
 ^Z
 [1]+  Stopped                 python src/show_timer.py
@@ -434,14 +434,14 @@ KeyboardInterrupt</code></pre>
 <li>Child gets 0 as return value (but has something else as its process ID)</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<div class="sourceCode" id="cb16" data-file="proc/fork.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pid <span class="op">=</span> os.fork()</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pid <span class="op">==</span> <span class="dv">0</span>:</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"child got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
-<pre><code>starting 41618
+<pre data-file="proc/fork.out"><code>starting 41618
 parent got 41619 is 41618
 child got 0 is 41619</code></pre>
 <div>
@@ -471,7 +471,7 @@ child got 0 is 41619</code></pre>
 <ul>
 <li>Can force OS to do I/O <em>right now</em> by <a href="../glossary/index.html#flush">flushing</a> its buffers</li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<div class="sourceCode" id="cb18" data-file="proc/flush.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sys.stdout.flush()</span>
@@ -480,7 +480,7 @@ child got 0 is 41619</code></pre>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"child got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
-<pre><code>starting 41536
+<pre data-file="proc/flush.out"><code>starting 41536
 parent got 41537 is 41536
 child got 0 is 41537</code></pre>
 <h2 data-number="3.12" id="exec"><span class="header-section-number">3.12</span> Exec</h2>
@@ -492,7 +492,7 @@ child got 0 is 41537</code></pre>
 </ul></li>
 <li>Use <code>fork</code>/<code>exec</code> to create a new process and then run a program in it</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<div class="sourceCode" id="cb20" data-file="proc/fork_exec.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"starting </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>sys.stdout.flush()</span>
@@ -501,7 +501,7 @@ child got 0 is 41537</code></pre>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    os.execl(<span class="st">"/bin/echo"</span>, <span class="st">"echo"</span>, <span class="ss">f"child echoing </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> from </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"parent got </span><span class="sc">{</span>pid<span class="sc">}</span><span class="ss"> is </span><span class="sc">{</span>os<span class="sc">.</span>getpid()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
-<pre><code>starting 46713
+<pre data-file="proc/fork_exec.out"><code>starting 46713
 parent got 46714 is 46713
 child echoing 0 from 46714</code></pre>
 <section id="exercise-different-kinds-of-exec" class="exercise" data-number="3.13">
@@ -518,6 +518,14 @@ child echoing 0 from 46714</code></pre>
     <a class="pager-link next" href="../jobs/index.html">Running Jobs →</a>
   </nav>
 </footer>
+<script>
+document.addEventListener('click', function (e) {
+  var link = e.target.closest && e.target.closest('a');
+  document.querySelectorAll('details.topnav-dropdown[open]').forEach(function (d) {
+    if (!d.contains(e.target) || (link && d.contains(link))) d.removeAttribute('open');
+  });
+});
+</script>
 
 
 </body></html>

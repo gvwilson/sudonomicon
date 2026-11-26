@@ -70,9 +70,9 @@
 <li>If two directories <code>A</code> and <code>B</code> contain a program <code>xyz</code> and <code>A</code> comes before <code>B</code> in the user’s <code>PATH</code>, the command <code>xyz</code> will run <code>A/xyz</code> instead of <code>B/xyz</code></li>
 <li>This is how <a href="../glossary/index.html#virtual_env">virtual environments</a> work</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> : <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">grep</span> conda</span>
+<div class="sourceCode" id="cb1" data-file="dock/show_virtual_env.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="va">$PATH</span> <span class="kw">|</span> <span class="fu">tr</span> : <span class="st">'\n'</span> <span class="kw">|</span> <span class="fu">grep</span> conda</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"python is"</span> <span class="va">$(</span><span class="fu">which</span> python<span class="va">)</span></span></code></pre></div>
-<pre><code>/Users/tut/conda/envs/sys/bin
+<pre data-file="dock/show_virtual_env.out"><code>/Users/tut/conda/envs/sys/bin
 /Users/tut/conda/condabin
 python is /Users/tut/conda/envs/sys/bin/python</code></pre>
 <ul>
@@ -85,13 +85,13 @@ python is /Users/tut/conda/envs/sys/bin/python</code></pre>
 <li>Activate that virtual environment: <code>conda activate example</code></li>
 <li>Install the <code>faker</code> package: <code>pip install faker</code></li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> <span class="va">$HOME</span>/conda/envs/example <span class="at">-name</span> faker</span></code></pre></div>
-<pre><code>/Users/tut/conda/envs/example/bin/faker
+<div class="sourceCode" id="cb3" data-file="dock/find_faker.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> <span class="va">$HOME</span>/conda/envs/example <span class="at">-name</span> faker</span></code></pre></div>
+<pre data-file="dock/find_faker.out"><code>/Users/tut/conda/envs/example/bin/faker
 /Users/tut/conda/envs/example/lib/python3.12/site-packages/faker</code></pre>
 <ul>
 <li>The script in <code>bin</code> loads the module and runs it</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/Users/gregwilson/conda/envs/example/bin/python3.12</span></span>
+<div class="sourceCode" id="cb5" data-file="dock/faker_bin.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/Users/gregwilson/conda/envs/example/bin/python3.12</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
@@ -122,10 +122,10 @@ python is /Users/tut/conda/envs/sys/bin/python</code></pre>
 <li>Define an <a href="../glossary/index.html#docker_image">image</a> with its own copy of the operating system, filesystem, etc.</li>
 <li>Run it in a <a href="../glossary/index.html#docker_container">container</a> that is isolated from the rest of your computer</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image ls</span></code></pre></div>
-<pre><code>REPOSITORY   TAG       IMAGE ID   CREATED   SIZE</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> container ls</span></code></pre></div>
-<pre><code>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES</code></pre>
+<div class="sourceCode" id="cb6" data-file="dock/docker_image_ls.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image ls</span></code></pre></div>
+<pre data-file="dock/docker_image_ls.out"><code>REPOSITORY   TAG       IMAGE ID   CREATED   SIZE</code></pre>
+<div class="sourceCode" id="cb8" data-file="dock/docker_container_ls.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> container ls</span></code></pre></div>
+<pre data-file="dock/docker_container_ls.out"><code>CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES</code></pre>
 <ul>
 <li>Because we haven’t created or run anything yet</li>
 </ul>
@@ -133,11 +133,11 @@ python is /Users/tut/conda/envs/sys/bin/python</code></pre>
 <ul>
 <li>Docker requires a <a href="../glossary/index.html#daemon">daemon</a> process to be running in the background to start images</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image ls</span></code></pre></div>
-<pre><code>Cannot connect to the Docker daemon at unix:///Users/tut/.docker/run/docker.sock.
+<div class="sourceCode" id="cb10" data-file="dock/docker_image_ls.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> image ls</span></code></pre></div>
+<pre data-file="dock/docker_image_ls_err.out"><code>Cannot connect to the Docker daemon at unix:///Users/tut/.docker/run/docker.sock.
 Is the docker daemon running?</code></pre>
 <h2 data-number="10.7" id="running-a-container"><span class="header-section-number">10.7</span> Running a Container</h2>
-<pre><code>$ docker container run ubuntu:latest
+<pre data-file="dock/docker_run_fresh.text"><code>$ docker container run ubuntu:latest
 Unable to find image 'ubuntu:latest' locally
 latest: Pulling from library/ubuntu
 bccd10f490ab: Pull complete 
@@ -160,7 +160,7 @@ ubuntu       latest    ca2b0f26964c   3 weeks ago   77.9MB</code></pre>
 <li>But its default command is <code>/bin/bash</code> with no inputs, so it exits immediately.</li>
 </ul>
 <h2 data-number="10.8" id="re-running-a-container"><span class="header-section-number">10.8</span> Re-running a Container</h2>
-<pre><code>$ docker container run ubuntu:latest pwd
+<pre data-file="dock/docker_run_again.text"><code>$ docker container run ubuntu:latest pwd
 /
 $ docker container run ubuntu:latest ls
 bin
@@ -174,7 +174,7 @@ var</code></pre>
 <li>Runs the given command instead of the default <code>/bin/bash</code></li>
 </ul>
 <h2 class="aside" data-number="10.9" id="this-doesnt-work"><span class="header-section-number">10.9</span> This Doesn’t Work</h2>
-<pre><code>$ docker container run ubuntu:latest "echo hello"
+<pre data-file="dock/docker_run_error.text"><code>$ docker container run ubuntu:latest "echo hello"
 docker: Error response from daemon: \
 failed to create task for container: \
 failed to create shim task: \
@@ -189,13 +189,13 @@ exec: "echo hello": executable file not found in $PATH: unknown.</code></pre>
 <ul>
 <li>We don’t have to run immediately</li>
 </ul>
-<pre><code>$ docker pull ubuntu:latest
+<pre data-file="dock/docker_pull.text"><code>$ docker pull ubuntu:latest
 latest: Pulling from library/ubuntu
 Digest: sha256:77906da86b60585ce12215807090eb327e7386c8fafb5402369e421f44eff17e
 Status: Image is up to date for ubuntu:latest
 docker.io/library/ubuntu:latest</code></pre>
 <h2 data-number="10.11" id="what-have-we-got"><span class="header-section-number">10.11</span> What Have We Got?</h2>
-<pre><code>$ docker container run ubuntu cat /etc/os-release
+<pre data-file="dock/os_release.text"><code>$ docker container run ubuntu cat /etc/os-release
 PRETTY_NAME="Ubuntu 22.04.4 LTS"
 NAME="Ubuntu"
 VERSION_ID="22.04"
@@ -242,7 +242,7 @@ Figure&nbsp;10.1: Docker Layers and Copy-on-Write
 </figure>
 </div>
 <h2 data-number="10.14" id="inside-the-container"><span class="header-section-number">10.14</span> Inside the Container</h2>
-<pre><code>$ docker container run -i -t ubuntu
+<pre data-file="dock/docker_run_interactive.text"><code>$ docker container run -i -t ubuntu
 root@4238b3b51abd:/# pwd
 /
 root@4238b3b51abd:/# whoami
@@ -261,7 +261,7 @@ $</code></pre>
 <li>The hexadecimal number after <code>root@</code> is the container’s unique ID</li>
 </ul>
 <h2 data-number="10.15" id="persistence"><span class="header-section-number">10.15</span> Persistence</h2>
-<pre><code>$ docker container run -i -t ubuntu
+<pre data-file="dock/docker_run_nonpersistent.text"><code>$ docker container run -i -t ubuntu
 root@a8ea570a84d3:/# ls /tmp
 root@a8ea570a84d3:/# touch /tmp/proof-we-were-here.txt
 root@a8ea570a84d3:/# ls /tmp
@@ -277,7 +277,7 @@ exit</code></pre>
 <li>Notice that the container’s ID changes each time it runs</li>
 </ul>
 <h2 data-number="10.16" id="what-is-running"><span class="header-section-number">10.16</span> What Is Running</h2>
-<pre><code>$ docker container ls --format "table {{.ID}}\t{{.Status}}" |
+<pre data-file="dock/docker_container_ls_id.text"><code>$ docker container ls --format "table {{.ID}}\t{{.Status}}" |
 CONTAINER ID   STATUS                                       |
                                                             |
                                                             | $ docker container run -it ubuntu
@@ -300,7 +300,7 @@ CONTAINER ID   STATUS                                       |</code></pre>
 </ul></li>
 </ul>
 <h2 data-number="10.17" id="ids-only"><span class="header-section-number">10.17</span> IDs Only</h2>
-<pre><code>$ docker container ls -a -q
+<pre data-file="dock/docker_container_ids_only.text"><code>$ docker container ls -a -q
 22b7c4109157
 8640cfb5e07a
 4c1ffdcb1c88
@@ -312,7 +312,7 @@ fa9f02841fe9</code></pre>
 <li>So <code>docker container rm  -f $(docker container ls -a -q)</code> gets rid of everything</li>
 </ul>
 <h2 data-number="10.18" id="filtering"><span class="header-section-number">10.18</span> Filtering</h2>
-<pre><code>$ docker image ls --filter reference="ubuntu"
+<pre data-file="dock/docker_image_ls_filter.text"><code>$ docker image ls --filter reference="ubuntu"
 REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
 ubuntu       latest    2b7cc08dcdbb   6 weeks ago   69.2MB</code></pre>
 <ul>
@@ -322,7 +322,7 @@ ubuntu       latest    2b7cc08dcdbb   6 weeks ago   69.2MB</code></pre>
 <ul>
 <li>Use <a href="https://en.wikipedia.org/wiki/APT_(software)">apt</a> (Advanced Package Tool)</li>
 </ul>
-<pre><code>$ docker container run -it ubuntu
+<pre data-file="dock/docker_install_python.text"><code>$ docker container run -it ubuntu
 # apt update
 …lots of output…
 # apt install -y python3
@@ -344,7 +344,7 @@ Python 3.10.12</code></pre>
 <li>Version is most recent in the default repository</li>
 <li>But <em>it isn’t there the next time we run</em></li>
 </ul>
-<pre><code># exit
+<pre data-file="dock/docker_install_python_nonpersistent.text"><code># exit
 exit
 $ docker run -it ubuntu
 # which python
@@ -358,13 +358,13 @@ exit</code></pre>
 <li>Ours is <code>ubuntu-python3/Dockerfile</code></li>
 </ul></li>
 </ul>
-<pre><code>FROM ubuntu:latest
+<pre data-file="dock/ubuntu-python3/Dockerfile"><code>FROM ubuntu:latest
 RUN apt update
 RUN apt install python3 -y</code></pre>
 <ul>
 <li>Tell docker to build the image</li>
 </ul>
-<pre><code>$ docker build -t gvwilson/ubuntu-python3 ubuntu-python3
+<pre data-file="dock/ubuntu_python3_build.text"><code>$ docker build -t gvwilson/ubuntu-python3 ubuntu-python3
 #0 building with "desktop-linux" instance using docker driver
 #1 [internal] load build definition from Dockerfile
 #1 transferring dockerfile: 99B done
@@ -389,14 +389,14 @@ RUN apt install python3 -y</code></pre>
 <ul>
 <li>Use <code>-t gvwilson/python3</code> to <a href="../glossary/index.html#docker_tag">tag</a> the image</li>
 </ul>
-<pre><code>$ docker container run -it gvwilson/ubuntu-python3
+<pre data-file="dock/ubuntu_python3_run.text"><code>$ docker container run -it gvwilson/ubuntu-python3
 # which python3
 /usr/bin/python3</code></pre>
 <h2 data-number="10.21" id="inspecting-containers"><span class="header-section-number">10.21</span> Inspecting Containers</h2>
-<pre><code>$ docker container inspect 56d9f83286f9
+<pre data-file="dock/ubuntu_python3_inspect.text"><code>$ docker container inspect 56d9f83286f9
 …199 lines of JSON…</code></pre>
 <h2 data-number="10.22" id="layers"><span class="header-section-number">10.22</span> Layers</h2>
-<pre><code>$ docker image history gvwilson/ubuntu-python3
+<pre data-file="dock/docker_image_history.text"><code>$ docker image history gvwilson/ubuntu-python3
 IMAGE          CREATED        CREATED BY                                      SIZE      COMMENT
 c06d47d8275d   24 hours ago   RUN /bin/sh -c apt install python3 -y # buil…   29.5MB    buildkit.dockerfile.v0
 &lt;missing&gt;      24 hours ago   RUN /bin/sh -c apt update # buildkit            45.6MB    buildkit.dockerfile.v0
@@ -410,7 +410,7 @@ c06d47d8275d   24 hours ago   RUN /bin/sh -c apt install python3 -y # buil…   
 <li>Docker images are built in layers</li>
 <li>Layers can be shared between images to reduce disk space</li>
 </ul>
-<pre><code>$ docker system df
+<pre data-file="dock/docker_system_df.text"><code>$ docker system df
 TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
 Images          1         1         144.8MB   0B (0%)
 Containers      1         0         14B       14B (100%)
@@ -424,19 +424,19 @@ Build Cache     5         0         62B       62B</code></pre>
 <ul>
 <li>Add <code>CMD</code> with a list of arguments to specify default command to execute when image runs</li>
 </ul>
-<pre><code>FROM ubuntu:latest
+<pre data-file="dock/python3-version/Dockerfile"><code>FROM ubuntu:latest
 RUN apt update
 RUN apt install python3 -y
 CMD ["python3", "--version"]</code></pre>
 <ul>
 <li>Build</li>
 </ul>
-<pre><code>$ docker build -t gvwilson/python3 python3-version
+<pre data-file="dock/python3_version_build.text"><code>$ docker build -t gvwilson/python3 python3-version
 …lots of output…</code></pre>
 <ul>
 <li>Run</li>
 </ul>
-<pre><code>$ docker container run gvwilson/python3-version
+<pre data-file="dock/python3_version_run.text"><code>$ docker container run gvwilson/python3-version
 Python 3.10.12</code></pre>
 <ul>
 <li>But that’s all we get, because all we asked for was the version</li>
@@ -445,7 +445,7 @@ Python 3.10.12</code></pre>
 <li>Use <code>-i</code> to put Python in interactive mode</li>
 </ul></li>
 </ul>
-<pre><code>FROM ubuntu:latest
+<pre data-file="dock/python3-interactive/Dockerfile"><code>FROM ubuntu:latest
 RUN apt update
 RUN apt install python3 -y
 CMD ["python3", "-i"]</code></pre>
@@ -455,7 +455,7 @@ CMD ["python3", "-i"]</code></pre>
 <li>Use <code>-it</code> to connect standard input and output to container when it runs</li>
 </ul></li>
 </ul>
-<pre><code>$ docker container run -it gvwilson/python3-interactive
+<pre data-file="dock/python3_interactive_run.text"><code>$ docker container run -it gvwilson/python3-interactive
 Python 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; print("hello")
@@ -466,11 +466,11 @@ $ </code></pre>
 <ul>
 <li>Create a new directory <code>python3-script</code> and add this file</li>
 </ul>
-<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"proof that the script was copied"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35" data-file="dock/python3-script/proof.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"proof that the script was copied"</span>)</span></code></pre></div>
 <ul>
 <li>Modify the Docker file to copy it into the image</li>
 </ul>
-<pre><code>FROM ubuntu:latest
+<pre data-file="dock/python3-script/Dockerfile"><code>FROM ubuntu:latest
 RUN apt update
 RUN apt install python3 -y
 COPY proof.py /home
@@ -478,7 +478,7 @@ CMD ["python3", "/home/proof.py"]</code></pre>
 <ul>
 <li>Build and run</li>
 </ul>
-<pre><code>$ docker build -t gvwilson/python3-script python3-script
+<pre data-file="dock/python3_script_run.text"><code>$ docker build -t gvwilson/python3-script python3-script
 …output…
 $ docker container run gvwilson/python3-script
 proof that the script was copied</code></pre>
@@ -500,7 +500,7 @@ proof that the script was copied</code></pre>
 <li>Containers exist to provide isolation…</li>
 <li>…but sometimes we <em>want</em> interaction with external resources</li>
 </ul>
-<pre><code>$ mkdir -p /tmp/mount_example
+<pre data-file="dock/mount_temp.text"><code>$ mkdir -p /tmp/mount_example
 $ echo "proof that mounting works" &gt; /tmp/mount_example/test.txt
 $ docker container run -it --mount type=bind,source=/tmp/mount_example,target=/example ubuntu
 # ls /example
@@ -529,23 +529,23 @@ copied.txt	test.txt</code></pre>
 </ul></li>
 <li>Build this image</li>
 </ul>
-<pre><code>FROM ubuntu:latest
+<pre data-file="dock/ubuntu-env-var-fails/Dockerfile"><code>FROM ubuntu:latest
 CMD ["echo", "variable is '${ECHO_VAR}'"]</code></pre>
 <ul>
 <li>Run it</li>
 </ul>
-<pre><code>$ ECHO_VAR=some_string docker container run gvwilson/ubuntu-env-var
+<pre data-file="dock/ubuntu_env_var_fails.text"><code>$ ECHO_VAR=some_string docker container run gvwilson/ubuntu-env-var
 variable is '${ECHO_VAR}'</code></pre>
 <ul>
 <li><code>CMD</code> takes the string literally</li>
 <li>So try this:</li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<div class="sourceCode" id="cb41" data-file="dock/ubuntu-env-var-succeeds/show_var.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"variable is '</span><span class="va">${ECHO_VAR}</span><span class="st">'"</span></span></code></pre></div>
-<pre><code>FROM ubuntu:latest
+<pre data-file="dock/ubuntu-env-var-succeeds/Dockerfile"><code>FROM ubuntu:latest
 COPY show_var.sh /home
 CMD ["/home/show_var.sh"]</code></pre>
-<pre><code>$ docker container run gvwilson/ubuntu-env-var-succeeds
+<pre data-file="dock/ubuntu_env_var_succeeds.text"><code>$ docker container run gvwilson/ubuntu-env-var-succeeds
 variable is ''
 $ ECHO_VAR='it worked' docker container run gvwilson/ubuntu-env-var-succeeds
 variable is ''
@@ -563,14 +563,14 @@ variable is 'it worked'</code></pre>
 <li>Which means you now have to figure out how to manage a file full of secrets…</li>
 </ul></li>
 </ul>
-<pre><code>ECHO_VAR=this is set in a .env file</code></pre>
-<pre><code>$ docker container run --env-file ./set_echo_var.env gvwilson/ubuntu-env-var-succeeds
+<pre data-file="dock/set_echo_var.env"><code>ECHO_VAR=this is set in a .env file</code></pre>
+<pre data-file="dock/run_with_env_file.text"><code>$ docker container run --env-file ./set_echo_var.env gvwilson/ubuntu-env-var-succeeds
 variable is 'this is set in a .env file'</code></pre>
 <ul>
 <li>Note the lack of quotes around the variable definition in the <code>.env</code> file</li>
 </ul>
 <h2 data-number="10.30" id="long-running-containers"><span class="header-section-number">10.30</span> Long-Running Containers</h2>
-<pre><code>docker container ls -a --format "table {{.ID}}\t{{.Status}}" | head -n 5
+<pre data-file="dock/docker_exited.text"><code>docker container ls -a --format "table {{.ID}}\t{{.Status}}" | head -n 5
 CONTAINER ID   STATUS
 56d9f83286f9   Exited (0) 3 minutes ago
 3a48286cb202   Exited (0) 7 minutes ago
@@ -587,7 +587,7 @@ CONTAINER ID   STATUS
 <li>The <code>expr</code> command is rather useful</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<div class="sourceCode" id="cb47" data-file="dock/count-time/count_time.sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="va">COUNTER</span><span class="op">=</span>1</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="fu">true</span></span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
@@ -598,13 +598,13 @@ CONTAINER ID   STATUS
 <ul>
 <li>Create a Dockerfile</li>
 </ul>
-<pre><code>FROM ubuntu:latest
+<pre data-file="dock/count-time/Dockerfile"><code>FROM ubuntu:latest
 COPY count_time.sh /home
 CMD ["/home/count_time.sh"]</code></pre>
 <ul>
 <li>Build and run as usual</li>
 </ul>
-<pre><code>$ docker container run gvwilson/count-time
+<pre data-file="dock/count_time_first.text"><code>$ docker container run gvwilson/count-time
 1 18:38:10
 2 18:38:11
 3 18:38:12
@@ -618,12 +618,12 @@ CMD ["/home/count_time.sh"]</code></pre>
 <li>Note: only have to give the first few digits of ID to <code>docker kill</code></li>
 </ul></li>
 </ul>
-<pre><code>$ docker ps
+<pre data-file="dock/count_time_stop.text"><code>$ docker ps
 CONTAINER ID   IMAGE                 COMMAND                 CREATED         STATUS
 741d896e4bb3   gvwilson/count-time   "/home/count_time.sh"   7 seconds ago   Up 6 seconds
 $ docker kill 741d</code></pre>
 <h2 data-number="10.32" id="a-better-way"><span class="header-section-number">10.32</span> A Better Way</h2>
-<pre><code>$ docker container run --detach gvwilson/count-time
+<pre data-file="dock/count_time_detach.text"><code>$ docker container run --detach gvwilson/count-time
 54c8c682a94a3853c62e2f86c19d463428a01452ed7e5cf85b076dcc0f447474
 $ docker ps
 CONTAINER ID   IMAGE                 COMMAND                 CREATED          STATUS
@@ -636,7 +636,7 @@ $</code></pre>
 <li>Use <code>docker container stop</code> to shut things down gracefully</li>
 <li>Inspect output after the fact (or while the container is running) with <code>docker logs</code></li>
 </ul>
-<pre><code>$ docker logs 54c8
+<pre data-file="dock/count_time_logs.text"><code>$ docker logs 54c8
 1 18:42:44
 2 18:42:45
 3 18:42:46
@@ -656,6 +656,14 @@ Stoneman, Elton. 2020. <em><span class="nocase">Docker in a Month of Lunches</sp
     <a class="pager-link next" href="../finale/index.html">Conclusion →</a>
   </nav>
 </footer>
+<script>
+document.addEventListener('click', function (e) {
+  var link = e.target.closest && e.target.closest('a');
+  document.querySelectorAll('details.topnav-dropdown[open]').forEach(function (d) {
+    if (!d.contains(e.target) || (link && d.contains(link))) d.removeAttribute('open');
+  });
+});
+</script>
 
 
 </body></html>

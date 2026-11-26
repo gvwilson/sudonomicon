@@ -45,14 +45,14 @@
 <li>Hard to show output statically</li>
 </ul></li>
 </ul>
-<pre><code>$ watch -n 5 date
+<pre data-file="jobs/watch_date.text"><code>$ watch -n 5 date
 Every 5.0s: date              cherne: Mon Apr 22 16:11:48 2024
 Mon Apr 22 16:11:53 EDT 2024</code></pre>
 <ul>
 <li><code>-n 5</code>: every five seconds</li>
 <li>Less distracting to show without title (<code>-t</code>)</li>
 </ul>
-<pre><code>$ watch -t -n 5 date
+<pre data-file="jobs/watch_date_no_title.text"><code>$ watch -t -n 5 date
 Mon Apr 22 16:11:53 EDT 2024</code></pre>
 <ul>
 <li>More useful to show differences with <code>-d</code></li>
@@ -67,7 +67,7 @@ Mon Apr 22 16:11:53 EDT 2024</code></pre>
 <ul>
 <li>Use <code>fswatch</code> (file system watch)</li>
 </ul>
-<pre><code>$ fswatch -l 1 -x Created -x Removed /tmp
+<pre data-file="jobs/fswatch_example.text"><code>$ fswatch -l 1 -x Created -x Removed /tmp
 # touch /tmp/a.txt
 /private/tmp/a.txt Created IsFile
 # rm /tmp/a.txt
@@ -106,7 +106,7 @@ Mon Apr 22 16:11:53 EDT 2024</code></pre>
 <li>Get the exit status using <code>$?</code></li>
 </ul></li>
 </ul>
-<pre><code># Make a place for this example.
+<pre data-file="jobs/pre_commit_always_fail.text"><code># Make a place for this example.
 $ mkdir example
 $ cd example
 # Turn it into a Git repository.
@@ -140,7 +140,7 @@ Changes to be committed:
 <ul>
 <li>More useful to check the files or something else</li>
 </ul>
-<pre><code>$ cat &gt; .git/hooks/pre-commit
+<pre data-file="jobs/pre_commit_ruff.text"><code>$ cat &gt; .git/hooks/pre-commit
 ruff check
 exit $?
 $ cat &gt; a.py
@@ -177,6 +177,14 @@ All checks passed!
     <a class="pager-link next" href="../http/index.html">HTTP →</a>
   </nav>
 </footer>
+<script>
+document.addEventListener('click', function (e) {
+  var link = e.target.closest && e.target.closest('a');
+  document.querySelectorAll('details.topnav-dropdown[open]').forEach(function (d) {
+    if (!d.contains(e.target) || (link && d.contains(link))) d.removeAttribute('open');
+  });
+});
+</script>
 
 
 </body></html>
