@@ -321,7 +321,22 @@ revised content</code></pre>
 </ul></li>
 <li>Other programs can also use those system calls</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> stat</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"/tmp/somefile.txt"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">"w"</span>) <span class="im">as</span> writer:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    writer.write(<span class="st">"original content"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>status <span class="op">=</span> os.stat(filename)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(status)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># os.stat_result(st_mode=33188, st_ino=99159112, st_dev=16777234, st_nlink=1, st_uid=501,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                st_gid=0, st_size=16, st_atime=1713644644, st_mtime=1713644747,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                st_ctime=1713644747)</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(status.st_mode)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 33188</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stat.filemode(status.st_mode))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># -rw-r--r--</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"user ID </span><span class="sc">{</span>status<span class="sc">.</span>st_uid<span class="sc">}</span><span class="ss"> group ID </span><span class="sc">{</span>status<span class="sc">.</span>st_gid<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># user ID 501 group ID 0</span></span></code></pre></div>
 <ul>
 <li><code>os.stat</code> returns a tuple with named fields
 <ul>
@@ -333,7 +348,17 @@ revised content</code></pre>
 <li>Much easier to use <code>stat.filemode</code> to turn it into an <code>ls</code>-style string</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>os.chmod(filename, <span class="dv">0</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>status <span class="op">=</span> os.stat(filename)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stat.filemode(status.st_mode))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filename, <span class="st">"r"</span>) <span class="im">as</span> reader:</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> reader.read()</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">OSError</span> <span class="im">as</span> exc:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"trying to open and read: </span><span class="sc">{</span><span class="bu">type</span>(exc)<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>exc<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># trying to open and read: &lt;class 'PermissionError'&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># [Errno 13] Permission denied: '/tmp/somefile.txt</span></span></code></pre></div>
 <ul>
 <li>Use <code>os.chmod</code> to set the permission to nothing-nothing-nothing (i.e., 0)</li>
 <li>Trying to read/write file after that causes <code>PermissionError</code> (a subclass of <code>OSError</code>)</li>

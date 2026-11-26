@@ -266,7 +266,20 @@ Start where you are, use what you have, help who you can.</code></pre>
 </ul></li>
 </ul>
 <h2 data-number="5.11" id="our-own-file-server"><span class="header-section-number">5.11</span> Our Own File Server</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            url_path <span class="op">=</span> <span class="va">self</span>.path.lstrip(<span class="st">"/"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            full_path <span class="op">=</span> Path.cwd().joinpath(url_path)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"'</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss">' =&gt; '</span><span class="sc">{</span>full_path<span class="sc">}</span><span class="ss">'"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> full_path.exists():</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> ServerException(<span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss"> not found"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="kw">not</span> full_path.is_file():</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> ServerException(<span class="ss">f"</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>path<span class="sc">}</span><span class="ss"> not file"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.handle_file(<span class="va">self</span>.path, full_path)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> msg:</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.handle_error(msg)</span></code></pre></div>
 <ul>
 <li>Our <code>RequestHandler</code> handles a single <code>GET</code> request</li>
 <li>Combine working directory with requested file path to get local path to file</li>
@@ -280,14 +293,27 @@ Start where you are, use what you have, help who you can.</code></pre>
 <ul>
 <li>Handle errors</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ERROR_PAGE <span class="op">=</span> <span class="st">"""</span><span class="op">\</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;html&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;head&gt;&lt;title&gt;Error accessing </span><span class="sc">{path}</span><span class="st">&lt;/title&gt;&lt;/head&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;h1&gt;Error accessing </span><span class="sc">{path}</span><span class="st">: </span><span class="sc">{msg}</span><span class="st">&lt;/h1&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Define our own exceptions so we’re sure we’re only catching what we expect</li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ServerException(<span class="pp">Exception</span>):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
 <h2 data-number="5.13" id="running-our-file-server"><span class="header-section-number">5.13</span> Running Our File Server</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    os.chdir(sys.argv[<span class="dv">1</span>])</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> HTTPServer(serverAddress, RequestHandler)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"serving in </span><span class="sc">{</span>os<span class="sc">.</span>getcwd()<span class="sc">}</span><span class="ss">..."</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div>
 <ul>
 <li>And then get <code>motto.txt</code> as before</li>
 </ul>
@@ -402,19 +428,37 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></pre>
 <li>Modify server to generate it dynamically</li>
 <li>Main program</li>
 </ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> main():</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    sandbox, filename <span class="op">=</span> sys.argv[<span class="dv">1</span>], sys.argv[<span class="dv">2</span>]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    os.chdir(sandbox)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pl.read_csv(filename)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    serverAddress <span class="op">=</span> (<span class="st">""</span>, <span class="dv">8000</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    server <span class="op">=</span> BirdServer(df, serverAddress, RequestHandler)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    server.serve_forever()</span></code></pre></div>
 <ul>
 <li>Create our own server class because we want to pass the dataframe in the constructor</li>
 </ul>
-<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BirdServer(HTTPServer):</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data, server_address, request_handler):</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(server_address, request_handler)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._data <span class="op">=</span> data</span></code></pre></div>
 <ul>
 <li><code>do_GET</code> converts the dataframe to JSON (will modify later to do more than this)</li>
 </ul>
-<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RequestHandler(BaseHTTPRequestHandler):</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="va">self</span>.server._data.write_json(row_oriented<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_content(result, HTTPStatus.OK)</span></code></pre></div>
 <ul>
 <li><code>send_content</code> <a href="../glossary/index.html#character_encoding">encodes</a> the JSON string as <a href="../glossary/index.html#utf_8">UTF-8</a> and sets the MIME type to <code>application/json</code></li>
 </ul>
-<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> send_content(<span class="va">self</span>, content, status):</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> <span class="bu">bytes</span>(content, <span class="st">"utf-8"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_response(<span class="bu">int</span>(status))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Type"</span>, <span class="st">"application/json; charset=utf-8"</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Length"</span>, <span class="bu">str</span>(<span class="bu">len</span>(content)))</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.end_headers()</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wfile.write(content)</span></code></pre></div>
 <ul>
 <li>Can view in browser at <code>http://localhost:8000</code> or use <code>requests</code> to fetch as before</li>
 </ul>
