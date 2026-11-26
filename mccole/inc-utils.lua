@@ -17,7 +17,7 @@ end
 
 function M.extract_region(content, mark)
   local m = escape_pattern(mark)
-  return content:match("# mccole:" .. m .. "\n(.-)\n# mccole:/" .. m) or ""
+  return content:match("# mccole:" .. m .. "\n(.-)\n[ \t]*# mccole:/" .. m) or ""
 end
 
 function M.omit_region(content, mark)

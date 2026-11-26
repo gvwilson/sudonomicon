@@ -289,7 +289,12 @@ Start where you are, use what you have, help who you can.</code></pre>
 <ul>
 <li>Serve files</li>
 </ul>
-<div class="sourceCode" id="cb15" data-file="http/file_server_unsafe.py"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb15" data-file="http/file_server_unsafe.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> send_content(<span class="va">self</span>, content, status):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_response(<span class="bu">int</span>(status))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Type"</span>, <span class="st">"text/html; charset=utf-8"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_header(<span class="st">"Content-Length"</span>, <span class="bu">str</span>(<span class="bu">len</span>(content)))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.end_headers()</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wfile.write(content)</span></code></pre></div>
 <ul>
 <li>Handle errors</li>
 </ul>
@@ -301,7 +306,10 @@ Start where you are, use what you have, help who you can.</code></pre>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt;</span></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div>
-<div class="sourceCode" id="cb17" data-file="http/file_server_unsafe.py"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb17" data-file="http/file_server_unsafe.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> handle_error(<span class="va">self</span>, msg):</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> ERROR_PAGE.<span class="bu">format</span>(path<span class="op">=</span><span class="va">self</span>.path, msg<span class="op">=</span>msg)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> <span class="bu">bytes</span>(content, <span class="st">"utf-8"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_content(content, HTTPStatus.NOT_FOUND)</span></code></pre></div>
 <ul>
 <li>Define our own exceptions so we’re sure we’re only catching what we expect</li>
 </ul>
@@ -395,7 +403,19 @@ Start where you are, use what you have, help who you can.</code></pre>
 <p>The shortcut <code>~<em>username</em></code> (tilde) means “the specified user’s home directory” in the shell, while <code>~</code> on its own means “the current user’s home directory”. Create a file called <code>test.txt</code> in your home directory and then try to get <code>~/test.txt</code> using your browser, <code>requests</code>, and <code>netcat</code>. What happens with each and why?</p>
 </section>
 <h2 data-number="5.17" id="a-safer-file-server"><span class="header-section-number">5.17</span> A Safer File Server</h2>
-<div class="sourceCode" id="cb33" data-file="http/file_server_safe.py"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb33" data-file="http/file_server_safe.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> handle_file(<span class="va">self</span>, given_path, full_path):</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>            resolved_path <span class="op">=</span> <span class="bu">str</span>(full_path.resolve())</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>            sandbox <span class="op">=</span> <span class="bu">str</span>(Path.cwd().resolve())</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> resolved_path.startswith(sandbox):</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> ServerException(<span class="ss">f"Cannot access </span><span class="sc">{</span>given_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> <span class="bu">open</span>(full_path, <span class="st">"rb"</span>) <span class="im">as</span> reader:</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                content <span class="op">=</span> reader.read()</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.send_content(content, HTTPStatus.OK)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> ServerException(<span class="ss">f"Cannot find </span><span class="sc">{</span>given_path<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">IOError</span>:</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> ServerException(<span class="ss">f"Cannot read </span><span class="sc">{</span>given_path<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div>
 <ul>
 <li><a href="../glossary/index.html#resolve_path">Resolve</a> the constructed path</li>
 <li>Then check that it’s below the current working directory (i.e., the sandbox)</li>
@@ -468,7 +488,10 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></pre>
 <li>Want <code>http://localhost:8000/?year=2021&amp;species=rebnut</code> to select red-breasted nuthatches in 2021</li>
 <li>Put slicing in a method of its own</li>
 </ul>
-<div class="sourceCode" id="cb40" data-file="http/bird_server_slice.py"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb40" data-file="http/bird_server_slice.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> do_GET(<span class="va">self</span>):</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="va">self</span>.filter_data()</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>        as_json <span class="op">=</span> result.to_json(orient<span class="op">=</span><span class="st">"records"</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.send_content(as_json, HTTPStatus.OK)</span></code></pre></div>
 <ul>
 <li>Use <code>urlparse</code> and <code>parse_qs</code> from <a href="https://docs.python.org/3/library/urllib.parse.html"><code>urllib.parse</code></a> to get query parameters
 <ul>
@@ -476,7 +499,16 @@ L13476859,60.8606726,-135.2015181,CA-YT,2021,2,15,bkcchi,3.0</code></pre>
 </ul></li>
 <li>Then filter data as requested</li>
 </ul>
-<div class="sourceCode" id="cb41" data-file="http/bird_server_slice.py"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb41" data-file="http/bird_server_slice.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> filter_data(<span class="va">self</span>):</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>        params <span class="op">=</span> parse_qs(urlparse(<span class="va">self</span>.path).query)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> <span class="va">self</span>.server._data</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"species"</span> <span class="kw">in</span> params:</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>            species <span class="op">=</span> params[<span class="st">"species"</span>][<span class="dv">0</span>]</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> result[result[<span class="st">"species_id"</span>] <span class="op">==</span> species]</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"year"</span> <span class="kw">in</span> params:</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>            year <span class="op">=</span> <span class="bu">int</span>(params[<span class="st">"year"</span>][<span class="dv">0</span>])</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> result[result[<span class="st">"year"</span>] <span class="op">==</span> year]</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result</span></code></pre></div>
 <section id="exercise-serving-data" class="exercise" data-number="5.21">
 <h2 data-number="5.21"><span class="header-section-number">5.21</span> Exercise: Serving Data</h2>
 <ol type="1">
